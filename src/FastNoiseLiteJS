@@ -177,11 +177,97 @@ class FastNoise {
                 return GenFractalPingPong(x, y);
         }
     }
+    
+    GetNoise(x,y,z){
+        x *= this.#Frequency;
+        y *= this.#Frequency;
+        z *= this.#Frequency;
+        
+        switch (this.#TransformType3D) {
+            case FastNoise.TransformType3D.ImproveXYPlanes:
+                let xy = x + y;
+                let s2 =xy * -0.211324865405187;
+                z *= 0.577350269189626;
+                x += s2 - z;
+                y += s2 - z;
+                z += xy * 0.577350269189626;
+                break;
+            case FastNoise.TransformType3D.ImproveXZPlanes:
+                let xz = x + z;
+                let s2 =xz * -0.211324865405187;
+                y *= 0.577350269189626;
+                x += s2 - y;
+                z += s2 - y;
+                y += xz * 0.577350269189626;
+                break;
+            case FastNoise.TransformType3D.DefaultOpenSimplex2:
+                const R3 = 2.0/3.0;
+                let r = (x + y + z) * R3;
+                x = r - x;
+                y = r - y;
+                z = r - z;
+                break;
+            default:
+                break;
+        }
 
+        switch (this.#FractalType) { //add methods
+            default:
+                return GenNoiseSingle(this.#Seed, x , y, z);
+            case FastNoise.FractalType.FBm:
+                return GenFractalFBn(x,y,z);
+            case FastNoise.FractalType.Ridged:
+                return GenFractalRidged(x, y, z);
+            case FastNoise.FractalType.PingPong:
+                return GenFractalPingPong(x, y, z);
+        }
+    }
+    
 
+    //idk about the vector thing
+    /**
+     * 
+     * @param {number} coord 
+     */
+    DomainWrap(coord){
+        switch (key) {
+            case value:
+                
+                break;
+        
+            default:
+                break;
+        }
+    }
 
+    test(){
+        this.DomainWrap("hello");
+    }
 }
 
-noise = new FastNoise();
-noise.SetNoiseType(FastNoise.NoiseType.OpenSimplex2)
-noise.GetNoise(1,1);
+
+class Vector2 {
+    /**
+     * 2d Vector
+     * @param {number} x 
+     * @param {number} y 
+     */
+    constructor(x,y){
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Vector3 {
+    /**
+     * 3d Vector
+     * @param {number} x 
+     * @param {number} y 
+     * @param {number} z 
+     */
+    constructor(x,y,z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+}
