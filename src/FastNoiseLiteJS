@@ -1,3 +1,4 @@
+// @ts-check
 class FastNoise {
     
     static NoiseType ={
@@ -240,8 +241,6 @@ class FastNoise {
         }
     }
 
-    test(){
-        this.DomainWrap("hello");
     }
 }
 
