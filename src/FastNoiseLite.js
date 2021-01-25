@@ -1,6 +1,7 @@
+
 // @ts-check
 class FastNoise {
-    
+    // @ts-check
     static NoiseType ={
         OpenSimplex2: "OpenSimplex2",
         OpenSimplex2S: "OpenSimplex2S",
@@ -97,7 +98,7 @@ class FastNoise {
 
     SetRotationType3D(rotationType3D){
         this.#RotationType3D = rotationType3D;
-        UpdateTransformType3D(); //TODO: add
+        //UpdateTransformType3D(); //TODO: add
         //UpdateWarpTransformType3D(); //TODO: add
     }
 
@@ -147,103 +148,117 @@ class FastNoise {
     SetDomainWarpAmp(domainWarpAmp){
         this.#DomainWarpAmp = domainWarpAmp;
     }
-
-    GetNoise(x,y){
-        x *= this.#Frequency;
-        y *= this.#Frequency;
-
-        switch (this.#NoiseType) {
-            case FastNoise.NoiseType.OpenSimplex2:
-            case FastNoise.NoiseType.OpenSimplex2S:
-                const SQRT3 = 1.7320508075688772935274463415059;
-                const F2 = 0.5 * (SQRT3 -1);
-                let t = (x+y) * F2;
-                x += t;
-                y += t;
-
-                break;
-        
-            default:
-                break;
-        }
-
-        switch (this.#FractalType) { //add methods
-            default:
-                return GenNoiseSingle(this.#Seed, x , y);
-            case FastNoise.FractalType.FBm:
-                return GenFractalFBn(x,y);
-            case FastNoise.FractalType.Ridged:
-                return GenFractalRidged(x, y);
-            case FastNoise.FractalType.PingPong:
-                return GenFractalPingPong(x, y);
-        }
-    }
     
     GetNoise(x,y,z){
-        x *= this.#Frequency;
-        y *= this.#Frequency;
-        z *= this.#Frequency;
-        
-        switch (this.#TransformType3D) {
-            case FastNoise.TransformType3D.ImproveXYPlanes:
-                let xy = x + y;
-                let s2 =xy * -0.211324865405187;
-                z *= 0.577350269189626;
-                x += s2 - z;
-                y += s2 - z;
-                z += xy * 0.577350269189626;
-                break;
-            case FastNoise.TransformType3D.ImproveXZPlanes:
-                let xz = x + z;
-                let s2 =xz * -0.211324865405187;
-                y *= 0.577350269189626;
-                x += s2 - y;
-                z += s2 - y;
-                y += xz * 0.577350269189626;
-                break;
-            case FastNoise.TransformType3D.DefaultOpenSimplex2:
-                const R3 = 2.0/3.0;
-                let r = (x + y + z) * R3;
-                x = r - x;
-                y = r - y;
-                z = r - z;
-                break;
-            default:
-                break;
-        }
+        if (x == undefined){
+            x *= this.#Frequency;
+            y *= this.#Frequency;
 
-        switch (this.#FractalType) { //add methods
-            default:
-                return GenNoiseSingle(this.#Seed, x , y, z);
-            case FastNoise.FractalType.FBm:
-                return GenFractalFBn(x,y,z);
-            case FastNoise.FractalType.Ridged:
-                return GenFractalRidged(x, y, z);
-            case FastNoise.FractalType.PingPong:
-                return GenFractalPingPong(x, y, z);
+            switch (this.#NoiseType) {
+                case FastNoise.NoiseType.OpenSimplex2:
+                case FastNoise.NoiseType.OpenSimplex2S:
+                    const SQRT3 = 1.7320508075688772935274463415059;
+                    const F2 = 0.5 * (SQRT3 -1);
+                    let t = (x+y) * F2;
+                    x += t;
+                    y += t;
+                    break;
+        
+                default:
+                    break;
+            }   
+
+            switch (this.#FractalType) { //add methods
+                default:
+                    return //GenNoiseSingle(this.#Seed, x , y);
+                case FastNoise.FractalType.FBm:
+                    return //GenFractalFBn(x,y);
+                case FastNoise.FractalType.Ridged:
+                    return //GenFractalRidged(x, y);
+                case FastNoise.FractalType.PingPong:
+                    return //GenFractalPingPong(x, y);
+            }
+        } else {
+            x *= this.#Frequency;
+            y *= this.#Frequency;
+            z *= this.#Frequency;
+        
+            switch (this.#TransformType3D) {
+                case FastNoise.TransformType3D.ImproveXYPlanes:
+                {
+                    let xy = x + y;
+                    let s2 =xy * -0.211324865405187;
+                    z *= 0.577350269189626;
+                    x += s2 - z;
+                    y += s2 - z;
+                    z += xy * 0.577350269189626;
+                    break;
+                }
+                case FastNoise.TransformType3D.ImproveXZPlanes:
+                {
+                    let xz = x + z;
+                    let s2 =xz * -0.211324865405187;
+                    y *= 0.577350269189626;
+                    x += s2 - y;
+                    z += s2 - y;
+                    y += xz * 0.577350269189626;
+                    break;
+                }
+                case FastNoise.TransformType3D.DefaultOpenSimplex2:
+                    const R3 = 2.0/3.0;
+                    let r = (x + y + z) * R3;
+                    x = r - x;
+                    y = r - y;
+                    z = r - z;
+                    break;
+                default:
+                    break;
+            }
+
+            switch (this.#FractalType) { //add methods
+                default:
+                    return //GenNoiseSingle(this.#Seed, x , y, z);
+                case FastNoise.FractalType.FBm:
+                    return //GenFractalFBn(x,y,z);
+                case FastNoise.FractalType.Ridged:
+                    return //GenFractalRidged(x, y, z);
+                case FastNoise.FractalType.PingPong:
+                    return //GenFractalPingPong(x, y, z);
+            }
         }
+        
     }
     
 
-    //idk about the vector thing
     /**
      * 
-     * @param {number} coord 
+     * @param {Vector2|Vector3} coord 
      */
     DomainWrap(coord){
-        switch (key) {
-            case value:
-                
-                break;
-        
-            default:
-                break;
-        }
+            switch (this.#FractalType) {
+                default:
+                    //DomainWrapSinge(coord);
+                    break;
+                case FastNoise.FractalType.DomainWarpProgressive:
+                    //DomainWarpFractalProgressive(coord);
+                    break;
+                case FastNoise.FractalType.DomainWarpIndependent:
+                    //DomainWarpFractalIndependent(coord);
+                    break;
+            }
     }
+    
+    
+    static whatwew = [
+        2,3,4,5,6,3,2,2,3,4,5,4
+    ]
+    
+    whatd
 
-    }
+    
+
+
 }
-
 
 class Vector2 {
     /**
@@ -270,3 +285,7 @@ class Vector3 {
         this.z = z;
     }
 }
+
+var vec = new Vector3(2,1,1);
+var noise = new FastNoise();
+noise.DomainWrap(vec);
