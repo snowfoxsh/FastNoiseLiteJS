@@ -1,400 +1,395 @@
 class FastNoise {
-    /**
-     * @static
-     * @enum {string}
-     * @type {Readonly<{Cellular: string, OpenSimplex2: string, Value: string, ValueCubic: string, Perlin: string, OpenSimplex2S: string}>}
-     */
-    static NoiseType = Object.freeze({
-        OpenSimplex2: "OpenSimplex2",
-        OpenSimplex2S: "OpenSimplex2S",
-        Cellular: "Cellular",
-        Perlin: "Perlin",
-        ValueCubic: "ValueCubic",
-        Value: "Value",
-    })
+	/**
+	 * @static
+	 * @enum {string}
+	 * @type {Readonly<{Cellular: string, OpenSimplex2: string, Value: string, ValueCubic: string, Perlin: string, OpenSimplex2S: string}>}
+	 */
+	static NoiseType = Object.freeze({
+		OpenSimplex2: "OpenSimplex2",
+		OpenSimplex2S: "OpenSimplex2S",
+		Cellular: "Cellular",
+		Perlin: "Perlin",
+		ValueCubic: "ValueCubic",
+		Value: "Value",
+	});
 
-    /**
-     * @static
-     * @enum {string}
-     * @type {Readonly<{ImproveXYPlanes: string, ImproveXZPlanes: string, None: string}>}
-     */
-    static RotationType3D = Object.freeze({
-        None: "None",
-        ImproveXYPlanes: "ImproveXYPlanes",
-        ImproveXZPlanes: "ImproveXZPlanes",
-    })
+	/**
+	 * @static
+	 * @enum {string}
+	 * @type {Readonly<{ImproveXYPlanes: string, ImproveXZPlanes: string, None: string}>}
+	 */
+	static RotationType3D = Object.freeze({
+		None: "None",
+		ImproveXYPlanes: "ImproveXYPlanes",
+		ImproveXZPlanes: "ImproveXZPlanes",
+	});
 
-    /**
-     * @static
-     * @enum {string}
-     * @type {Readonly<{FBm: string, DomainWarpIndependent: string, PingPong: string, None: string, Ridged: string, DomainWarpProgressive: string}>}
-     */
-    static FractalType = Object.freeze({
-        None: "None",
-        FBm: "FBm",
-        Ridged: "Ridged",
-        PingPong: "PingPong",
-        DomainWarpProgressive: "DomainWarpProgressive",
-        DomainWarpIndependent: "DomainWarpIndependent",
-    })
-    /**
-     * @static
-     * @enum {string}
-     * @type {Readonly<{EuclideanSq: string, Euclidean: string, Hybrid: string, Manhattan: string}>}
-     */
-    static CellularDistanceFunction = Object.freeze({
-        Euclidean: "Euclidean",
-        EuclideanSq: "EuclideanSq",
-        Manhattan: "Manhattan",
-        Hybrid: "Hybrid",
-    })
-    /**
-     * @static
-     * @enum {string}
-     * @type {Readonly<{Distance2Sub: string, Distance2Mul: string, Distance2Add: string, Distance2Div: string, CellValue: string, Distance: string, Distance2: string}>}
-     */
-    static CellularReturnType = Object.freeze({
-        CellValue: "CellValue",
-        Distance: "Distance",
-        Distance2: "Distance2",
-        Distance2Add: "Distance2Add",
-        Distance2Sub: "Distance2Sub",
-        Distance2Mul: "Distance2Mul",
-        Distance2Div: "Distance2Div",
-    })
-    /**
-     * @static
-     * @enum {string}
-     * @type {Readonly<{BasicGrid: string, OpenSimplex2Reduced: string, OpenSimplex2: string}>}
-     */
-    static DomainWarpType = Object.freeze({
-        OpenSimplex2: "OpenSimplex2",
-        OpenSimplex2Reduced: "OpenSimplex2Reduced",
-        BasicGrid: "BasicGrid",
-    })
-    /**
-     * @static
-     * @enum {string}
-     * @type {Readonly<{ImproveXYPlanes: string, ImproveXZPlanes: string, None: string, DefaultOpenSimplex2: string}>}
-     */
-    static TransformType3D = Object.freeze({
-        None: "None",
-        ImproveXYPlanes: "ImproveXYPlanes",
-        ImproveXZPlanes: "ImproveXZPlanes",
-        DefaultOpenSimplex2: "DefaultOpenSimplex2",
-    })
+	/**
+	 * @static
+	 * @enum {string}
+	 * @type {Readonly<{FBm: string, DomainWarpIndependent: string, PingPong: string, None: string, Ridged: string, DomainWarpProgressive: string}>}
+	 */
+	static FractalType = Object.freeze({
+		None: "None",
+		FBm: "FBm",
+		Ridged: "Ridged",
+		PingPong: "PingPong",
+		DomainWarpProgressive: "DomainWarpProgressive",
+		DomainWarpIndependent: "DomainWarpIndependent",
+	});
+	/**
+	 * @static
+	 * @enum {string}
+	 * @type {Readonly<{EuclideanSq: string, Euclidean: string, Hybrid: string, Manhattan: string}>}
+	 */
+	static CellularDistanceFunction = Object.freeze({
+		Euclidean: "Euclidean",
+		EuclideanSq: "EuclideanSq",
+		Manhattan: "Manhattan",
+		Hybrid: "Hybrid",
+	});
+	/**
+	 * @static
+	 * @enum {string}
+	 * @type {Readonly<{Distance2Sub: string, Distance2Mul: string, Distance2Add: string, Distance2Div: string, CellValue: string, Distance: string, Distance2: string}>}
+	 */
+	static CellularReturnType = Object.freeze({
+		CellValue: "CellValue",
+		Distance: "Distance",
+		Distance2: "Distance2",
+		Distance2Add: "Distance2Add",
+		Distance2Sub: "Distance2Sub",
+		Distance2Mul: "Distance2Mul",
+		Distance2Div: "Distance2Div",
+	});
+	/**
+	 * @static
+	 * @enum {string}
+	 * @type {Readonly<{BasicGrid: string, OpenSimplex2Reduced: string, OpenSimplex2: string}>}
+	 */
+	static DomainWarpType = Object.freeze({
+		OpenSimplex2: "OpenSimplex2",
+		OpenSimplex2Reduced: "OpenSimplex2Reduced",
+		BasicGrid: "BasicGrid",
+	});
+	/**
+	 * @static
+	 * @enum {string}
+	 * @type {Readonly<{ImproveXYPlanes: string, ImproveXZPlanes: string, None: string, DefaultOpenSimplex2: string}>}
+	 */
+	static TransformType3D = Object.freeze({
+		None: "None",
+		ImproveXYPlanes: "ImproveXYPlanes",
+		ImproveXZPlanes: "ImproveXZPlanes",
+		DefaultOpenSimplex2: "DefaultOpenSimplex2",
+	});
 
+	//private
+	#Seed = 1337;
+	#Frequency = 0.01;
+	#NoiseType = FastNoise.NoiseType.OpenSimplex2;
+	#RotationType3D = FastNoise.RotationType3D.None;
+	#TransformType3D = FastNoise.TransformType3D.DefaultOpenSimplex2;
+	#DomainWarpAmp = 1.0;
 
-    //private
-    #Seed = 1337;
-    #Frequency = 0.01;
-    #NoiseType = FastNoise.NoiseType.OpenSimplex2;
-    #RotationType3D = FastNoise.RotationType3D.None;
-    #TransformType3D = FastNoise.TransformType3D.DefaultOpenSimplex2;
-    #DomainWarpAmp = 1.0;
+	#FractalType = FastNoise.FractalType.None;
+	#Octaves = 3;
+	#Lacunarity = 2.0;
+	#Gain = 0.5;
+	#WeightedStrength = 0.0;
+	#PingPongStrength = 2.0;
 
-    #FractalType = FastNoise.FractalType.None;
-    #Octaves = 3;
-    #Lacunarity = 2.0;
-    #Gain = 0.5;
-    #WeightedStrength = 0.0;
-    #PingPongStrength = 2.0;
+	#FractalBounding = 1 / 1.75;
 
-    #FractalBounding = 1 / 1.75;
+	#CellularDistanceFunction = FastNoise.CellularDistanceFunction.EuclideanSq;
+	#CellularReturnType = FastNoise.CellularReturnType.Distance;
+	#CellularJitterModifier = 1.0;
 
-    #CellularDistanceFunction = FastNoise.CellularDistanceFunction.EuclideanSq;
-    #CellularReturnType = FastNoise.CellularReturnType.Distance;
-    #CellularJitterModifier = 1.0;
+	#DomainWarpType = FastNoise.DomainWarpType.OpenSimplex2;
+	#WarpTransformType3D = FastNoise.TransformType3D.DefaultOpenSimplex2;
 
-    #DomainWarpType = FastNoise.DomainWarpType.OpenSimplex2;
-    #WarpTransformType3D = FastNoise.TransformType3D.DefaultOpenSimplex2;
+	/**
+	 * @description Create new FastNoise object with optional seed
+	 * @param {number} [seed]
+	 * @constructor
+	 */
+	constructor(seed) {
+		if (seed !== undefined) {
+			this.#Seed = seed;
+		}
+	}
 
-    /**
-     * @description Create new FastNoise object with optional seed
-     * @param {number} [seed]
-     * @constructor
-     */
-    constructor(seed) {
-        if (seed !== undefined) {
-            this.#Seed = seed;
-        }
-    }
+	/**
+	 * @description Sets seed used for all noise types
+	 * @remarks Default: 1337
+	 * @default 1337
+	 * @param {number} seed
+	 */
+	SetSeed(seed) {
+		this.#Seed = seed;
+	}
 
-    /**
-     * @description Sets seed used for all noise types
-     * @remarks Default: 1337
-     * @default 1337
-     * @param {number} seed
-     */
-    SetSeed(seed) {
-        this.#Seed = seed;
-    }
+	/**
+	 * @description Sets frequency for all noise types
+	 * @remarks Default: 0.01
+	 * @default 0.01
+	 * @param {number} frequency
+	 */
+	SetFrequency(frequency) {
+		this.#Frequency = frequency;
+	}
 
-    /**
-     * @description Sets frequency for all noise types
-     * @remarks Default: 0.01
-     * @default 0.01
-     * @param {number} frequency
-     */
-    SetFrequency(frequency) {
-        this.#Frequency = frequency;
-    }
+	/**
+	 * @description Sets noise algorithm used for GetNoise(...)
+	 * @remarks Default: OpenSimplex2
+	 * @default FastNoise.NoiseType.OpenSimplex2
+	 * @param {FastNoise.NoiseType} noiseType
+	 */
+	SetNoiseType(noiseType) {
+		this.#NoiseType = noiseType;
+		this.#UpdateTransformType3D();
+	}
 
-    /**
-     * @description Sets noise algorithm used for GetNoise(...)
-     * @remarks Default: OpenSimplex2
-     * @default FastNoise.NoiseType.OpenSimplex2
-     * @param {FastNoise.NoiseType} noiseType
-     */
-    SetNoiseType(noiseType) {
-        this.#NoiseType = noiseType;
-        this.#UpdateTransformType3D();
-    }
+	/**
+	 * @description Sets domain rotation type for 3D Noise and 3D DomainWarp.
+	 * @description Can aid in reducing directional artifacts when sampling a 2D plane in 3D
+	 * @remarks Default: None
+	 * @default FastNoise.RotationType3D.None
+	 * @param {FastNoise.RotationType3D} rotationType3D
+	 */
+	SetRotationType3D(rotationType3D) {
+		this.#RotationType3D = rotationType3D;
+		this.#UpdateTransformType3D();
+		this.#UpdateWarpTransformType3D();
+	}
 
-    /**
-     * @description Sets domain rotation type for 3D Noise and 3D DomainWarp.
-     * @description Can aid in reducing directional artifacts when sampling a 2D plane in 3D
-     * @remarks Default: None
-     * @default FastNoise.RotationType3D.None
-     * @param {FastNoise.RotationType3D} rotationType3D
-     */
-    SetRotationType3D(rotationType3D) {
-        this.#RotationType3D = rotationType3D;
-        this.#UpdateTransformType3D();
-        this.#UpdateWarpTransformType3D();
-    }
+	/**
+	 * @description Sets method for combining octaves in all fractal noise types
+	 * @remarks Default: None
+	 * @default FastNoise.FractalType.None
+	 * @param {FastNoise.FractalType} fractalType
+	 */
+	SetFractalType(fractalType) {
+		this.#FractalType = fractalType;
+	}
 
-    /**
-     * @description Sets method for combining octaves in all fractal noise types
-     * @remarks Default: None
-     * @default FastNoise.FractalType.None
-     * @param {FastNoise.FractalType} fractalType
-     */
-    SetFractalType(fractalType) {
-        this.#FractalType = fractalType;
-    }
+	/**
+	 * @description Sets octave count for all fractal noise types
+	 * @remarks Default: 3
+	 * @default 3
+	 * @param {number} octaves
+	 */
+	SetFractalOctaves(octaves) {
+		this.#Octaves = octaves;
+		this.#CalculateFractalBounding();
+	}
 
-    /**
-     * @description Sets octave count for all fractal noise types
-     * @remarks Default: 3
-     * @default 3
-     * @param {number} octaves
-     */
-    SetFractalOctaves(octaves) {
-        this.#Octaves = octaves;
-        this.#CalculateFractalBounding();
-    }
+	/**
+	 * @description Sets octave lacunarity for all fractal noise types
+	 * @remarks Default: 2.0
+	 * @default 2.0
+	 * @param {number} lacunarity
+	 */
+	SetFractalLacunarity(lacunarity) {
+		this.#Lacunarity = lacunarity;
+	}
 
-    /**
-     * @description Sets octave lacunarity for all fractal noise types
-     * @remarks Default: 2.0
-     * @default 2.0
-     * @param {number} lacunarity
-     */
-    SetFractalLacunarity(lacunarity) {
-        this.#Lacunarity = lacunarity;
-    }
+	/**
+	 * @description Sets octave gain for all fractal noise types
+	 * @remarks Default: 0.5
+	 * @default 0.5
+	 * @param {number} gain
+	 */
+	SetFractalGain(gain) {
+		this.#Gain = gain;
+		this.#CalculateFractalBounding();
+	}
 
-    /**
-     * @description Sets octave gain for all fractal noise types
-     * @remarks Default: 0.5
-     * @default 0.5
-     * @param {number} gain
-     */
-    SetFractalGain(gain) {
-        this.#Gain = gain;
-        this.#CalculateFractalBounding();
-    }
+	/**
+	 * @description Sets octave weighting for all none DomainWarp fratal types
+	 * @remarks Default: 0.0 | Keep between 0...1 to maintain -1...1 output bounding
+	 * @default 0.5
+	 * @param {number} weightedStrength
+	 */
+	SetFractalWeightedStrength(weightedStrength) {
+		this.#WeightedStrength = weightedStrength;
+	}
 
-    /**
-     * @description Sets octave weighting for all none DomainWarp fratal types
-     * @remarks Default: 0.0 | Keep between 0...1 to maintain -1...1 output bounding
-     * @default 0.5
-     * @param {number} weightedStrength
-     */
-    SetFractalWeightedStrength(weightedStrength) {
-        this.#WeightedStrength = weightedStrength;
-    }
+	/**
+	 * @description Sets strength of the fractal ping pong effect
+	 * @remarks Default: 2.0
+	 * @default 2.0
+	 * @param {number} pingPongStrength
+	 */
+	SetFractalPingPongStrength(pingPongStrength) {
+		this.#PingPongStrength = pingPongStrength;
+	}
 
-    /**
-     * @description Sets strength of the fractal ping pong effect
-     * @remarks Default: 2.0
-     * @default 2.0
-     * @param {number} pingPongStrength
-     */
-    SetFractalPingPongStrength(pingPongStrength) {
-        this.#PingPongStrength = pingPongStrength;
-    }
+	/**
+	 * @description Sets distance function used in cellular noise calculations
+	 * @remarks Default: Distance
+	 * @default FastNoise.CellularDistanceFunction.Distance
+	 * @param {FastNoise.CellularDistanceFunction} cellularDistanceFunction
+	 */
+	SetCellularDistanceFunction(cellularDistanceFunction) {
+		this.#CellularDistanceFunction = cellularDistanceFunction;
+	}
 
-    /**
-     * @description Sets distance function used in cellular noise calculations
-     * @remarks Default: Distance
-     * @default FastNoise.CellularDistanceFunction.Distance
-     * @param {FastNoise.CellularDistanceFunction} cellularDistanceFunction
-     */
-    SetCellularDistanceFunction(cellularDistanceFunction) {
-        this.#CellularDistanceFunction = cellularDistanceFunction;
-    }
+	/**
+	 * @description Sets return type from cellular noise calculations
+	 * @remarks Default: EuclideanSq
+	 * @default FastNoise.CellularReturnType.EuclideanSq
+	 * @param {FastNoise.CellularReturnType} cellularReturnType
+	 */
+	SetCellularReturnType(cellularReturnType) {
+		this.#CellularReturnType = cellularReturnType;
+	}
 
-    /**
-     * @description Sets return type from cellular noise calculations
-     * @remarks Default: EuclideanSq
-     * @default FastNoise.CellularReturnType.EuclideanSq
-     * @param {FastNoise.CellularReturnType} cellularReturnType
-     */
-    SetCellularReturnType(cellularReturnType) {
-        this.#CellularReturnType = cellularReturnType;
-    }
+	/**
+	 * @description Sets the maximum distance a cellular point can move from it's grid position
+	 * @remarks Default: 1.0
+	 * @default 1.0
+	 * @param {number} cellularJitter
+	 */
+	SetCellularJitter(cellularJitter) {
+		this.#CellularJitterModifier = cellularJitter;
+	}
 
-    /**
-     * @description Sets the maximum distance a cellular point can move from it's grid position
-     * @remarks Default: 1.0
-     * @default 1.0
-     * @param {number} cellularJitter
-     */
-    SetCellularJitter(cellularJitter) {
-        this.#CellularJitterModifier = cellularJitter;
-    }
+	/**
+	 * @description Sets the warp algorithm when using DomainWarp(...)
+	 * @remarks Default: OpenSimplex2
+	 * @default FastNoise.DomainWarpType.OpenSimplex2
+	 * @param {FastNoise.DomainWarpType} domainWarpType
+	 */
+	SetDomainWarpType(domainWarpType) {
+		this.#DomainWarpType = domainWarpType;
+		this.#UpdateWarpTransformType3D();
+	}
 
-    /**
-     * @description Sets the warp algorithm when using DomainWarp(...)
-     * @remarks Default: OpenSimplex2
-     * @default FastNoise.DomainWarpType.OpenSimplex2
-     * @param {FastNoise.DomainWarpType} domainWarpType
-     */
-    SetDomainWarpType(domainWarpType) {
-        this.#DomainWarpType = domainWarpType;
-        this.#UpdateWarpTransformType3D();
-    }
+	/**
+	 * @description Sets the maximum warp distance from original position when using DomainWarp(...)
+	 * @remarks Default: 1.0
+	 * @default 1.0
+	 * @param {number} domainWarpAmp
+	 */
+	SetDomainWarpAmp(domainWarpAmp) {
+		this.#DomainWarpAmp = domainWarpAmp;
+	}
 
-    /**
-     * @description Sets the maximum warp distance from original position when using DomainWarp(...)
-     * @remarks Default: 1.0
-     * @default 1.0
-     * @param {number} domainWarpAmp
-     */
-    SetDomainWarpAmp(domainWarpAmp) {
-        this.#DomainWarpAmp = domainWarpAmp;
-    }
+	/**
+	 * @description 2D/3D noise at given position using current settings
+	 * @param {number} x
+	 * @param {number} y
+	 * @param {number} [z]
+	 * @return {number} Noise output bounded between -1...1
+	 */
+	GetNoise(x, y, z) {
+		let R2 = (x, y) => {
+			x *= this.#Frequency;
+			y *= this.#Frequency;
 
+			switch (this.#NoiseType) {
+				case FastNoise.NoiseType.OpenSimplex2:
+				case FastNoise.NoiseType.OpenSimplex2S:
+					const SQRT3 = 1.7320508075688772935274463415059;
+					const F2 = 0.5 * (SQRT3 - 1);
+					let t = (x + y) * F2;
+					x += t;
+					y += t;
+					break;
+				default:
+					break;
+			}
 
-    /**
-     * @description 2D/3D noise at given position using current settings
-     * @param {number} x
-     * @param {number} y
-     * @param {number} [z]
-     * @return {number} Noise output bounded between -1...1
-     */
-    GetNoise(x, y, z) {
-        let R2 = (x, y) => {
-            x *= this.#Frequency;
-            y *= this.#Frequency;
+			switch (this.#FractalType) {
+				default:
+					return this.#GenNoiseSingle(this.#Seed, x, y);
+				case FastNoise.FractalType.FBm:
+					return this.#GenFractalFBm(x, y);
+				case FastNoise.FractalType.Ridged:
+					return this.#GenFractalRidged(x, y);
+				case FastNoise.FractalType.PingPong:
+					return this.#GenFractalPingPong(x, y);
+			}
+		};
 
-            switch (this.#NoiseType) {
-                case FastNoise.NoiseType.OpenSimplex2:
-                case FastNoise.NoiseType.OpenSimplex2S:
-                    const SQRT3 = 1.7320508075688772935274463415059;
-                    const F2 = 0.5 * (SQRT3 - 1);
-                    let t = (x + y) * F2;
-                    x += t;
-                    y += t;
-                    break;
-                default:
-                    break;
-            }
+		let R3 = (x, y, z) => {
+			x *= this.#Frequency;
+			y *= this.#Frequency;
+			z *= this.#Frequency;
 
-            switch (this.#FractalType) {
-                default:
-                    return this.#GenNoiseSingle(this.#Seed, x, y);
-                case FastNoise.FractalType.FBm:
-                    return this.#GenFractalFBm(x, y);
-                case FastNoise.FractalType.Ridged:
-                    return this.#GenFractalRidged(x, y);
-                case FastNoise.FractalType.PingPong:
-                    return this.#GenFractalPingPong(x, y);
-            }
-        }
+			switch (this.#TransformType3D) {
+				case FastNoise.TransformType3D.ImproveXYPlanes: {
+					let xy = x + y;
+					let s2 = xy * -0.211324865405187;
+					z *= 0.577350269189626;
+					x += s2 - z;
+					y += s2 - z;
+					z += xy * 0.577350269189626;
+					break;
+				}
+				case FastNoise.TransformType3D.ImproveXZPlanes: {
+					let xz = x + z;
+					let s2 = xz * -0.211324865405187;
+					y *= 0.577350269189626;
+					x += s2 - y;
+					z += s2 - y;
+					y += xz * 0.577350269189626;
+					break;
+				}
+				case FastNoise.TransformType3D.DefaultOpenSimplex2:
+					const R3 = 2.0 / 3.0;
+					let r = (x + y + z) * R3;
+					x = r - x;
+					y = r - y;
+					z = r - z;
+					break;
+				default:
+					break;
+			}
 
-        let R3 = (x, y, z) => {
-            x *= this.#Frequency;
-            y *= this.#Frequency;
-            z *= this.#Frequency;
+			switch (
+				this.#FractalType //add methods
+			) {
+				default:
+					return this.#GenNoiseSingle(this.#Seed, x, y, z);
+				case FastNoise.FractalType.FBm:
+					return this.#GenFractalFBm(x, y, z);
+				case FastNoise.FractalType.Ridged:
+					return this.#GenFractalRidged(x, y, z);
+				case FastNoise.FractalType.PingPong:
+					return this.#GenFractalPingPong(x, y, z);
+			}
+		};
 
-            switch (this.#TransformType3D) {
-                case FastNoise.TransformType3D.ImproveXYPlanes:
-                    {
-                        let xy = x + y;
-                        let s2 = xy * -0.211324865405187;
-                        z *= 0.577350269189626;
-                        x += s2 - z;
-                        y += s2 - z;
-                        z += xy * 0.577350269189626;
-                        break;
-                    }
-                case FastNoise.TransformType3D.ImproveXZPlanes:
-                    {
-                        let xz = x + z;
-                        let s2 = xz * -0.211324865405187;
-                        y *= 0.577350269189626;
-                        x += s2 - y;
-                        z += s2 - y;
-                        y += xz * 0.577350269189626;
-                        break;
-                    }
-                case FastNoise.TransformType3D.DefaultOpenSimplex2:
-                    const R3 = 2.0 / 3.0;
-                    let r = (x + y + z) * R3;
-                    x = r - x;
-                    y = r - y;
-                    z = r - z;
-                    break;
-                default:
-                    break;
-            }
+		if (arguments.length === 2) {
+			return R2(x, y);
+		}
 
-            switch (this.#FractalType) { //add methods
-                default:
-                    return this.#GenNoiseSingle(this.#Seed, x, y, z);
-                case FastNoise.FractalType.FBm:
-                    return this.#GenFractalFBm(x, y, z);
-                case FastNoise.FractalType.Ridged:
-                    return this.#GenFractalRidged(x, y, z);
-                case FastNoise.FractalType.PingPong:
-                    return this.#GenFractalPingPong(x, y, z);
-            }
-        }
+		if (arguments.length === 3) {
+			return R3(x, y, z);
+		}
+	}
 
-        if (arguments.length === 2) {
-            return R2(x, y);
-        }
+	/**
+	 * @description 2D/3D warps the input position using current domain warp settings
+	 * @param {Vector2|Vector3} coord
+	 */
+	DomainWrap(coord) {
+		switch (this.#FractalType) {
+			default:
+				this.#DomainWarpSingle(coord);
+				break;
+			case FastNoise.FractalType.DomainWarpProgressive:
+				this.#DomainWarpFractalProgressive(coord);
+				break;
+			case FastNoise.FractalType.DomainWarpIndependent:
+				this.#DomainWarpFractalIndependent(coord);
+				break;
+		}
+	}
 
-        if (arguments.length === 3) {
-            return R3(x, y, z);
-        }
-    }
-
-
-    /**
-     * @description 2D/3D warps the input position using current domain warp settings
-     * @param {Vector2|Vector3} coord
-     */
-    DomainWrap(coord) {
-        switch (this.#FractalType) {
-            default:
-                this.#DomainWarpSingle(coord);
-                break;
-            case FastNoise.FractalType.DomainWarpProgressive:
-                this.#DomainWarpFractalProgressive(coord);
-                break;
-            case FastNoise.FractalType.DomainWarpIndependent:
-                this.#DomainWarpFractalIndependent(coord);
-                break;
-        }
-    }
-
-
-
-    #Gradients2D = [
+	#Gradients2D = [
         0.130526192220052, 0.99144486137381, 0.38268343236509, 0.923879532511287, 0.608761429008721, 0.793353340291235, 0.793353340291235, 0.608761429008721,
         0.923879532511287, 0.38268343236509, 0.99144486137381, 0.130526192220051, 0.99144486137381, -0.130526192220051, 0.923879532511287, -0.38268343236509,
         0.793353340291235, -0.60876142900872, 0.608761429008721, -0.793353340291235, 0.38268343236509, -0.923879532511287, 0.130526192220052, -0.99144486137381,
@@ -427,7 +422,7 @@ class FastNoise {
         -0.793353340291235, 0.608761429008721, -0.608761429008721, 0.793353340291235, -0.38268343236509, 0.923879532511287, -0.130526192220052, 0.99144486137381,
         0.38268343236509, 0.923879532511287, 0.923879532511287, 0.38268343236509, 0.923879532511287, -0.38268343236509, 0.38268343236509, -0.923879532511287,
         -0.38268343236509, -0.923879532511287, -0.923879532511287, -0.38268343236509, -0.923879532511287, 0.38268343236509, -0.38268343236509, 0.923879532511287,
-    ]
+    ];
 
     #RandVecs2D = [
         -0.2700222198, -0.9628540911, 0.3863092627, -0.9223693152, 0.04444859006, -0.999011673, -0.5992523158, -0.8005602176, -0.7819280288, 0.6233687174, 0.9464672271, 0.3227999196, -0.6514146797, -0.7587218957, 0.9378472289, 0.347048376,
@@ -462,7 +457,7 @@ class FastNoise {
         -0.9988770922, -0.047376731, -0.1250179027, 0.992154486, -0.8280133617, 0.560708367, 0.9324863769, -0.3612051451, 0.6394653183, 0.7688199442, -0.01623847064, -0.9998681473, -0.9955014666, -0.09474613458, -0.81453315, 0.580117012,
         0.4037327978, -0.9148769469, 0.9944263371, 0.1054336766, -0.1624711654, 0.9867132919, -0.9949487814, -0.100383875, -0.6995302564, 0.7146029809, 0.5263414922, -0.85027327, -0.5395221479, 0.841971408, 0.6579370318, 0.7530729462,
         0.01426758847, -0.9998982128, -0.6734383991, 0.7392433447, 0.639412098, -0.7688642071, 0.9211571421, 0.3891908523, -0.146637214, -0.9891903394, -0.782318098, 0.6228791163, -0.5039610839, -0.8637263605, -0.7743120191, -0.6328039957,
-    ]
+    ];
 
     #Gradients3D = [
         0, 1, 1, 0, 0, -1, 1, 0, 0, 1, -1, 0, 0, -1, -1, 0,
@@ -481,7 +476,7 @@ class FastNoise {
         1, 0, 1, 0, -1, 0, 1, 0, 1, 0, -1, 0, -1, 0, -1, 0,
         1, 1, 0, 0, -1, 1, 0, 0, 1, -1, 0, 0, -1, -1, 0, 0,
         1, 1, 0, 0, 0, -1, 1, 0, -1, 1, 0, 0, 0, -1, -1, 0
-    ]
+    ];
 
     #RandVecs3D = [
         -0.7292736885, -0.6618439697, 0.1735581948, 0, 0.790292081, -0.5480887466, -0.2739291014, 0, 0.7217578935, 0.6226212466, -0.3023380997, 0, 0.565683137, -0.8208298145, -0.0790000257, 0, 0.760049034, -0.5555979497, -0.3370999617, 0, 0.3713945616, 0.5011264475, 0.7816254623, 0, -0.1277062463, -0.4254438999, -0.8959289049, 0, -0.2881560924, -0.5815838982, 0.7607405838, 0,
@@ -516,2362 +511,2746 @@ class FastNoise {
         0.9985120116, 0.04659011161, -0.02833944577, 0, -0.3727687496, -0.9082481361, 0.1900757285, 0, 0.91737377, -0.3483642108, 0.1925298489, 0, 0.2714911074, 0.4147529736, -0.8684886582, 0, 0.5131763485, -0.7116334161, 0.4798207128, 0, -0.8737353606, 0.18886992, -0.4482350644, 0, 0.8460043821, -0.3725217914, 0.3814499973, 0, 0.8978727456, -0.1780209141, -0.4026575304, 0,
         0.2178065647, -0.9698322841, -0.1094789531, 0, -0.1518031304, -0.7788918132, -0.6085091231, 0, -0.2600384876, -0.4755398075, -0.8403819825, 0, 0.572313509, -0.7474340931, -0.3373418503, 0, -0.7174141009, 0.1699017182, -0.6756111411, 0, -0.684180784, 0.02145707593, -0.7289967412, 0, -0.2007447902, 0.06555605789, -0.9774476623, 0, -0.1148803697, -0.8044887315, 0.5827524187, 0,
         -0.7870349638, 0.03447489231, 0.6159443543, 0, -0.2015596421, 0.6859872284, 0.6991389226, 0, -0.08581082512, -0.10920836, -0.9903080513, 0, 0.5532693395, 0.7325250401, -0.396610771, 0, -0.1842489331, -0.9777375055, -0.1004076743, 0, 0.0775473789, -0.9111505856, 0.4047110257, 0, 0.1399838409, 0.7601631212, -0.6344734459, 0, 0.4484419361, -0.845289248, 0.2904925424, 0
-    ]
-
-
-    #PrimeX = 501125321;
-    #PrimeY = 1136930381;
-    #PrimeZ = 1720413743;
-
-    /**
-     * @private
-     * @param {number} a
-     * @param {number} b
-     * @param {number} t
-     * @returns {number}
-     */
-    static #Lerp(a, b, t) {
-        return a + t * (b - a);
-    }
-
-    /**
-     * @private
-     * @param {number} t
-     * @returns {number}
-     */
-    static #InterpHermite(t) {
-        return t * t * (3 - 2 * t);
-    }
-
-    /**
-     * @private
-     * @param t
-     * @returns {number}
-     */
-    static #InterpQuintic(t) {
-        return t * t * t * (t * (t * 6 - 15) + 10);
-    }
-
-    /**
-     * @private
-     * @param {number} a
-     * @param {number} b
-     * @param {number} c
-     * @param {number} d
-     * @param {number} t
-     * @returns {number}
-     */
-    static #CubicLerp(a, b, c, d, t) {
-        let p = (d - c) - (a - b);
-        return t * t * t * p + t * t * ((a - b) - p) + t * (c - a) + b;
-    }
-
-    /**
-     * @private
-     * @param {number} t
-     * @returns {number}
-     */
-    static #PingPong(t) {
-        t -= Math.trunc((t * 0.5) * 2);
-        return t < 1 ? t : 2 - t;
-    }
-
-    /**
-     * @private
-     */
-    #CalculateFractalBounding() {
-        let gain = Math.abs(this.#Gain);
-        let amp = gain;
-        let ampFractal = 1.0;
-        for (let i = 1; i < this.#Octaves; i++) {
-            ampFractal += amp;
-            amp *= gain;
-        }
-        this.#FractalBounding = 1 / ampFractal;
-    }
-
-    /**
-     * @private
-     * @returns {number}
-     */
-    #Hash() {
-        /**
-         * @param {number} seed
-         * @param {number} xPrimed
-         * @param {number} yPrimed
-         * @returns {number}
-         */
-        let R2 = (seed, xPrimed, yPrimed) => {
-            let hash = Math.trunc(seed ^ xPrimed ^ yPrimed);
-            hash *= 0x27d4eb2d;
-            return hash;
-
-        };
-
-        /**
-         *
-         * @param {number} seed
-         * @param {number} xPrimed
-         * @param {number} yPrimed
-         * @param {number} zPrimed
-         * @returns {number}
-         */
-        let R3 = (seed, xPrimed, yPrimed, zPrimed) => {
-            let hash = Math.trunc(seed ^ xPrimed ^ yPrimed ^ zPrimed);
-            hash *= 0x27d4eb2d;
-            return hash;
-        };
-
-        if (arguments.length === 3) {
-            return R2(arguments[0], arguments[1], arguments[2]);
-        }
-
-        if (arguments.length === 4) {
-            return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
-        }
-    }
-
-    /**
-     * @private
-     * @returns {number}
-     */
-    #ValCoord() {
-        /**
-         *
-         * @param {number} seed
-         * @param {number} xPrimed
-         * @param {number} yPrimed
-         * @returns {number}
-         */
-        let R2 = (seed, xPrimed, yPrimed) => {
-            let hash = this.#Hash(seed, xPrimed, yPrimed);
-
-            hash *= hash;
-            hash ^= hash << 19;
-            return hash * (1 / 2147483648.0);
-        }
-
-        /**
-         *
-         * @param {number} seed
-         * @param {number} xPrimed
-         * @param {number} yPrimed
-         * @param {number} zPrimed
-         * @returns {number}
-         */
-        let R3 = (seed, xPrimed, yPrimed, zPrimed) => {
-            let hash = this.#Hash(seed, xPrimed, yPrimed, zPrimed);
-
-            hash *= hash;
-            hash ^= hash << 19;
-            return hash * (1 / 2147483648.0);
-        }
-
-        if (arguments.length === 3) {
-            return R2(arguments[0], arguments[1], arguments[2]);
-        }
-
-        if (arguments.length === 4) {
-            return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
-        }
-
-    }
-
-    /**
-     * @private
-     * @returns {number}
-     */
-    #GradCoord() {
-
-        /**
-         *
-         * @param {number} seed
-         * @param {number} xPrimed
-         * @param {number} yPrimed
-         * @param {number} xd
-         * @param {number} yd
-         * @returns {number}
-         */
-        let R2 = (seed, xPrimed, yPrimed, xd, yd) => {
-            let hash = this.#Hash(seed, xPrimed, yPrimed);
-            hash ^= hash >> 15;
-            hash &= 127 << 1;
-
-            let xg = this.#Gradients2D[hash];
-            let yg = this.#Gradients2D[hash | 1];
-
-            return xd * xg + yd * yg;
-        };
-        /**
-         *
-         * @param {number} seed
-         * @param {number} xPrimed
-         * @param {number} yPrimed
-         * @param {number} zPrimed
-         * @param {number} xd
-         * @param {number} yd
-         * @param {number} zd
-         * @returns {number}
-         */
-        let R3 = (seed, xPrimed, yPrimed, zPrimed, xd, yd, zd) => {
-            let hash = this.#Hash(seed, xPrimed, yPrimed, zPrimed);
-            hash ^= hash >> 15;
-            hash &= 63 << 2;
-
-            let xg = this.#Gradients3D[hash];
-            let yg = this.#Gradients3D[hash | 1];
-            let zg = this.#Gradients3D[hash | 2];
-
-            return xd * xg + yd * yg + zd * zg;
-        };
-
-        if (arguments.length === 5) {
-            return R2(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4]);
-        }
-
-        if (arguments.length === 7) {
-            return R3(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6]);
-        }
-
-    }
-
-    /**
-     * @private
-     */
-    #GenNoiseSingle() {
-        /**
-         *
-         * @param {number} seed
-         * @param {number} x
-         * @param {number} y
-         * @returns {number}
-         */
-        let R2 = (seed, x, y) => {
-            switch (this.#NoiseType) {
-                case FastNoise.NoiseType.OpenSimplex2:
-                    return this.#SingleOpenSimplex2(seed, x, y);
-                case FastNoise.NoiseType.OpenSimplex2S:
-                    return this.#SingleOpenSimplex2S(seed, x, y);
-                case FastNoise.NoiseType.Cellular:
-                    return this.#SingleCellular(seed, x, y)
-                case FastNoise.NoiseType.Perlin:
-                    return this.#SinglePerlin(seed, x, y)
-                case FastNoise.NoiseType.ValueCubic:
-                    return this.#SingleValueCubic()
-                case FastNoise.NoiseType.Value:
-                    return this.#SingleValue()
-                default:
-                    return 0;
-            }
-        }
-        /**
-         *
-         * @param {number} seed
-         * @param {number} x
-         * @param {number} y
-         * @param {number} z
-         * @returns {number}
-         */
-        let R3 = (seed, x, y, z) => {
-            switch (this.#NoiseType) {
-                case FastNoise.NoiseType.OpenSimplex2:
-                    return this.#SingleOpenSimplex2(seed, x, y, z);
-                case FastNoise.NoiseType.OpenSimplex2S:
-                    return this.#SingleOpenSimplex2S(seed, x, y, z);
-                case FastNoise.NoiseType.Cellular:
-                    return this.#SingleCellular(seed, x, y, z);
-                case FastNoise.NoiseType.Perlin:
-                    return this.#SinglePerlin(seed, x, y, z);
-                case FastNoise.NoiseType.ValueCubic:
-                    return this.#SingleValueCubic(seed, x, y, z);
-                case FastNoise.NoiseType.Value:
-                    return this.#SingleValue(seed, x, y, z);
-                default:
-                    return 0;
-            }
-        }
-
-        if (arguments.length === 3) {
-            return R2(arguments[0], arguments[1], arguments[2]);
-        }
-
-        if (arguments.length === 4) {
-            return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
-        }
-
-    }
-
-    /**
-     * @private
-     */
-    #UpdateTransformType3D() {
-        switch (this.#RotationType3D) {
-            case FastNoise.RotationType3D.ImproveXYPlanes:
-                this.#TransformType3D = FastNoise.TransformType3D.ImproveXYPlanes;
-                break;
-            case FastNoise.RotationType3D.ImproveXZPlanes:
-                this.#TransformType3D = FastNoise.TransformType3D.ImproveXZPlanes;
-                break;
-            default:
-                switch (this.#NoiseType) {
-                    case FastNoise.NoiseType.OpenSimplex2:
-                    case FastNoise.NoiseType.OpenSimplex2S:
-                        this.#TransformType3D = FastNoise.TransformType3D.DefaultOpenSimplex2;
-                        break;
-                    default:
-                        this.#TransformType3D = FastNoise.TransformType3D.None;
-                        break;
-                }
-                break;
-        }
-    }
-
-    /**
-     * @private
-     */
-    #UpdateWarpTransformType3D() {
-        switch (this.#RotationType3D) {
-            case FastNoise.RotationType3D.ImproveXYPlanes:
-                this.#WarpTransformType3D = FastNoise.TransformType3D.ImproveXYPlanes;
-                break;
-            case FastNoise.RotationType3D.ImproveXZPlanes:
-                this.#WarpTransformType3D = FastNoise.TransformType3D.ImproveXZPlanes;
-                break;
-            default:
-                switch (this.#DomainWarpType) {
-                    case FastNoise.DomainWarpType.OpenSimplex2:
-                    case FastNoise.DomainWarpType.OpenSimplex2Reduced:
-                        this.#WarpTransformType3D = FastNoise.TransformType3D.DefaultOpenSimplex2;
-                        break;
-                    default:
-                        this.#WarpTransformType3D = FastNoise.TransformType3D.None;
-                        break;
-                }
-                break;
-        }
-    }
-
-    /**
-     * @private
-     * @returns {number}
-     */
-    #GenFractalFBm() {
-        /**
-         *
-         * @param {number} x
-         * @param {number} y
-         * @returns {number}
-         */
-        let R2 = (x, y) => {
-
-            let seed = this.#Seed;
-            let sum = 0;
-            let amp = this.#FractalBounding;
-
-            for (let i = 0; i < this.#Octaves; i++) {
-
-                let noise = this.#GenNoiseSingle(seed++, x, y);
-                sum += noise * amp;
-                amp *= FastNoise.#Lerp(1.0, Math.min(noise + 1, 2) * 0.5, this.#WeightedStrength);
-
-                x *= this.#Lacunarity;
-                y *= this.#Lacunarity;
-                amp *= this.#Gain;
-            }
-            return sum;
-
-        }
-        /**
-         *
-         * @param {number} x
-         * @param {number} y
-         * @param {number} z
-         * @returns {number}
-         */
-        let R3 = (x, y, z) => {
-            let seed = this.#Seed;
-            let sum = 0;
-            let amp = this.#FractalBounding;
-
-            for (let i = 0; i < this.#Octaves; i++) {
-
-                let noise = this.#GenNoiseSingle(seed++, x, y, z);
-                sum += noise * amp;
-                amp *= FastNoise.#Lerp(1.0, (noise + 1) * 0.5, this.#WeightedStrength);
-
-                x *= this.#Lacunarity;
-                y *= this.#Lacunarity;
-                z *= this.#Lacunarity;
-                amp *= this.#Gain;
-            }
-            return sum;
-        }
-
-        if (arguments.length === 2) {
-            return R2(arguments[0], arguments[1]);
-        }
-
-        if (arguments.length === 3) {
-            return R3(arguments[0], arguments[1], arguments[2]);
-        }
-
-
-    }
-
-    /**
-     * @private
-     * @returns {number}
-     */
-    #GenFractalRidged() {
-        /**
-         *
-         * @param {number} x
-         * @param {number} y
-         * @returns {number}
-         */
-        let R2 = (x, y) => {
-
-            let seed = this.#Seed;
-            let sum = 0;
-            let amp = this.#FractalBounding;
-
-            for (let i = 0; i < this.#Octaves; i++) {
-
-                let noise = Math.abs(this.#GenNoiseSingle(seed++, x, y));
-                sum += (noise * -2 + 1) * amp;
-                amp *= FastNoise.#Lerp(1.0, 1 - noise, this.#WeightedStrength);
-
-                x *= this.#Lacunarity;
-                y *= this.#Lacunarity;
-                amp *= this.#Gain;
-            }
-            return sum;
-
-        }
-        /**
-         *
-         * @param {number} x
-         * @param {number} y
-         * @param {number} z
-         * @returns {number}
-         */
-        let R3 = (x, y, z) => {
-
-            let seed = this.#Seed;
-            let sum = 0;
-            let amp = this.#FractalBounding;
-
-            for (let i = 0; i < this.#Octaves; i++) {
-
-                let noise = Math.abs(this.#GenNoiseSingle(seed++, x, y, z));
-                sum += (noise * -2 + 1) * amp;
-                amp *= FastNoise.#Lerp(1.0, 1 - noise, this.#WeightedStrength);
-
-                x *= this.#Lacunarity;
-                y *= this.#Lacunarity;
-                z *= this.#Lacunarity;
-                amp *= this.#Gain;
-            }
-            return sum;
-        }
-
-        if (arguments.length === 2) {
-            return R2(arguments[0], arguments[1]);
-        }
-
-        if (arguments.length === 3) {
-            return R3(arguments[0], arguments[1], arguments[2]);
-        }
-    }
-
-    /**
-     * @private
-     * @returns {number}
-     */
-    #GenFractalPingPong() {
-        /**
-         *
-         * @param {number} x
-         * @param {number} y
-         * @returns {number}
-         */
-        let R2 = (x, y) => {
-            let seed = this.#Seed;
-            let sum = 0;
-            let amp = this.#FractalBounding;
-
-            for (let i = 0; i < this.#Octaves; i++) {
-                let noise = FastNoise.#PingPong((this.#GenNoiseSingle(seed++, x, y) + 1) * this.#PingPongStrength);
-                sum += (noise - 0.5) * 2 * amp;
-                amp *= FastNoise.#Lerp(1.0, noise, this.#WeightedStrength);
-
-                x *= this.#Lacunarity;
-                y *= this.#Lacunarity;
-                amp *= this.#Gain;
-            }
-            return sum;
-        }
-        /**
-         *
-         * @param {number} x
-         * @param {number} y
-         * @param {number} z
-         * @returns {number}
-         */
-        let R3 = (x, y, z) => {
-            let seed = this.#Seed;
-            let sum = 0;
-            let amp = this.#FractalBounding;
-
-            for (let i = 0; i < this.#Octaves; i++) {
-                let noise = FastNoise.#PingPong((this.#GenNoiseSingle(seed++, x, y, z) + 1) * this.#PingPongStrength);
-                sum += (noise - 0.5) * 2 * amp;
-                amp *= FastNoise.#Lerp(1.0, noise, this.#WeightedStrength);
-
-                x *= this.#Lacunarity;
-                y *= this.#Lacunarity;
-                z *= this.#Lacunarity;
-                amp *= this.#Gain;
-            }
-            return sum;
-        }
-        if (arguments.length === 2) {
-            return R2(arguments[0], arguments[1]);
-        }
-
-        if (arguments.length === 3) {
-            return R3(arguments[0], arguments[1], arguments[2]);
-        }
-    }
-
-    /**
-     * @private
-     * @returns {number}
-     */
-    #SingleOpenSimplex2() {
-
-        /**
-         *
-         * @param {number} seed
-         * @param {number} x
-         * @param {number} y
-         * @returns {number}
-         */
-        let R2 = (seed, x, y) => {
-            const SQRT3 = 1.7320508075688772935274463415059;
-            const G2 = (3 - SQRT3) / 6;
-
-            let i = Math.floor(x);
-            let j = Math.floor(y);
-            let xi = (x - i);
-            let yi = (y - j);
-
-            let t = (xi + yi) * G2;
-            let x0 = (xi - t);
-            let y0 = (yi - t);
-
-            i *= this.#PrimeX;
-            j *= this.#PrimeY;
-
-            let n0, n1, n2;
-
-            let a = 0.5 - x0 * x0 - y0 * y0;
-
-            if (a <= 0) {
-                n0 = 0;
-            } else {
-                n0 = (a * a) * (a * a) * this.#GradCoord(seed, i, j, x0, y0);
-            }
-
-            let c = (2 * (1 - 2 * G2) * (1 / G2 - 2)) * t + ((-2 * (1 - 2 * G2) * (1 - 2 * G2)) + a);
-
-            if (c <= 0) {
-                n2 = 0;
-            } else {
-                let x2 = x0 + (2 * G2 - 1);
-                let y2 = y0 + (2 * G2 - 1);
-                n2 = (c * c) * (c * c) * this.#GradCoord(seed, i + this.#PrimeX, j + this.#PrimeY, x2, y2);
-            }
-
-            if (y0 > x0) {
-                let x1 = x0 + G2;
-                let y1 = y0 + (G2 - 1);
-                let b = 0.5 - x1 * x1 - y1 * y1;
-                if (b <= 0) {
-                    n1 = 0;
-                } else {
-                    n1 = (b * b) * (b * b) * this.#GradCoord(seed, i, j + this.#PrimeY, x1, y1);
-                }
-            } else {
-                let x1 = x0 + (G2 - 1);
-                let y1 = y0 + G2;
-                let b = 0.5 - x1 * x1 - y1 * y1;
-                if (b <= 0) {
-                    n1 = 0;
-                } else {
-                    n1 = (b * b) * (b * b) * this.#GradCoord(seed, i + this.#PrimeX, j, x1, y1);
-                }
-            }
-            return (n0 + n1 + n2) * 99.83685446303647;
-        }
-
-        /**
-         *
-         * @param {number} seed
-         * @param {number} x
-         * @param {number} y
-         * @param {number} z
-         * @returns {number}
-         */
-        let R3 = (seed, x, y, z) => {
-            // 3D OpenSimplex2 case uses two offset rotated cube grids.
-
-            /*
-             * --- Rotation moved to switch statements before fractal evaluation ---
-             * final FNLfloat R3 = (FNLfloat)(2.0 / 3.0);
-             * FNLfloat r = (x + y + z) * R3; // Rotation, not skew
-             * x = r - x; y = r - y; z = r - z;
-             */
-
-            let i = Math.round(x);
-            let j = Math.round(y);
-            let k = Math.round(z);
-            let x0 = (x - i);
-            let y0 = (y - j);
-            let z0 = (z - k);
-
-            let yNSign = Math.trunc((-1.0 - y0) | 1);
-            let xNSign = Math.trunc((-1.0 - x0) | 1);
-            let zNSign = Math.trunc((-1.0 - z0) | 1);
-
-            let ax0 = xNSign * -x0;
-            let ay0 = yNSign * -y0;
-            let az0 = zNSign * -z0;
-            i *= this.#PrimeX;
-            j *= this.#PrimeY;
-            k *= this.#PrimeZ;
-
-            let value = 0;
-            let a = (0.6 - x0 * x0) - (y0 * y0 + z0 * z0);
-
-            for (let l = 0; ; l++) {
-                if (a > 0) {
-                    value += (a * a) * (a * a) * this.#GradCoord(seed, i, j, k, x0, y0, z0);
-                }
-
-                if (ax0 >= ay0 && ax0 >= az0) {
-                    let b = a + ax0 + ax0;
-                    if (b > 1) {
-                        b -= 1;
-                        value += (b * b) * (b * b) * this.#GradCoord(seed, i - xNSign * this.#PrimeX, j, k, x0 + xNSign, y0, z0);
-                    }
-                }
-                else if (ay0 > ax0 && ay0 >= az0) {
-                    let b = a + ay0 + ay0;
-                    if (b > 1) {
-                        b -= 1;
-                        value += (b * b) * (b * b) * this.#GradCoord(seed, i, j - yNSign * this.#PrimeY, k, x0, y0 + yNSign, z0);
-                    }
-                }
-                else {
-                    let b = a + az0 + az0;
-                    if (b > 1) {
-                        b -= 1;
-                        value += (b * b) * (b * b) * this.#GradCoord(seed, i, j, k - zNSign * this.#PrimeZ, x0, y0, z0 + zNSign);
-                    }
-                }
-
-                if (l === 1) { break; }
-
-                ax0 = 0.5 - ax0;
-                ay0 = 0.5 - ay0;
-                az0 = 0.5 - az0;
-
-                x0 = xNSign * ax0;
-                y0 = yNSign * ay0;
-                z0 = zNSign * az0;
-
-                a += (0.75 - ax0) - (ay0 + az0);
-
-                i += (xNSign >> 1) & this.#PrimeX;
-                j += (yNSign >> 1) & this.#PrimeY;
-                k += (zNSign >> 1) & this.#PrimeZ;
-
-                xNSign = -xNSign;
-                yNSign = -yNSign;
-                zNSign = -zNSign;
-
-                seed = ~seed;
-            }
-
-            return value * 32.69428253173828125;
-        }
-
-        if (arguments.length === 3) {
-            return R2(arguments[0], arguments[1], arguments[2]);
-        }
-
-        if (arguments.length === 4) {
-            return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
-        }
-
-    }
-
-
-    /**
-     * @private
-     * @returns {number}
-     */
-    #SingleOpenSimplex2S() {
-
-        /**
-         *
-         * @param {number} seed
-         * @param {number} x
-         * @param {number} y
-         * @returns {number}
-         */
-        let R2 = (seed, x, y) => {
-            // 2D OpenSimplex2S case is a modified 2D simplex noise.
-
-            const SQRT3 = 1.7320508075688772935274463415059;
-            const G2 = (3 - SQRT3) / 6;
-
-            /*
-             * --- Skew moved to TransformNoiseCoordinate method ---
-             * final FNLfloat F2 = 0.5f * (SQRT3 - 1);
-             * FNLfloat s = (x + y) * F2;
-             * x += s; y += s;
-             */
-
-            let i = Math.floor(x);
-            let j = Math.floor(y);
-            let xi = (x - i);
-            let yi = (y - j);
-
-            i *= this.#PrimeX;
-            j *= this.#PrimeY;
-            let i1 = i + this.#PrimeX;
-            let j1 = j + this.#PrimeY;
-
-            let t = (xi + yi) * G2;
-            let x0 = xi - t;
-            let y0 = yi - t;
-
-            let a0 = (2.0 / 3.0) - x0 * x0 - y0 * y0;
-            let value = (a0 * a0) * (a0 * a0) * this.#GradCoord(seed, i, j, x0, y0);
-            let a1 = (2 * (1 - 2 * G2) * (1 / G2 - 2)) * t + ((-2 * (1 - 2 * G2) * (1 - 2 * G2)) + a0);
-            let x1 = x0 - (1 - 2 * G2);
-            let y1 = y0 - (1 - 2 * G2);
-            value += (a1 * a1) * (a1 * a1) * this.#GradCoord(seed, i1, j1, x1, y1);
-
-            // Nested conditionals were faster than compact bit logic/arithmetic.
-            let xmyi = xi - yi;
-            if (t > G2) {
-                if (xi + xmyi > 1) {
-                    let x2 = x0 + (3 * G2 - 2);
-                    let y2 = y0 + (3 * G2 - 1);
-                    let a2 = (2.0 / 3.0) - x2 * x2 - y2 * y2;
-                    if (a2 > 0) {
-                        value += (a2 * a2) * (a2 * a2) * this.#GradCoord(seed, i + (this.#PrimeX << 1), j + this.#PrimeY, x2, y2);
-                    }
-                } else {
-                    let x2 = x0 + G2;
-                    let y2 = y0 + (G2 - 1);
-                    let a2 = (2.0 / 3.0) - x2 * x2 - y2 * y2;
-                    if (a2 > 0) {
-                        value += (a2 * a2) * (a2 * a2) * this.#GradCoord(seed, i, j + this.#PrimeY, x2, y2);
-                    }
-                }
-
-                if (yi - xmyi > 1) {
-                    let x3 = x0 + (3 * G2 - 1);
-                    let y3 = y0 + (3 * G2 - 2);
-                    let a3 = (2.0 / 3.0) - x3 * x3 - y3 * y3;
-                    if (a3 > 0) {
-                        value += (a3 * a3) * (a3 * a3) * this.#GradCoord(seed, i + this.#PrimeX, j + (this.#PrimeY << 1), x3, y3);
-                    }
-                } else {
-                    let x3 = x0 + (G2 - 1);
-                    let y3 = y0 + G2;
-                    let a3 = (2.0 / 3.0) - x3 * x3 - y3 * y3;
-                    if (a3 > 0) {
-                        value += (a3 * a3) * (a3 * a3) * this.#GradCoord(seed, i + this.#PrimeX, j, x3, y3);
-                    }
-                }
-            } else {
-                if (xi + xmyi < 0) {
-                    let x2 = x0 + (1 - G2);
-                    let y2 = y0 - G2;
-                    let a2 = (2.0 / 3.0) - x2 * x2 - y2 * y2;
-                    if (a2 > 0) {
-                        value += (a2 * a2) * (a2 * a2) * this.#GradCoord(seed, i - this.#PrimeX, j, x2, y2);
-                    }
-                } else {
-                    let x2 = x0 + (G2 - 1);
-                    let y2 = y0 + G2;
-                    let a2 = (2.0 / 3.0) - x2 * x2 - y2 * y2;
-                    if (a2 > 0) {
-                        value += (a2 * a2) * (a2 * a2) * this.#GradCoord(seed, i + this.#PrimeX, j, x2, y2);
-                    }
-                }
-
-                if (yi < xmyi) {
-                    let x2 = x0 - G2;
-                    let y2 = y0 - (G2 - 1);
-                    let a2 = (2.0 / 3.0) - x2 * x2 - y2 * y2;
-                    if (a2 > 0) {
-                        value += (a2 * a2) * (a2 * a2) * this.#GradCoord(seed, i, j - this.#PrimeY, x2, y2);
-                    }
-                } else {
-                    let x2 = x0 + G2;
-                    let y2 = y0 + (G2 - 1);
-                    let a2 = (2.0 / 3.0) - x2 * x2 - y2 * y2;
-                    if (a2 > 0) {
-                        value += (a2 * a2) * (a2 * a2) * this.#GradCoord(seed, i, j + this.#PrimeY, x2, y2);
-                    }
-                }
-            }
-
-            return value * 18.24196194486065;
-        }
-
-        /**
-         *
-         * @param {number} seed
-         * @param {number} x
-         * @param {number} y
-         * @param {number} z
-         * @returns {number}
-         */
-        let R3 = (seed, x, y, z) => {
-            // 3D OpenSimplex2S case uses two offset rotated cube grids.
-
-            /*
-             * --- Rotation moved to TransformNoiseCoordinate method ---
-             * final FNLfloat R3 = (FNLfloat)(2.0 / 3.0);
-             * FNLfloat r = (x + y + z) * R3; // Rotation, not skew
-             * x = r - x; y = r - y; z = r - z;
-             */
-
-            let i = Math.floor(x);
-            let j = Math.floor(y);
-            let k = Math.floor(z);
-            let xi = (x - i);
-            let yi = (y - j);
-            let zi = (z - k);
-
-            i *= this.#PrimeX;
-            j *= this.#PrimeY;
-            k *= this.#PrimeZ;
-            let seed2 = seed + 1293373;
-
-            let xNMask = Math.trunc(-0.5 - xi);
-            let yNMask = Math.trunc(-0.5 - yi);
-            let zNMask = Math.trunc(-0.5 - zi);
-
-            let x0 = xi + xNMask;
-            let y0 = yi + yNMask;
-            let z0 = zi + zNMask;
-            let a0 = 0.75 - x0 * x0 - y0 * y0 - z0 * z0;
-            let value = (a0 * a0) * (a0 * a0) * this.#GradCoord(seed, i + (xNMask & this.#PrimeX), j + (yNMask & this.#PrimeY), k + (zNMask & this.#PrimeZ), x0, y0, z0);
-
-            let x1 = xi - 0.5;
-            let y1 = yi - 0.5;
-            let z1 = zi - 0.5;
-            let a1 = 0.75 - x1 * x1 - y1 * y1 - z1 * z1;
-            value += (a1 * a1) * (a1 * a1) * this.#GradCoord(seed2, i + this.#PrimeX, j + this.#PrimeY, k + this.#PrimeZ, x1, y1, z1);
-
-            let xAFlipMask0 = ((xNMask | 1) << 1) * x1;
-            let yAFlipMask0 = ((yNMask | 1) << 1) * y1;
-            let zAFlipMask0 = ((zNMask | 1) << 1) * z1;
-            let xAFlipMask1 = (-2 - (xNMask << 2)) * x1 - 1.0;
-            let yAFlipMask1 = (-2 - (yNMask << 2)) * y1 - 1.0;
-            let zAFlipMask1 = (-2 - (zNMask << 2)) * z1 - 1.0;
-
-            let skip5 = false;
-            let a2 = xAFlipMask0 + a0;
-            if (a2 > 0) {
-                let x2 = x0 - (xNMask | 1);
-                let y2 = y0;
-                let z2 = z0;
-                value += (a2 * a2) * (a2 * a2) * this.#GradCoord(seed,
-                    i + (~xNMask & this.#PrimeX), j + (yNMask & this.#PrimeY), k + (zNMask & this.#PrimeZ), x2, y2, z2);
-            } else {
-                let a3 = yAFlipMask0 + zAFlipMask0 + a0;
-
-                if (a3 > 0) {
-                    let x3 = x0;
-                    let y3 = y0 - (yNMask | 1);
-                    let z3 = z0 - (zNMask | 1);
-                    value += (a3 * a3) * (a3 * a3) * this.#GradCoord(seed,
-                        i + (xNMask & this.#PrimeX), j + (~yNMask & this.#PrimeY), k + (~zNMask & this.#PrimeZ), x3, y3, z3);
-                }
-
-                let a4 = xAFlipMask1 + a1;
-                if (a4 > 0) {
-                    let x4 = (xNMask | 1) + x1;
-                    let y4 = y1;
-                    let z4 = z1;
-                    value += (a4 * a4) * (a4 * a4) * this.#GradCoord(seed2,
-                        i + (xNMask & (this.#PrimeX * 2)), j + this.#PrimeY, k + this.#PrimeZ, x4, y4, z4);
-                    skip5 = true;
-                }
-            }
-
-            let skip9 = false;
-            let a6 = yAFlipMask0 + a0;
-            if (a6 > 0) {
-                let x6 = x0;
-                let y6 = y0 - (yNMask | 1);
-                let z6 = z0;
-                value += (a6 * a6) * (a6 * a6) * this.#GradCoord(seed,
-                    i + (xNMask & this.#PrimeX), j + (~yNMask & this.#PrimeY), k + (zNMask & this.#PrimeZ), x6, y6, z6);
-            } else {
-                let a7 = xAFlipMask0 + zAFlipMask0 + a0;
-                if (a7 > 0) {
-                    let x7 = x0 - (xNMask | 1);
-                    let y7 = y0;
-                    let z7 = z0 - (zNMask | 1);
-                    value += (a7 * a7) * (a7 * a7) * this.#GradCoord(seed,
-                        i + (~xNMask & this.#PrimeX), j + (yNMask & this.#PrimeY), k + (~zNMask & this.#PrimeZ), x7, y7, z7);
-                }
-
-                let a8 = yAFlipMask1 + a1;
-                if (a8 > 0) {
-                    let x8 = x1;
-                    let y8 = (yNMask | 1) + y1;
-                    let z8 = z1;
-                    value += (a8 * a8) * (a8 * a8) * this.#GradCoord(seed2,
-                        i + this.#PrimeX, j + (yNMask & (this.#PrimeY << 1)), k + this.#PrimeZ, x8, y8, z8);
-                    skip9 = true;
-                }
-            }
-
-            let skipD = false;
-            let aA = zAFlipMask0 + a0;
-            if (aA > 0) {
-                let xA = x0;
-                let yA = y0;
-                let zA = z0 - (zNMask | 1);
-                value += (aA * aA) * (aA * aA) * this.#GradCoord(seed,
-                    i + (xNMask & this.#PrimeX), j + (yNMask & this.#PrimeY), k + (~zNMask & this.#PrimeZ), xA, yA, zA);
-            } else {
-                let aB = xAFlipMask0 + yAFlipMask0 + a0;
-                if (aB > 0) {
-                    let xB = x0 - (xNMask | 1);
-                    let yB = y0 - (yNMask | 1);
-                    let zB = z0;
-                    value += (aB * aB) * (aB * aB) * this.#GradCoord(seed,
-                        i + (~xNMask & this.#PrimeX), j + (~yNMask & this.#PrimeY), k + (zNMask & this.#PrimeZ), xB, yB, zB);
-                }
-
-                let aC = zAFlipMask1 + a1;
-                if (aC > 0) {
-                    let xC = x1;
-                    let yC = y1;
-                    let zC = (zNMask | 1) + z1;
-                    value += (aC * aC) * (aC * aC) * this.#GradCoord(seed2, i + this.#PrimeX, j + this.#PrimeY, k + (zNMask & (this.#PrimeZ << 1)), xC, yC, zC);
-                    skipD = true;
-                }
-            }
-
-            if (!skip5) {
-                let a5 = yAFlipMask1 + zAFlipMask1 + a1;
-                if (a5 > 0) {
-                    let x5 = x1;
-                    let y5 = (yNMask | 1) + y1;
-                    let z5 = (zNMask | 1) + z1;
-                    value += (a5 * a5) * (a5 * a5) * this.#GradCoord(seed2,
-                        i + this.#PrimeX, j + (yNMask & (this.#PrimeY << 1)), k + (zNMask & (this.#PrimeZ << 1)), x5, y5, z5);
-                }
-            }
-
-            if (!skip9) {
-                let a9 = xAFlipMask1 + zAFlipMask1 + a1;
-                if (a9 > 0) {
-                    let x9 = (xNMask | 1) + x1;
-                    let y9 = y1;
-                    let z9 = (zNMask | 1) + z1;
-                    value += (a9 * a9) * (a9 * a9) * this.#GradCoord(seed2,
-                        i + (xNMask & (this.#PrimeX * 2)), j + this.#PrimeY, k + (zNMask & (this.#PrimeZ << 1)), x9, y9, z9);
-                }
-            }
-
-            if (!skipD) {
-                let aD = xAFlipMask1 + yAFlipMask1 + a1;
-                if (aD > 0) {
-                    let xD = (xNMask | 1) + x1;
-                    let yD = (yNMask | 1) + y1;
-                    let zD = z1;
-                    value += (aD * aD) * (aD * aD) * this.#GradCoord(seed2,
-                        i + (xNMask & (this.#PrimeX << 1)), j + (yNMask & (this.#PrimeY << 1)), k + this.#PrimeZ, xD, yD, zD);
-                }
-            }
-
-            return value * 9.046026385208288;
-        }
-
-        if (arguments.length === 3) {
-            return R2(arguments[0], arguments[1], arguments[2]);
-        }
-
-        if (arguments.length === 4) {
-            return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
-        }
-
-    }
-
-    /**
-     * @private
-     * @returns {number}
-     */
-    #SingleCellular() {
-        /**
-         *
-         * @param {number} seed
-         * @param {number} x
-         * @param {number} y
-         * @returns {number}
-         */
-        let R2 = (seed, x, y) => {
-            let xr = Math.round(x);
-            let yr = Math.round(y);
-
-            let distance0 = Number.MAX_VALUE;
-            let distance1 = Number.MAX_VALUE;
-
-            let closestHash = 0;
-
-            let cellularJitter = 0.43701595 * this.#CellularJitterModifier;
-
-            let xPrimed = (xr - 1) * this.#PrimeX;
-            let yPrimedBase = (yr - 1) * this.#PrimeY;
-
-            switch (this.#CellularDistanceFunction) {
-                default:
-                case FastNoise.CellularDistanceFunction.Euclidean:
-                case FastNoise.CellularDistanceFunction.EuclideanSq:
-                    for (let xi = xr - 1; xi <= xr + 1; xi++) {
-                        let yPrimed = yPrimedBase;
-
-                        for (let yi = yr - 1; yi <= yr + 1; yi++) {
-                            let hash = this.#Hash(seed, xPrimed, yPrimed);
-                            let idx = hash & (255 << 1);
-
-                            let vecX = (xi - x) + this.#RandVecs2D[idx] * cellularJitter;
-                            let vecY = (yi - y) + this.#RandVecs2D[idx | 1] * cellularJitter;
-
-                            let newDistance = vecX * vecX + vecY * vecY;
-
-                            distance1 = Math.max(Math.min(distance1, newDistance), distance0);
-                            if (newDistance < distance0) {
-                                distance0 = newDistance;
-                                closestHash = hash;
-                            }
-                            yPrimed += this.#PrimeY;
-                        }
-                        xPrimed += this.#PrimeX;
-                    }
-                    break;
-                case FastNoise.CellularDistanceFunction.Manhattan:
-                    for (let xi = xr - 1; xi <= xr + 1; xi++) {
-                        let yPrimed = yPrimedBase;
-
-                        for (let yi = yr - 1; yi <= yr + 1; yi++) {
-                            let hash = this.#Hash(seed, xPrimed, yPrimed);
-                            let idx = hash & (255 << 1);
-
-                            let vecX = (xi - x) + this.#RandVecs2D[idx] * cellularJitter;
-                            let vecY = (yi - y) + this.#RandVecs2D[idx | 1] * cellularJitter;
-
-                            let newDistance = Math.abs(vecX) + Math.abs(vecY);
-
-                            distance1 = Math.max(Math.min(distance1, newDistance), distance0);
-                            if (newDistance < distance0) {
-                                distance0 = newDistance;
-                                closestHash = hash;
-                            }
-                            yPrimed += this.#PrimeY;
-                        }
-                        xPrimed += this.#PrimeX;
-                    }
-                    break;
-                case FastNoise.CellularDistanceFunction.Hybrid:
-                    for (let xi = xr - 1; xi <= xr + 1; xi++) {
-                        let yPrimed = yPrimedBase;
-
-                        for (let yi = yr - 1; yi <= yr + 1; yi++) {
-                            let hash = this.#Hash(seed, xPrimed, yPrimed);
-                            let idx = hash & (255 << 1);
-
-                            let vecX = (xi - x) + this.#RandVecs2D[idx] * cellularJitter;
-                            let vecY = (yi - y) + this.#RandVecs2D[idx | 1] * cellularJitter;
-
-                            let newDistance = (Math.abs(vecX) + Math.abs(vecY)) + (vecX * vecX + vecY * vecY);
-
-                            distance1 = Math.max(Math.min(distance1, newDistance), distance0);
-                            if (newDistance < distance0) {
-                                distance0 = newDistance;
-                                closestHash = hash;
-                            }
-                            yPrimed += this.#PrimeY;
-                        }
-                        xPrimed += this.#PrimeX;
-                    }
-                    break;
-            }
-
-            if (this.#CellularDistanceFunction === FastNoise.CellularDistanceFunction.Euclidean && this.#CellularReturnType !== FastNoise.CellularReturnType.CellValue) {
-                distance0 = Math.sqrt(distance0);
-
-                if (this.#CellularReturnType !== FastNoise.CellularReturnType.CellValue) {
-                    distance1 = Math.sqrt(distance1);
-                }
-            }
-
-            switch (this.#CellularReturnType) {
-                case FastNoise.CellularReturnType.CellValue:
-                    return closestHash * (1 / 2147483648.0);
-                case FastNoise.CellularReturnType.Distance:
-                    return distance0 - 1;
-                case FastNoise.CellularReturnType.Distance2:
-                    return distance1 - 1;
-                case FastNoise.CellularReturnType.Distance2Add:
-                    return (distance1 + distance0) * 0.5 - 1;
-                case FastNoise.CellularReturnType.Distance2Sub:
-                    return distance1 - distance0 - 1;
-                case FastNoise.CellularReturnType.Distance2Mul:
-                    return distance1 * distance0 * 0.5 - 1;
-                case FastNoise.CellularReturnType.Distance2Div:
-                    return distance0 / distance1 - 1;
-                default:
-                    return 0;
-            }
-        }
-
-        /**
-         *
-         * @param {number} seed
-         * @param {number} x
-         * @param {number} y
-         * @param {number} z
-         * @returns {number}
-         */
-        let R3 = (seed, x, y, z) => {
-            let xr = Math.round(x);
-            let yr = Math.round(y);
-            let zr = Math.round(z);
-
-            let distance0 = Number.MAX_VALUE;
-            let distance1 = Number.MAX_VALUE;
-            let closestHash = 0;
-
-            let cellularJitter = 0.39614353 * this.#CellularJitterModifier;
-
-            let xPrimed = (xr - 1) * this.#PrimeX;
-            let yPrimedBase = (yr - 1) * this.#PrimeY;
-            let zPrimedBase = (zr - 1) * this.#PrimeZ;
-
-            switch (this.#CellularDistanceFunction) {
-                case FastNoise.CellularDistanceFunction.Euclidean:
-                case FastNoise.CellularDistanceFunction.EuclideanSq:
-                    for (let xi = xr - 1; xi <= xr + 1; xi++) {
-                        let yPrimed = yPrimedBase;
-
-                        for (let yi = yr - 1; yi <= yr + 1; yi++) {
-                            let zPrimed = zPrimedBase;
-
-                            for (let zi = zr - 1; zi <= zr + 1; zi++) {
-                                let hash = this.#Hash(seed, xPrimed, yPrimed, zPrimed);
-                                let idx = hash & (255 << 2);
-
-                                let vecX = (xi - x) + this.#RandVecs3D[idx] * cellularJitter;
-                                let vecY = (yi - y) + this.#RandVecs3D[idx | 1] * cellularJitter;
-                                let vecZ = (zi - z) + this.#RandVecs3D[idx | 2] * cellularJitter;
-
-                                let newDistance = vecX * vecX + vecY * vecY + vecZ * vecZ;
-
-                                distance1 = Math.max(Math.min(distance1, newDistance), distance0);
-                                if (newDistance < distance0) {
-                                    distance0 = newDistance;
-                                    closestHash = hash;
-                                }
-                                zPrimed += this.#PrimeZ;
-                            }
-                            yPrimed += this.#PrimeY;
-                        }
-                        xPrimed += this.#PrimeX;
-                    }
-                    break;
-                case FastNoise.CellularDistanceFunction.Manhattan:
-                    for (let xi = xr - 1; xi <= xr + 1; xi++) {
-                        let yPrimed = yPrimedBase;
-
-                        for (let yi = yr - 1; yi <= yr + 1; yi++) {
-                            let zPrimed = zPrimedBase;
-
-                            for (let zi = zr - 1; zi <= zr + 1; zi++) {
-                                let hash = this.#Hash(seed, xPrimed, yPrimed, zPrimed);
-                                let idx = hash & (255 << 2);
-
-                                let vecX = (xi - x) + this.#RandVecs3D[idx] * cellularJitter;
-                                let vecY = (yi - y) + this.#RandVecs3D[idx | 1] * cellularJitter;
-                                let vecZ = (zi - z) + this.#RandVecs3D[idx | 2] * cellularJitter;
-
-                                let newDistance = Math.abs(vecX) + Math.abs(vecY) + Math.abs(vecZ);
-
-                                distance1 = Math.max(Math.min(distance1, newDistance), distance0);
-                                if (newDistance < distance0) {
-                                    distance0 = newDistance;
-                                    closestHash = hash;
-                                }
-                                zPrimed += this.#PrimeZ;
-                            }
-                            yPrimed += this.#PrimeY;
-                        }
-                        xPrimed += this.#PrimeX;
-                    }
-                    break;
-                case FastNoise.CellularDistanceFunction.Hybrid:
-                    for (let xi = xr - 1; xi <= xr + 1; xi++) {
-                        let yPrimed = yPrimedBase;
-
-                        for (let yi = yr - 1; yi <= yr + 1; yi++) {
-                            let zPrimed = zPrimedBase;
-
-                            for (let zi = zr - 1; zi <= zr + 1; zi++) {
-                                let hash = this.#Hash(seed, xPrimed, yPrimed, zPrimed);
-                                let idx = hash & (255 << 2);
-
-                                let vecX = (xi - x) + this.#RandVecs3D[idx] * cellularJitter;
-                                let vecY = (yi - y) + this.#RandVecs3D[idx | 1] * cellularJitter;
-                                let vecZ = (zi - z) + this.#RandVecs3D[idx | 2] * cellularJitter;
-
-                                let newDistance = (Math.abs(vecX) + Math.abs(vecY) + Math.abs(vecZ)) + (vecX * vecX + vecY * vecY + vecZ * vecZ);
-
-                                distance1 = Math.max(Math.min(distance1, newDistance), distance0);
-                                if (newDistance < distance0) {
-                                    distance0 = newDistance;
-                                    closestHash = hash;
-                                }
-                                zPrimed += this.#PrimeZ;
-                            }
-                            yPrimed += this.#PrimeY;
-                        }
-                        xPrimed += this.#PrimeX;
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            if (this.#CellularDistanceFunction === FastNoise.CellularDistanceFunction.Euclidean && this.#CellularReturnType !== FastNoise.CellularReturnType.CellValue) {
-                distance0 = Math.sqrt(distance0);
-
-                if (this.#CellularReturnType !== FastNoise.CellularReturnType.CellValue) {
-                    distance1 = Math.sqrt(distance1);
-                }
-            }
-
-            switch (this.#CellularReturnType) {
-                case FastNoise.CellularReturnType.CellValue:
-                    return closestHash * (1 / 2147483648.0);
-                case FastNoise.CellularReturnType.Distance:
-                    return distance0 - 1;
-                case FastNoise.CellularReturnType.Distance2:
-                    return distance1 - 1;
-                case FastNoise.CellularReturnType.Distance2Add:
-                    return (distance1 + distance0) * 0.5 - 1;
-                case FastNoise.CellularReturnType.Distance2Sub:
-                    return distance1 - distance0 - 1;
-                case FastNoise.CellularReturnType.Distance2Mul:
-                    return distance1 * distance0 * 0.5 - 1;
-                case FastNoise.CellularReturnType.Distance2Div:
-                    return distance0 / distance1 - 1;
-                default:
-                    return 0;
-            }
-        }
-
-        if (arguments.length === 3) {
-            return R2(arguments[0], arguments[1], arguments[2]);
-        }
-
-        if (arguments.length === 4) {
-            return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
-        }
-
-
-    }
-
-    /**
-     * @private
-     * @returns {number}
-     */
-    #SinglePerlin() {
-        /**
-         *
-         * @param {number} seed
-         * @param {number} x
-         * @param {number} y
-         * @returns {number}
-         */
-        let R2 = (seed, x, y) => {
-            let x0 = Math.floor(x);
-            let y0 = Math.floor(y);
-
-            let xd0 = (x - x0);
-            let yd0 = (y - y0);
-            let xd1 = xd0 - 1;
-            let yd1 = yd0 - 1;
-
-            let xs = FastNoise.#InterpQuintic(xd0);
-            let ys = FastNoise.#InterpQuintic(yd0);
-
-            x0 *= this.#PrimeX;
-            y0 *= this.#PrimeY;
-            let x1 = x0 + this.#PrimeX;
-            let y1 = y0 + this.#PrimeY;
-
-            let xf0 = FastNoise.#Lerp(this.#GradCoord(seed, x0, y0, xd0, yd0), this.#GradCoord(seed, x1, y0, xd1, yd0), xs);
-            let xf1 = FastNoise.#Lerp(this.#GradCoord(seed, x0, y1, xd0, yd1), this.#GradCoord(seed, x1, y1, xd1, yd1), xs);
-
-            return FastNoise.#Lerp(xf0, xf1, ys) * 1.4247691104677813;
-        }
-
-        /**
-         *
-         * @param {number} seed
-         * @param {number} x
-         * @param {number} y
-         * @param {number} z
-         * @returns {number}
-         */
-        let R3 = (seed, x, y, z) => {
-            let x0 = Math.floor(x);
-            let y0 = Math.floor(y);
-            let z0 = Math.floor(z);
-
-            let xd0 = (x - x0);
-            let yd0 = (y - y0);
-            let zd0 = (z - z0);
-            let xd1 = xd0 - 1;
-            let yd1 = yd0 - 1;
-            let zd1 = zd0 - 1;
-
-            let xs = FastNoise.#InterpQuintic(xd0);
-            let ys = FastNoise.#InterpQuintic(yd0);
-            let zs = FastNoise.#InterpQuintic(zd0);
-
-            x0 *= this.#PrimeX;
-            y0 *= this.#PrimeY;
-            z0 *= this.#PrimeZ;
-            let x1 = x0 + this.#PrimeX;
-            let y1 = y0 + this.#PrimeY;
-            let z1 = z0 + this.#PrimeZ;
-
-            let xf00 = FastNoise.#Lerp(this.#GradCoord(seed, x0, y0, z0, xd0, yd0, zd0), this.#GradCoord(seed, x1, y0, z0, xd1, yd0, zd0), xs);
-            let xf10 = FastNoise.#Lerp(this.#GradCoord(seed, x0, y1, z0, xd0, yd1, zd0), this.#GradCoord(seed, x1, y1, z0, xd1, yd1, zd0), xs);
-            let xf01 = FastNoise.#Lerp(this.#GradCoord(seed, x0, y0, z1, xd0, yd0, zd1), this.#GradCoord(seed, x1, y0, z1, xd1, yd0, zd1), xs);
-            let xf11 = FastNoise.#Lerp(this.#GradCoord(seed, x0, y1, z1, xd0, yd1, zd1), this.#GradCoord(seed, x1, y1, z1, xd1, yd1, zd1), xs);
-
-            let yf0 = FastNoise.#Lerp(xf00, xf10, ys);
-            let yf1 = FastNoise.#Lerp(xf01, xf11, ys);
-
-            return FastNoise.#Lerp(yf0, yf1, zs) * 0.964921414852142333984375;
-        }
-
-        if (arguments.length === 3) {
-            return R2(arguments[0], arguments[1], arguments[2]);
-        }
-
-        if (arguments.length === 4) {
-            return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
-        }
-
-    }
-
-    /**
-     * @private
-     * @returns {number}
-     */
-    #SingleValueCubic() {
-        /**
-         * @param {number} seed
-         * @param {number} x
-         * @param {number} y
-         * @returns {number}
-         */
-        let R2 = (seed, x, y) => {
-            let x1 = Math.floor(x);
-            let y1 = Math.floor(y);
-
-            let xs = (x - x1);
-            let ys = (y - y1);
-
-            x1 *= this.#PrimeX;
-            y1 *= this.#PrimeY;
-            let x0 = x1 - this.#PrimeX;
-            let y0 = y1 - this.#PrimeY;
-            let x2 = x1 + this.#PrimeX;
-            let y2 = y1 + this.#PrimeY;
-            let x3 = x1 + (this.#PrimeX << 1);
-            let y3 = y1 + (this.#PrimeY << 1);
-
-            return FastNoise.#CubicLerp(
-                FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y0), this.#ValCoord(seed, x1, y0), this.#ValCoord(seed, x2, y0), this.#ValCoord(seed, x3, y0), xs),
-                FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y1), this.#ValCoord(seed, x1, y1), this.#ValCoord(seed, x2, y1), this.#ValCoord(seed, x3, y1), xs),
-                FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y2), this.#ValCoord(seed, x1, y2), this.#ValCoord(seed, x2, y2), this.#ValCoord(seed, x3, y2), xs),
-                FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y3), this.#ValCoord(seed, x1, y3), this.#ValCoord(seed, x2, y3), this.#ValCoord(seed, x3, y3), xs),
-                ys) * (1 / (1.5 * 1.5));
-        }
-
-        /**
-         *
-         * @param {number} seed
-         * @param {number} x
-         * @param {number} y
-         * @param {number} z
-         * @returns {number}
-         */
-        let R3 = (seed, x, y, z) => {
-            let x1 = Math.floor(x);
-            let y1 = Math.floor(y);
-            let z1 = Math.floor(z);
-
-            let xs = (x - x1);
-            let ys = (y - y1);
-            let zs = (z - z1);
-
-            x1 *= this.#PrimeX;
-            y1 *= this.#PrimeY;
-            z1 *= this.#PrimeZ;
-
-            let x0 = x1 - this.#PrimeX;
-            let y0 = y1 - this.#PrimeY;
-            let z0 = z1 - this.#PrimeZ;
-            let x2 = x1 + this.#PrimeX;
-            let y2 = y1 + this.#PrimeY;
-            let z2 = z1 + this.#PrimeZ;
-            let x3 = x1 + (this.#PrimeX << 1);
-            let y3 = y1 + (this.#PrimeY << 1);
-            let z3 = z1 + (this.#PrimeZ << 1);
-
-
-            return FastNoise.#CubicLerp(
-                FastNoise.#CubicLerp(
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y0, z0), this.#ValCoord(seed, x1, y0, z0), this.#ValCoord(seed, x2, y0, z0), this.#ValCoord(seed, x3, y0, z0), xs),
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y1, z0), this.#ValCoord(seed, x1, y1, z0), this.#ValCoord(seed, x2, y1, z0), this.#ValCoord(seed, x3, y1, z0), xs),
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y2, z0), this.#ValCoord(seed, x1, y2, z0), this.#ValCoord(seed, x2, y2, z0), this.#ValCoord(seed, x3, y2, z0), xs),
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y3, z0), this.#ValCoord(seed, x1, y3, z0), this.#ValCoord(seed, x2, y3, z0), this.#ValCoord(seed, x3, y3, z0), xs),
-                    ys),
-                FastNoise.#CubicLerp(
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y0, z1), this.#ValCoord(seed, x1, y0, z1), this.#ValCoord(seed, x2, y0, z1), this.#ValCoord(seed, x3, y0, z1), xs),
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y1, z1), this.#ValCoord(seed, x1, y1, z1), this.#ValCoord(seed, x2, y1, z1), this.#ValCoord(seed, x3, y1, z1), xs),
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y2, z1), this.#ValCoord(seed, x1, y2, z1), this.#ValCoord(seed, x2, y2, z1), this.#ValCoord(seed, x3, y2, z1), xs),
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y3, z1), this.#ValCoord(seed, x1, y3, z1), this.#ValCoord(seed, x2, y3, z1), this.#ValCoord(seed, x3, y3, z1), xs),
-                    ys),
-                FastNoise.#CubicLerp(
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y0, z2), this.#ValCoord(seed, x1, y0, z2), this.#ValCoord(seed, x2, y0, z2), this.#ValCoord(seed, x3, y0, z2), xs),
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y1, z2), this.#ValCoord(seed, x1, y1, z2), this.#ValCoord(seed, x2, y1, z2), this.#ValCoord(seed, x3, y1, z2), xs),
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y2, z2), this.#ValCoord(seed, x1, y2, z2), this.#ValCoord(seed, x2, y2, z2), this.#ValCoord(seed, x3, y2, z2), xs),
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y3, z2), this.#ValCoord(seed, x1, y3, z2), this.#ValCoord(seed, x2, y3, z2), this.#ValCoord(seed, x3, y3, z2), xs),
-                    ys),
-                FastNoise.#CubicLerp(
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y0, z3), this.#ValCoord(seed, x1, y0, z3), this.#ValCoord(seed, x2, y0, z3), this.#ValCoord(seed, x3, y0, z3), xs),
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y1, z3), this.#ValCoord(seed, x1, y1, z3), this.#ValCoord(seed, x2, y1, z3), this.#ValCoord(seed, x3, y1, z3), xs),
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y2, z3), this.#ValCoord(seed, x1, y2, z3), this.#ValCoord(seed, x2, y2, z3), this.#ValCoord(seed, x3, y2, z3), xs),
-                    FastNoise.#CubicLerp(this.#ValCoord(seed, x0, y3, z3), this.#ValCoord(seed, x1, y3, z3), this.#ValCoord(seed, x2, y3, z3), this.#ValCoord(seed, x3, y3, z3), xs),
-                    ys),
-                zs) * (1 / (1.5 * 1.5 * 1.5));
-        }
-
-        if (arguments.length === 3) {
-            return R2(arguments[0], arguments[1], arguments[2]);
-        }
-
-        if (arguments.length === 4) {
-            return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
-        }
-    }
-
-    /**
-     * @private
-     * @returns {number}
-     */
-    #SingleValue() {
-        /**
-         *
-         * @param {number}seed
-         * @param {number}x
-         * @param {number}y
-         * @returns {number}
-         */
-        let R2 = (seed, x, y) => {
-            let x0 = Math.floor(x);
-            let y0 = Math.floor(y);
-
-            let xs = FastNoise.#InterpHermite((x - x0));
-            let ys = FastNoise.#InterpHermite((y - y0));
-
-            x0 *= this.#PrimeX;
-            y0 *= this.#PrimeY;
-            let x1 = x0 + this.#PrimeX;
-            let y1 = y0 + this.#PrimeY;
-
-            let xf0 = FastNoise.#Lerp(this.#ValCoord(seed, x0, y0), this.#ValCoord(seed, x1, y0), xs);
-            let xf1 = FastNoise.#Lerp(this.#ValCoord(seed, x0, y1), this.#ValCoord(seed, x1, y1), xs);
-
-            return FastNoise.#Lerp(xf0, xf1, ys);
-        }
-
-        /**
-         *
-         * @param {number} seed
-         * @param {number} x
-         * @param {number} y
-         * @param {number} z
-         * @returns {number}
-         */
-        let R3 = (seed, x, y, z) => {
-            let x0 = Math.floor(x);
-            let y0 = Math.floor(y);
-            let z0 = Math.floor(z);
-
-            let xs = FastNoise.#InterpHermite((x - x0));
-            let ys = FastNoise.#InterpHermite((y - y0));
-            let zs = FastNoise.#InterpHermite((z - z0));
-
-            x0 *= this.#PrimeX;
-            y0 *= this.#PrimeY;
-            z0 *= this.#PrimeZ;
-            let x1 = x0 + this.#PrimeX;
-            let y1 = y0 + this.#PrimeY;
-            let z1 = z0 + this.#PrimeZ;
-
-            let xf00 = FastNoise.#Lerp(this.#ValCoord(seed, x0, y0, z0), this.#ValCoord(seed, x1, y0, z0), xs);
-            let xf10 = FastNoise.#Lerp(this.#ValCoord(seed, x0, y1, z0), this.#ValCoord(seed, x1, y1, z0), xs);
-            let xf01 = FastNoise.#Lerp(this.#ValCoord(seed, x0, y0, z1), this.#ValCoord(seed, x1, y0, z1), xs);
-            let xf11 = FastNoise.#Lerp(this.#ValCoord(seed, x0, y1, z1), this.#ValCoord(seed, x1, y1, z1), xs);
-
-            let yf0 = FastNoise.#Lerp(xf00, xf10, ys);
-            let yf1 = FastNoise.#Lerp(xf01, xf11, ys);
-
-            return FastNoise.#Lerp(yf0, yf1, zs);
-        }
-
-        if (arguments.length === 3) {
-            return R2(arguments[0], arguments[1], arguments[2]);
-        }
-
-        if (arguments.length === 4) {
-            return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
-        }
-
-    }
-
-    /**
-     * @private
-     */
-    #DoSingleDomainWarp() {
-        /**
-         *
-         * @param {number} seed
-         * @param {number} amp
-         * @param {number} freq
-         * @param {Vector2} coord
-         * @param {number} x
-         * @param {number} y
-         */
-        let R2 = (seed, amp, freq, coord, x, y) => {
-            switch (this.#DomainWarpType) {
-                case FastNoise.DomainWarpType.OpenSimplex2:
-                    this.#SingleDomainWarpOpenSimplex2Gradient(seed, amp * 38.283687591552734375, freq, coord, false, x, y);
-                    break;
-                case FastNoise.DomainWarpType.OpenSimplex2Reduced:
-                    this.#SingleDomainWarpOpenSimplex2Gradient(seed, amp * 16.0, freq, coord, true, x, y);
-                    break;
-                case FastNoise.DomainWarpType.BasicGrid:
-                    this.#SingleDomainWarpBasicGrid(seed, amp, freq, coord, x, y);
-                    break;
-            }
-        }
-        /**
-         *
-         * @param {number} seed
-         * @param {number} amp
-         * @param {number} freq
-         * @param {Vector3} coord
-         * @param {number} x
-         * @param {number} y
-         * @param {number} z
-         */
-        let R3 = (seed, amp, freq, coord, x, y, z) => {
-            switch (this.#DomainWarpType) {
-                case FastNoise.DomainWarpType.OpenSimplex2:
-                    this.#SingleDomainWarpOpenSimplex2Gradient(seed, amp * 32.69428253173828125, freq, coord, false, x, y, z);
-                    break;
-                case FastNoise.DomainWarpType.OpenSimplex2Reduced:
-                    this.#SingleDomainWarpOpenSimplex2Gradient(seed, amp * 7.71604938271605, freq, coord, true, x, y, z);
-                    break;
-                case FastNoise.DomainWarpType.BasicGrid:
-                    this.#SingleDomainWarpBasicGrid(seed, amp, freq, coord, x, y, z,);
-                    break;
-            }
-        }
-
-        if (arguments.length === 6 && arguments[3] instanceof Vector2) {
-            return R2(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
-        }
-
-        if (arguments.length === 7 && arguments[3] instanceof Vector3) {
-            return R3(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6]);
-        }
-    }
-
-    /**
-     * @private
-     */
-    #DomainWarpSingle() {
-        /**
-         *
-         * @param {Vector2} coord
-         */
-        let R2 = (coord) => {
-            let seed = this.#Seed;
-            let amp = this.#DomainWarpAmp * this.#FractalBounding;
-            let freq = this.#Frequency;
-
-            let xs = coord.x;
-            let ys = coord.y;
-            switch (this.#DomainWarpType) {
-                case FastNoise.DomainWarpType.OpenSimplex2:
-                case FastNoise.DomainWarpType.OpenSimplex2Reduced:
-                    const SQRT3 = 1.7320508075688772935274463415059;
-                    const F2 = 0.5 * (SQRT3 - 1);
-                    let t = (xs + ys) * F2;
-                    xs += t; ys += t;
-                    break;
-                default:
-                    break;
-            }
-
-            this.#DoSingleDomainWarp(seed, amp, freq, coord, xs, ys,);
-        }
-        /**
-         *
-         * @param {Vector3} coord
-         */
-        let R3 = (coord) => {
-            let seed = this.#Seed;
-            let amp = this.#DomainWarpAmp * this.#FractalBounding;
-            let freq = this.#Frequency;
-
-            let xs = coord.x;
-            let ys = coord.y;
-            let zs = coord.z;
-            switch (this.#WarpTransformType3D) {
-                case FastNoise.TransformType3D.ImproveXYPlanes:
-                    {
-                        let xy = xs + ys;
-                        let s2 = xy * -0.211324865405187;
-                        zs *= 0.577350269189626;
-                        xs += s2 - zs;
-                        ys = ys + s2 - zs;
-                        zs += xy * 0.577350269189626;
-                    }
-                    break;
-
-                case FastNoise.TransformType3D.ImproveXZPlanes:
-                    {
-                        let xz = xs + zs;
-                        let s2 = xz * -0.211324865405187;
-                        ys *= 0.577350269189626;
-                        xs += s2 - ys;
-                        zs += s2 - ys;
-                        ys += xz * 0.577350269189626;
-                    }
-                    break;
-                case FastNoise.TransformType3D.DefaultOpenSimplex2:
-                    const R3 = (2.0 / 3.0);
-                    let r = (xs + ys + zs) * R3; // Rotation, not skew
-                    xs = r - xs;
-                    ys = r - ys;
-                    zs = r - zs;
-                    break;
-                default:
-                    break;
-            }
-
-            this.#DoSingleDomainWarp(seed, amp, freq, coord, xs, ys, zs);
-        }
-
-        if (arguments.length === 1 && arguments[0] instanceof Vector2) {
-            return R2(arguments[0]);
-        }
-
-        if (arguments.length === 1 && arguments[0] instanceof Vector3) {
-            return R3(arguments[0]);
-        }
-
-    }
-
-    #DomainWarpFractalProgressive() {
-        /**
-         *
-         * @param {Vector2} coord
-         */
-        let R2 = (coord) => {
-            let seed = this.#Seed;
-            let amp = this.#DomainWarpAmp * this.#FractalBounding;
-            let freq = this.#Frequency;
-
-            for (let i = 0; i < this.#Octaves; i++) {
-                let xs = coord.x;
-                let ys = coord.y;
-                switch (this.#DomainWarpType) {
-                    case FastNoise.DomainWarpType.OpenSimplex2:
-                    case FastNoise.DomainWarpType.OpenSimplex2Reduced:
-                        const SQRT3 = 1.7320508075688772935274463415059;
-                        const F2 = 0.5 * (SQRT3 - 1);
-                        let t = (xs + ys) * F2;
-                        xs += t; ys += t;
-                        break;
-                    default:
-                        break;
-                }
-
-                this.#DoSingleDomainWarp(seed, amp, freq, coord, xs, ys);
-
-                seed++;
-                amp *= this.#Gain;
-                freq *= this.#Lacunarity;
-            }
-        }
-        /**
-         *
-         * @param {Vector3} coord
-         */
-
-        let R3 = (coord) => {
-            let seed = this.#Seed;
-            let amp = this.#DomainWarpAmp * this.#FractalBounding;
-            let freq = this.#Frequency;
-
-            for (let i = 0; i < this.#Octaves; i++) {
-                let xs = coord.x;
-                let ys = coord.y;
-                let zs = coord.z;
-                switch (this.#WarpTransformType3D) {
-                    case FastNoise.TransformType3D.ImproveXYPlanes:
-                        {
-                            let xy = xs + ys;
-                            let s2 = xy * -0.211324865405187;
-                            zs *= 0.577350269189626;
-                            xs += s2 - zs;
-                            ys = ys + s2 - zs;
-                            zs += xy * 0.577350269189626;
-                        }
-                        break;
-                    case FastNoise.TransformType3D.ImproveXZPlanes:
-                        {
-                            let xz = xs + zs;
-                            let s2 = xz * -0.211324865405187;
-                            ys *= 0.577350269189626;
-                            xs += s2 - ys; zs += s2 - ys;
-                            ys += xz * 0.577350269189626;
-                        }
-                        break;
-                    case FastNoise.TransformType3D.DefaultOpenSimplex2:
-                        {
-                            const R3 = (2.0 / 3.0);
-                            let r = (xs + ys + zs) * R3; // Rotation, not skew
-                            xs = r - xs;
-                            ys = r - ys;
-                            zs = r - zs;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-
-                this.#DoSingleDomainWarp(seed, amp, freq, coord, xs, ys, zs);
-
-                seed++;
-                amp *= this.#Gain;
-                freq *= this.#Lacunarity;
-            }
-        }
-
-        if (arguments.length === 1 && arguments[0] instanceof Vector2) {
-            return R2(arguments[0]);
-        }
-
-        if (arguments.length === 1 && arguments[0] instanceof Vector3) {
-            return R3(arguments[0]);
-        }
-    }
-
-    /**
-     * @private
-     */
-    #DomainWarpFractalIndependent() {
-        /**
-         *
-         * @param {Vector2} coord
-         */
-        let R2 = (coord) => {
-            let xs = coord.x;
-            let ys = coord.y;
-            switch (this.#DomainWarpType) {
-                case FastNoise.DomainWarpType.OpenSimplex2:
-                case FastNoise.DomainWarpType.OpenSimplex2Reduced:
-                    const SQRT3 = 1.7320508075688772935274463415059;
-                    const F2 = 0.5 * (SQRT3 - 1);
-                    let t = (xs + ys) * F2;
-                    xs += t; ys += t;
-                    break;
-                default:
-                    break;
-            }
-            let seed = this.#Seed;
-            let amp = this.#DomainWarpAmp * this.#FractalBounding;
-            let freq = this.#Frequency;
-
-            for (let i = 0; i < this.#Octaves; i++) {
-                this.#DoSingleDomainWarp(seed, amp, freq, coord, xs, ys);
-
-                seed++;
-                amp *= this.#Gain;
-                freq *= this.#Lacunarity;
-            }
-        }
-
-        /**
-         *
-         * @param {Vector3} coord
-         */
-        let R3 = (coord) => {
-            let xs = coord.x;
-            let ys = coord.y;
-            let zs = coord.z;
-            switch (this.#WarpTransformType3D) {
-                case FastNoise.TransformType3D.ImproveXYPlanes:
-                    {
-                        let xy = xs + ys;
-                        let s2 = xy * -0.211324865405187;
-                        zs *= 0.577350269189626;
-                        xs += s2 - zs;
-                        ys = ys + s2 - zs;
-                        zs += xy * 0.577350269189626;
-                    }
-                    break;
-                case FastNoise.TransformType3D.ImproveXZPlanes:
-                    {
-                        let xz = xs + zs;
-                        let s2 = xz * -0.211324865405187;
-                        ys *= 0.577350269189626;
-                        xs += s2 - ys; zs += s2 - ys;
-                        ys += xz * 0.577350269189626;
-                    }
-                    break;
-                case FastNoise.TransformType3D.DefaultOpenSimplex2:
-                    {
-                        const R3 = (2.0 / 3.0);
-                        let r = (xs + ys + zs) * R3; // Rotation, not skew
-                        xs = r - xs;
-                        ys = r - ys;
-                        zs = r - zs;
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            let seed = this.#Seed;
-            let amp = this.#DomainWarpAmp * this.#FractalBounding;
-            let freq = this.#Frequency;
-            for (let i = 0; i < this.#Octaves; i++) {
-                this.#DoSingleDomainWarp(seed, amp, freq, coord, xs, ys, zs);
-
-                seed++;
-                amp *= this.#Gain;
-                freq *= this.#Lacunarity;
-            }
-        }
-
-        if (arguments.length === 1 && arguments[0] instanceof Vector2) {
-            return R2(arguments[0]);
-        }
-
-        if (arguments.length === 1 && arguments[0] instanceof Vector3) {
-            return R3(arguments[0]);
-        }
-    }
-
-    /**
-     * @private
-     */
-    #SingleDomainWarpBasicGrid() {
-        /**
-         *
-         * @param {number} seed
-         * @param {number} warpAmp
-         * @param {number} frequency
-         * @param {Vector2} coord
-         * @param {number} x
-         * @param {number} y
-         */
-
-        let R2 = (seed, warpAmp, frequency, coord, x, y) => {
-            let xf = x * frequency;
-            let yf = y * frequency;
-
-            let x0 = Math.floor(xf);
-            let y0 = Math.floor(yf);
-
-            let xs = FastNoise.#InterpHermite(xf - x0);
-            let ys = FastNoise.#InterpHermite(yf - y0);
-
-            x0 *= this.#PrimeX;
-            y0 *= this.#PrimeY;
-            let x1 = x0 + this.#PrimeX;
-            let y1 = y0 + this.#PrimeY;
-
-            let hash0 = this.#Hash(seed, x0, y0) & (255 << 1);
-            let hash1 = this.#Hash(seed, x1, y0) & (255 << 1);
-
-            let lx0x = FastNoise.#Lerp(this.#RandVecs2D[hash0], this.#RandVecs2D[hash1], xs);
-            let ly0x = FastNoise.#Lerp(this.#RandVecs2D[hash0 | 1], this.#RandVecs2D[hash1 | 1], xs);
-
-            hash0 = this.#Hash(seed, x0, y1) & (255 << 1);
-            hash1 = this.#Hash(seed, x1, y1) & (255 << 1);
-
-            let lx1x = FastNoise.#Lerp(this.#RandVecs2D[hash0], this.#RandVecs2D[hash1], xs);
-            let ly1x = FastNoise.#Lerp(this.#RandVecs2D[hash0 | 1], this.#RandVecs2D[hash1 | 1], xs);
-
-            coord.x += FastNoise.#Lerp(lx0x, lx1x, ys) * warpAmp;
-            coord.y += FastNoise.#Lerp(ly0x, ly1x, ys) * warpAmp;
-        }
-
-        /**
-         *
-         * @param {number} seed
-         * @param {number} warpAmp
-         * @param {number} frequency
-         * @param {Vector3} coord
-         * @param {number} x
-         * @param {number} y
-         * @param {number} z
-         */
-        let R3 = (seed, warpAmp, frequency, coord, x, y, z) => {
-            let xf = x * frequency;
-            let yf = y * frequency;
-            let zf = z * frequency;
-
-            let x0 = Math.floor(xf);
-            let y0 = Math.floor(yf);
-            let z0 = Math.floor(zf);
-
-            let xs = FastNoise.#InterpHermite((xf - x0));
-            let ys = FastNoise.#InterpHermite((yf - y0));
-            let zs = FastNoise.#InterpHermite((zf - z0));
-
-            x0 *= this.#PrimeX;
-            y0 *= this.#PrimeY;
-            z0 *= this.#PrimeZ;
-            let x1 = x0 + this.#PrimeX;
-            let y1 = y0 + this.#PrimeY;
-            let z1 = z0 + this.#PrimeZ;
-
-            let hash0 = this.#Hash(seed, x0, y0, z0) & (255 << 2);
-            let hash1 = this.#Hash(seed, x1, y0, z0) & (255 << 2);
-
-            let lx0x = FastNoise.#Lerp(this.#RandVecs3D[hash0], this.#RandVecs3D[hash1], xs);
-            let ly0x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 1], this.#RandVecs3D[hash1 | 1], xs);
-            let lz0x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 2], this.#RandVecs3D[hash1 | 2], xs);
-
-            hash0 = this.#Hash(seed, x0, y1, z0) & (255 << 2);
-            hash1 = this.#Hash(seed, x1, y1, z0) & (255 << 2);
-
-            let lx1x = FastNoise.#Lerp(this.#RandVecs3D[hash0], this.#RandVecs3D[hash1], xs);
-            let ly1x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 1], this.#RandVecs3D[hash1 | 1], xs);
-            let lz1x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 2], this.#RandVecs3D[hash1 | 2], xs);
-
-            let lx0y = FastNoise.#Lerp(lx0x, lx1x, ys);
-            let ly0y = FastNoise.#Lerp(ly0x, ly1x, ys);
-            let lz0y = FastNoise.#Lerp(lz0x, lz1x, ys);
-
-            hash0 = this.#Hash(seed, x0, y0, z1) & (255 << 2);
-            hash1 = this.#Hash(seed, x1, y0, z1) & (255 << 2);
-
-            lx0x = FastNoise.#Lerp(this.#RandVecs3D[hash0], this.#RandVecs3D[hash1], xs);
-            ly0x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 1], this.#RandVecs3D[hash1 | 1], xs);
-            lz0x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 2], this.#RandVecs3D[hash1 | 2], xs);
-
-            hash0 = this.#Hash(seed, x0, y1, z1) & (255 << 2);
-            hash1 = this.#Hash(seed, x1, y1, z1) & (255 << 2);
-
-            lx1x = FastNoise.#Lerp(this.#RandVecs3D[hash0], this.#RandVecs3D[hash1], xs);
-            ly1x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 1], this.#RandVecs3D[hash1 | 1], xs);
-            lz1x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 2], this.#RandVecs3D[hash1 | 2], xs);
-
-            coord.x += FastNoise.#Lerp(lx0y, FastNoise.#Lerp(lx0x, lx1x, ys), zs) * warpAmp;
-            coord.y += FastNoise.#Lerp(ly0y, FastNoise.#Lerp(ly0x, ly1x, ys), zs) * warpAmp;
-            coord.z += FastNoise.#Lerp(lz0y, FastNoise.#Lerp(lz0x, lz1x, ys), zs) * warpAmp;
-        }
-
-        if (arguments.length === 6 && arguments[3] instanceof Vector2) {
-            R2(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
-        }
-
-        if (arguments.length === 7 && arguments[3] instanceof Vector3) {
-            R3(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6]);
-        }
-    }
-
-    /**
-     * @private
-     */
-    #SingleDomainWarpOpenSimplex2Gradient() {
-
-        /**
-         *
-         * @param {number} seed
-         * @param {number} warpAmp
-         * @param {number} frequency
-         * @param {Vector2} coord
-         * @param {boolean} outGradOnly
-         * @param {number} x
-         * @param {number} y
-         */
-        let R2 = (seed, warpAmp, frequency, coord, outGradOnly, x, y) => {
-            const SQRT3 = 1.7320508075688772935274463415059;
-            const G2 = (3 - SQRT3) / 6;
-
-            x *= frequency;
-            y *= frequency;
-
-            let i = Math.floor(x);
-            let j = Math.floor(y);
-            let xi = (x - i);
-            let yi = (y - j);
-
-            let t = (xi + yi) * G2;
-            let x0 = (xi - t);
-            let y0 = (yi - t);
-
-            i *= this.#PrimeX;
-            j *= this.#PrimeY;
-
-            let vx, vy;
-            vx = vy = 0;
-
-            let a = 0.5 - x0
-            if (a > 0) {
-                let aaaa = (a * a) * (a * a);
-                let xo, yo;
-                if (outGradOnly) {
-                    let hash = this.#Hash(seed, i, j) & (255 << 1);
-                    xo = this.#RandVecs2D[hash];
-                    yo = this.#RandVecs2D[hash | 1];
-                }
-                else {
-                    let hash = this.#Hash(seed, i, j);
-                    let index1 = hash & (127 << 1);
-                    let index2 = (hash >> 7) & (255 << 1);
-                    let xg = this.#Gradients2D[index1];
-                    let yg = this.#Gradients2D[index1 | 1];
-                    let value = x0 * xg + y0 * yg;
-                    let xgo = this.#RandVecs2D[index2];
-                    let ygo = this.#RandVecs2D[index2 | 1];
-                    xo = value * xgo;
-                    yo = value * ygo;
-                }
-                vx += aaaa * xo;
-                vy += aaaa * yo;
-            }
-
-            let c = (2 * (1 - 2 * G2) * (1 / G2 - 2)) * t + ((-2 * (1 - 2 * G2) * (1 - 2 * G2)) + a);
-            if (c > 0) {
-                let x2 = x0 + (2 * G2 - 1);
-                let y2 = y0 + (2 * G2 - 1);
-                let cccc = (c * c) * (c * c);
-                let xo, yo;
-                if (outGradOnly) {
-                    let hash = this.#Hash(seed, i + this.#PrimeX, j + this.#PrimeY) & (255 << 1);
-                    xo = this.#RandVecs2D[hash];
-                    yo = this.#RandVecs2D[hash | 1];
-                }
-                else {
-                    let hash = this.#Hash(seed, i + this.#PrimeX, j + this.#PrimeY);
-                    let index1 = hash & (127 << 1);
-                    let index2 = (hash >> 7) & (255 << 1);
-                    let xg = this.#Gradients2D[index1];
-                    let yg = this.#Gradients2D[index1 | 1];
-                    let value = x2 * xg + y2 * yg;
-                    let xgo = this.#RandVecs2D[index2];
-                    let ygo = this.#RandVecs2D[index2 | 1];
-                    xo = value * xgo;
-                    yo = value * ygo;
-                }
-                vx += cccc * xo;
-                vy += cccc * yo;
-            }
-
-            if (y0 > x0) {
-                let x1 = x0 + G2;
-                let y1 = y0 + (G2 - 1);
-                let b = 0.5 - x1 * x1 - y1 * y1;
-                if (b > 0) {
-                    let bbbb = (b * b) * (b * b);
-                    let xo, yo;
-                    if (outGradOnly) {
-                        let hash = this.#Hash(seed, i, j + this.#PrimeY) & (255 << 1);
-                        xo = this.#RandVecs2D[hash];
-                        yo = this.#RandVecs2D[hash | 1];
-                    }
-                    else {
-                        let hash = this.#Hash(seed, i, j + this.#PrimeY);
-                        let index1 = hash & (127 << 1);
-                        let index2 = (hash >> 7) & (255 << 1);
-                        let xg = this.#Gradients2D[index1];
-                        let yg = this.#Gradients2D[index1 | 1];
-                        let value = x1 * xg + y1 * yg;
-                        let xgo = this.#RandVecs2D[index2];
-                        let ygo = this.#RandVecs2D[index2 | 1];
-                        xo = value * xgo;
-                        yo = value * ygo;
-                    }
-                    vx += bbbb * xo;
-                    vy += bbbb * yo;
-                }
-            }
-            else {
-                let x1 = x0 + (G2 - 1);
-                let y1 = y0 + G2;
-                let b = 0.5 - x1 * x1 - y1 * y1;
-                if (b > 0) {
-                    let bbbb = (b * b) * (b * b);
-                    let xo, yo;
-                    if (outGradOnly) {
-                        let hash = this.#Hash(seed, i + this.#PrimeX, j) & (255 << 1);
-                        xo = this.#RandVecs2D[hash];
-                        yo = this.#RandVecs2D[hash | 1];
-                    }
-                    else {
-                        let hash = this.#Hash(seed, i + this.#PrimeX, j);
-                        let index1 = hash & (127 << 1);
-                        let index2 = (hash >> 7) & (255 << 1);
-                        let xg = this.#Gradients2D[index1];
-                        let yg = this.#Gradients2D[index1 | 1];
-                        let value = x1 * xg + y1 * yg;
-                        let xgo = this.#RandVecs2D[index2];
-                        let ygo = this.#RandVecs2D[index2 | 1];
-                        xo = value * xgo;
-                        yo = value * ygo;
-                    }
-                    vx += bbbb * xo;
-                    vy += bbbb * yo;
-                }
-            }
-
-            coord.x += vx * warpAmp;
-            coord.y += vy * warpAmp;
-
-        }
-
-        /**
-         *
-         * @param {number} seed
-         * @param {number} warpAmp
-         * @param {number} frequency
-         * @param {Vector3} coord
-         * @param {boolean} outGradOnly
-         * @param {number} x
-         * @param {number} y
-         * @param {number} z
-         */
-        let R3 = (seed, warpAmp, frequency, coord, outGradOnly, x, y, z) => {
-            x *= frequency;
-            y *= frequency;
-            z *= frequency;
-
-            let i = Math.round(x);
-            let j = Math.round(y);
-            let k = Math.round(z);
-            let x0 = x - i;
-            let y0 = y - j;
-            let z0 = z - k;
-
-            let xNSign = (-x0 - 1.0) | 1;
-            let yNSign = (-y0 - 1.0) | 1;
-            let zNSign = (-z0 - 1.0) | 1;
-
-            let ax0 = xNSign * -x0;
-            let ay0 = yNSign * -y0;
-            let az0 = zNSign * -z0;
-
-            i *= this.#PrimeX;
-            j *= this.#PrimeY;
-            k *= this.#PrimeZ;
-
-            let vx, vy, vz;
-            vx = vy = vz = 0;
-
-            let a = (0.6 - x0 * x0) - (y0 * y0 + z0 * z0);
-            for (let l = 0; ; l++) {
-                if (a > 0) {
-                    let aaaa = (a * a) * (a * a);
-                    let xo, yo, zo;
-                    if (outGradOnly) {
-                        let hash = this.#Hash(seed, i, j, k) & (255 << 2);
-                        xo = this.#RandVecs3D[hash];
-                        yo = this.#RandVecs3D[hash | 1];
-                        zo = this.#RandVecs3D[hash | 2];
-                    }
-                    else {
-                        let hash = this.#Hash(seed, i, j, k);
-                        let index1 = hash & (63 << 2);
-                        let index2 = (hash >> 6) & (255 << 2);
-                        let xg = this.#Gradients3D[index1];
-                        let yg = this.#Gradients3D[index1 | 1];
-                        let zg = this.#Gradients3D[index1 | 2];
-                        let value = x0 * xg + y0 * yg + z0 * zg;
-                        let xgo = this.#RandVecs3D[index2];
-                        let ygo = this.#RandVecs3D[index2 | 1];
-                        let zgo = this.#RandVecs3D[index2 | 2];
-                        xo = value * xgo;
-                        yo = value * ygo;
-                        zo = value * zgo;
-                    }
-                    vx += aaaa * xo;
-                    vy += aaaa * yo;
-                    vz += aaaa * zo;
-                }
-
-                let b = a;
-                let i1 = i;
-                let j1 = j;
-                let k1 = k;
-                let x1 = x0;
-                let y1 = y0;
-                let z1 = z0;
-
-                if (ax0 >= ay0 && ax0 >= az0) {
-                    x1 += xNSign;
-                    b = b + ax0 + ax0;
-                    i1 -= xNSign * this.#PrimeX;
-                }
-                else if (ay0 > ax0 && ay0 >= az0) {
-                    y1 += yNSign;
-                    b = b + ay0 + ay0;
-                    j1 -= yNSign * this.#PrimeY;
-                }
-                else {
-                    z1 += zNSign;
-                    b = b + az0 + az0;
-                    k1 -= zNSign * this.#PrimeZ;
-                }
-
-                if (b > 1) {
-                    b -= 1;
-                    let bbbb = (b * b) * (b * b);
-                    let xo, yo, zo;
-                    if (outGradOnly) {
-                        let hash = this.#Hash(seed, i1, j1, k1) & (255 << 2);
-                        xo = this.#RandVecs3D[hash];
-                        yo = this.#RandVecs3D[hash | 1];
-                        zo = this.#RandVecs3D[hash | 2];
-                    }
-                    else {
-                        let hash = this.#Hash(seed, i1, j1, k1);
-                        let index1 = hash & (63 << 2);
-                        let index2 = (hash >> 6) & (255 << 2);
-                        let xg = this.#Gradients3D[index1];
-                        let yg = this.#Gradients3D[index1 | 1];
-                        let zg = this.#Gradients3D[index1 | 2];
-                        let value = x1 * xg + y1 * yg + z1 * zg;
-                        let xgo = this.#RandVecs3D[index2];
-                        let ygo = this.#RandVecs3D[index2 | 1];
-                        let zgo = this.#RandVecs3D[index2 | 2];
-                        xo = value * xgo;
-                        yo = value * ygo;
-                        zo = value * zgo;
-                    }
-                    vx += bbbb * xo;
-                    vy += bbbb * yo;
-                    vz += bbbb * zo;
-                }
-
-                if (l === 1) break;
-
-                ax0 = 0.5 - ax0;
-                ay0 = 0.5 - ay0;
-                az0 = 0.5 - az0;
-
-                x0 = xNSign * ax0;
-                y0 = yNSign * ay0;
-                z0 = zNSign * az0;
-
-                a += (0.75 - ax0) - (ay0 + az0);
-
-                i += (xNSign >> 1) & this.#PrimeX;
-                j += (yNSign >> 1) & this.#PrimeY;
-                k += (zNSign >> 1) & this.#PrimeZ;
-
-                xNSign = -xNSign;
-                yNSign = -yNSign;
-                zNSign = -zNSign;
-
-                seed += 1293373;
-            }
-
-            coord.x += vx * warpAmp;
-            coord.y += vy * warpAmp;
-            coord.z += vz * warpAmp;
-        }
-
-        if (arguments.length === 7) {
-            R2(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6]);
-        }
-
-        if (arguments.length === 8) {
-            R3(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5], arguments[6], arguments[7]);
-        }
-    }
-
-
+    ];
+
+	#PrimeX = 501125321;
+	#PrimeY = 1136930381;
+	#PrimeZ = 1720413743;
+
+	/**
+	 * @private
+	 * @param {number} a
+	 * @param {number} b
+	 * @param {number} t
+	 * @returns {number}
+	 */
+	static #Lerp(a, b, t) {
+		return a + t * (b - a);
+	}
+
+	/**
+	 * @private
+	 * @param {number} t
+	 * @returns {number}
+	 */
+	static #InterpHermite(t) {
+		return t * t * (3 - 2 * t);
+	}
+
+	/**
+	 * @private
+	 * @param t
+	 * @returns {number}
+	 */
+	static #InterpQuintic(t) {
+		return t * t * t * (t * (t * 6 - 15) + 10);
+	}
+
+	/**
+	 * @private
+	 * @param {number} a
+	 * @param {number} b
+	 * @param {number} c
+	 * @param {number} d
+	 * @param {number} t
+	 * @returns {number}
+	 */
+	static #CubicLerp(a, b, c, d, t) {
+		let p = d - c - (a - b);
+		return t * t * t * p + t * t * (a - b - p) + t * (c - a) + b;
+	}
+
+	/**
+	 * @private
+	 * @param {number} t
+	 * @returns {number}
+	 */
+	static #PingPong(t) {
+		t -= Math.trunc(t * 0.5 * 2);
+		return t < 1 ? t : 2 - t;
+	}
+
+	/**
+	 * @private
+	 */
+	#CalculateFractalBounding() {
+		let gain = Math.abs(this.#Gain);
+		let amp = gain;
+		let ampFractal = 1.0;
+		for (let i = 1; i < this.#Octaves; i++) {
+			ampFractal += amp;
+			amp *= gain;
+		}
+		this.#FractalBounding = 1 / ampFractal;
+	}
+
+	/**
+	 * @private
+	 * @returns {number}
+	 */
+	#Hash() {
+		/**
+		 * @param {number} seed
+		 * @param {number} xPrimed
+		 * @param {number} yPrimed
+		 * @returns {number}
+		 */
+		let R2 = (seed, xPrimed, yPrimed) => {
+			let hash = Math.trunc(seed ^ xPrimed ^ yPrimed);
+			hash *= 0x27d4eb2d;
+			return hash;
+		};
+
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} xPrimed
+		 * @param {number} yPrimed
+		 * @param {number} zPrimed
+		 * @returns {number}
+		 */
+		let R3 = (seed, xPrimed, yPrimed, zPrimed) => {
+			let hash = Math.trunc(seed ^ xPrimed ^ yPrimed ^ zPrimed);
+			hash *= 0x27d4eb2d;
+			return hash;
+		};
+
+		if (arguments.length === 3) {
+			return R2(arguments[0], arguments[1], arguments[2]);
+		}
+
+		if (arguments.length === 4) {
+			return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
+		}
+	}
+
+	/**
+	 * @private
+	 * @returns {number}
+	 */
+	#ValCoord() {
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} xPrimed
+		 * @param {number} yPrimed
+		 * @returns {number}
+		 */
+		let R2 = (seed, xPrimed, yPrimed) => {
+			let hash = this.#Hash(seed, xPrimed, yPrimed);
+
+			hash *= hash;
+			hash ^= hash << 19;
+			return hash * (1 / 2147483648.0);
+		};
+
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} xPrimed
+		 * @param {number} yPrimed
+		 * @param {number} zPrimed
+		 * @returns {number}
+		 */
+		let R3 = (seed, xPrimed, yPrimed, zPrimed) => {
+			let hash = this.#Hash(seed, xPrimed, yPrimed, zPrimed);
+
+			hash *= hash;
+			hash ^= hash << 19;
+			return hash * (1 / 2147483648.0);
+		};
+
+		if (arguments.length === 3) {
+			return R2(arguments[0], arguments[1], arguments[2]);
+		}
+
+		if (arguments.length === 4) {
+			return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
+		}
+	}
+
+	/**
+	 * @private
+	 * @returns {number}
+	 */
+	#GradCoord() {
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} xPrimed
+		 * @param {number} yPrimed
+		 * @param {number} xd
+		 * @param {number} yd
+		 * @returns {number}
+		 */
+		let R2 = (seed, xPrimed, yPrimed, xd, yd) => {
+			let hash = this.#Hash(seed, xPrimed, yPrimed);
+			hash ^= hash >> 15;
+			hash &= 127 << 1;
+
+			let xg = this.#Gradients2D[hash];
+			let yg = this.#Gradients2D[hash | 1];
+
+			return xd * xg + yd * yg;
+		};
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} xPrimed
+		 * @param {number} yPrimed
+		 * @param {number} zPrimed
+		 * @param {number} xd
+		 * @param {number} yd
+		 * @param {number} zd
+		 * @returns {number}
+		 */
+		let R3 = (seed, xPrimed, yPrimed, zPrimed, xd, yd, zd) => {
+			let hash = this.#Hash(seed, xPrimed, yPrimed, zPrimed);
+			hash ^= hash >> 15;
+			hash &= 63 << 2;
+
+			let xg = this.#Gradients3D[hash];
+			let yg = this.#Gradients3D[hash | 1];
+			let zg = this.#Gradients3D[hash | 2];
+
+			return xd * xg + yd * yg + zd * zg;
+		};
+
+		if (arguments.length === 5) {
+			return R2(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4]);
+		}
+
+		if (arguments.length === 7) {
+			return R3(
+				arguments[0],
+				arguments[1],
+				arguments[2],
+				arguments[3],
+				arguments[4],
+				arguments[5],
+				arguments[6]
+			);
+		}
+	}
+
+	/**
+	 * @private
+	 */
+	#GenNoiseSingle() {
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} x
+		 * @param {number} y
+		 * @returns {number}
+		 */
+		let R2 = (seed, x, y) => {
+			switch (this.#NoiseType) {
+				case FastNoise.NoiseType.OpenSimplex2:
+					return this.#SingleOpenSimplex2(seed, x, y);
+				case FastNoise.NoiseType.OpenSimplex2S:
+					return this.#SingleOpenSimplex2S(seed, x, y);
+				case FastNoise.NoiseType.Cellular:
+					return this.#SingleCellular(seed, x, y);
+				case FastNoise.NoiseType.Perlin:
+					return this.#SinglePerlin(seed, x, y);
+				case FastNoise.NoiseType.ValueCubic:
+					return this.#SingleValueCubic();
+				case FastNoise.NoiseType.Value:
+					return this.#SingleValue();
+				default:
+					return 0;
+			}
+		};
+
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} z
+		 * @returns {number}
+		 */
+		let R3 = (seed, x, y, z) => {
+			switch (this.#NoiseType) {
+				case FastNoise.NoiseType.OpenSimplex2:
+					return this.#SingleOpenSimplex2(seed, x, y, z);
+				case FastNoise.NoiseType.OpenSimplex2S:
+					return this.#SingleOpenSimplex2S(seed, x, y, z);
+				case FastNoise.NoiseType.Cellular:
+					return this.#SingleCellular(seed, x, y, z);
+				case FastNoise.NoiseType.Perlin:
+					return this.#SinglePerlin(seed, x, y, z);
+				case FastNoise.NoiseType.ValueCubic:
+					return this.#SingleValueCubic(seed, x, y, z);
+				case FastNoise.NoiseType.Value:
+					return this.#SingleValue(seed, x, y, z);
+				default:
+					return 0;
+			}
+		};
+
+		if (arguments.length === 3) {
+			return R2(arguments[0], arguments[1], arguments[2]);
+		}
+
+		if (arguments.length === 4) {
+			return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
+		}
+	}
+
+	/**
+	 * @private
+	 */
+	#UpdateTransformType3D() {
+		switch (this.#RotationType3D) {
+			case FastNoise.RotationType3D.ImproveXYPlanes:
+				this.#TransformType3D = FastNoise.TransformType3D.ImproveXYPlanes;
+				break;
+			case FastNoise.RotationType3D.ImproveXZPlanes:
+				this.#TransformType3D = FastNoise.TransformType3D.ImproveXZPlanes;
+				break;
+			default:
+				switch (this.#NoiseType) {
+					case FastNoise.NoiseType.OpenSimplex2:
+					case FastNoise.NoiseType.OpenSimplex2S:
+						this.#TransformType3D = FastNoise.TransformType3D.DefaultOpenSimplex2;
+						break;
+					default:
+						this.#TransformType3D = FastNoise.TransformType3D.None;
+						break;
+				}
+				break;
+		}
+	}
+
+	/**
+	 * @private
+	 */
+	#UpdateWarpTransformType3D() {
+		switch (this.#RotationType3D) {
+			case FastNoise.RotationType3D.ImproveXYPlanes:
+				this.#WarpTransformType3D = FastNoise.TransformType3D.ImproveXYPlanes;
+				break;
+			case FastNoise.RotationType3D.ImproveXZPlanes:
+				this.#WarpTransformType3D = FastNoise.TransformType3D.ImproveXZPlanes;
+				break;
+			default:
+				switch (this.#DomainWarpType) {
+					case FastNoise.DomainWarpType.OpenSimplex2:
+					case FastNoise.DomainWarpType.OpenSimplex2Reduced:
+						this.#WarpTransformType3D = FastNoise.TransformType3D.DefaultOpenSimplex2;
+						break;
+					default:
+						this.#WarpTransformType3D = FastNoise.TransformType3D.None;
+						break;
+				}
+				break;
+		}
+	}
+
+	/**
+	 * @private
+	 * @returns {number}
+	 */
+	#GenFractalFBm() {
+		/**
+		 *
+		 * @param {number} x
+		 * @param {number} y
+		 * @returns {number}
+		 */
+		let R2 = (x, y) => {
+			let seed = this.#Seed;
+			let sum = 0;
+			let amp = this.#FractalBounding;
+
+			for (let i = 0; i < this.#Octaves; i++) {
+				let noise = this.#GenNoiseSingle(seed++, x, y);
+				sum += noise * amp;
+				amp *= FastNoise.#Lerp(1.0, Math.min(noise + 1, 2) * 0.5, this.#WeightedStrength);
+
+				x *= this.#Lacunarity;
+				y *= this.#Lacunarity;
+				amp *= this.#Gain;
+			}
+			return sum;
+		};
+		/**
+		 *
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} z
+		 * @returns {number}
+		 */
+		let R3 = (x, y, z) => {
+			let seed = this.#Seed;
+			let sum = 0;
+			let amp = this.#FractalBounding;
+
+			for (let i = 0; i < this.#Octaves; i++) {
+				let noise = this.#GenNoiseSingle(seed++, x, y, z);
+				sum += noise * amp;
+				amp *= FastNoise.#Lerp(1.0, (noise + 1) * 0.5, this.#WeightedStrength);
+
+				x *= this.#Lacunarity;
+				y *= this.#Lacunarity;
+				z *= this.#Lacunarity;
+				amp *= this.#Gain;
+			}
+			return sum;
+		};
+
+		if (arguments.length === 2) {
+			return R2(arguments[0], arguments[1]);
+		}
+
+		if (arguments.length === 3) {
+			return R3(arguments[0], arguments[1], arguments[2]);
+		}
+	}
+
+	/**
+	 * @private
+	 * @returns {number}
+	 */
+	#GenFractalRidged() {
+		/**
+		 *
+		 * @param {number} x
+		 * @param {number} y
+		 * @returns {number}
+		 */
+		let R2 = (x, y) => {
+			let seed = this.#Seed;
+			let sum = 0;
+			let amp = this.#FractalBounding;
+
+			for (let i = 0; i < this.#Octaves; i++) {
+				let noise = Math.abs(this.#GenNoiseSingle(seed++, x, y));
+				sum += (noise * -2 + 1) * amp;
+				amp *= FastNoise.#Lerp(1.0, 1 - noise, this.#WeightedStrength);
+
+				x *= this.#Lacunarity;
+				y *= this.#Lacunarity;
+				amp *= this.#Gain;
+			}
+			return sum;
+		};
+
+		/**
+		 *
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} z
+		 * @returns {number}
+		 */
+		let R3 = (x, y, z) => {
+			let seed = this.#Seed;
+			let sum = 0;
+			let amp = this.#FractalBounding;
+
+			for (let i = 0; i < this.#Octaves; i++) {
+				let noise = Math.abs(this.#GenNoiseSingle(seed++, x, y, z));
+				sum += (noise * -2 + 1) * amp;
+				amp *= FastNoise.#Lerp(1.0, 1 - noise, this.#WeightedStrength);
+
+				x *= this.#Lacunarity;
+				y *= this.#Lacunarity;
+				z *= this.#Lacunarity;
+				amp *= this.#Gain;
+			}
+			return sum;
+		};
+
+		if (arguments.length === 2) {
+			return R2(arguments[0], arguments[1]);
+		}
+
+		if (arguments.length === 3) {
+			return R3(arguments[0], arguments[1], arguments[2]);
+		}
+	}
+
+	/**
+	 * @private
+	 * @returns {number}
+	 */
+	#GenFractalPingPong() {
+		/**
+		 *
+		 * @param {number} x
+		 * @param {number} y
+		 * @returns {number}
+		 */
+		let R2 = (x, y) => {
+			let seed = this.#Seed;
+			let sum = 0;
+			let amp = this.#FractalBounding;
+
+			for (let i = 0; i < this.#Octaves; i++) {
+				let noise = FastNoise.#PingPong(
+					(this.#GenNoiseSingle(seed++, x, y) + 1) * this.#PingPongStrength
+				);
+				sum += (noise - 0.5) * 2 * amp;
+				amp *= FastNoise.#Lerp(1.0, noise, this.#WeightedStrength);
+
+				x *= this.#Lacunarity;
+				y *= this.#Lacunarity;
+				amp *= this.#Gain;
+			}
+			return sum;
+		};
+
+		/**
+		 *
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} z
+		 * @returns {number}
+		 */
+		let R3 = (x, y, z) => {
+			let seed = this.#Seed;
+			let sum = 0;
+			let amp = this.#FractalBounding;
+
+			for (let i = 0; i < this.#Octaves; i++) {
+				let noise = FastNoise.#PingPong(
+					(this.#GenNoiseSingle(seed++, x, y, z) + 1) * this.#PingPongStrength
+				);
+				sum += (noise - 0.5) * 2 * amp;
+				amp *= FastNoise.#Lerp(1.0, noise, this.#WeightedStrength);
+
+				x *= this.#Lacunarity;
+				y *= this.#Lacunarity;
+				z *= this.#Lacunarity;
+				amp *= this.#Gain;
+			}
+			return sum;
+		};
+		if (arguments.length === 2) {
+			return R2(arguments[0], arguments[1]);
+		}
+
+		if (arguments.length === 3) {
+			return R3(arguments[0], arguments[1], arguments[2]);
+		}
+	}
+
+	/**
+	 * @private
+	 * @returns {number}
+	 */
+	#SingleOpenSimplex2() {
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} x
+		 * @param {number} y
+		 * @returns {number}
+		 */
+		let R2 = (seed, x, y) => {
+			const SQRT3 = 1.7320508075688772935274463415059;
+			const G2 = (3 - SQRT3) / 6;
+
+			let i = Math.floor(x);
+			let j = Math.floor(y);
+			let xi = x - i;
+			let yi = y - j;
+
+			let t = (xi + yi) * G2;
+			let x0 = xi - t;
+			let y0 = yi - t;
+
+			i *= this.#PrimeX;
+			j *= this.#PrimeY;
+
+			let n0, n1, n2;
+
+			let a = 0.5 - x0 * x0 - y0 * y0;
+
+			if (a <= 0) {
+				n0 = 0;
+			} else {
+				n0 = a * a * (a * a) * this.#GradCoord(seed, i, j, x0, y0);
+			}
+
+			let c = 2 * (1 - 2 * G2) * (1 / G2 - 2) * t + (-2 * (1 - 2 * G2) * (1 - 2 * G2) + a);
+
+			if (c <= 0) {
+				n2 = 0;
+			} else {
+				let x2 = x0 + (2 * G2 - 1);
+				let y2 = y0 + (2 * G2 - 1);
+				n2 = c * c * (c * c) * this.#GradCoord(seed, i + this.#PrimeX, j + this.#PrimeY, x2, y2);
+			}
+
+			if (y0 > x0) {
+				let x1 = x0 + G2;
+				let y1 = y0 + (G2 - 1);
+				let b = 0.5 - x1 * x1 - y1 * y1;
+				if (b <= 0) {
+					n1 = 0;
+				} else {
+					n1 = b * b * (b * b) * this.#GradCoord(seed, i, j + this.#PrimeY, x1, y1);
+				}
+			} else {
+				let x1 = x0 + (G2 - 1);
+				let y1 = y0 + G2;
+				let b = 0.5 - x1 * x1 - y1 * y1;
+				if (b <= 0) {
+					n1 = 0;
+				} else {
+					n1 = b * b * (b * b) * this.#GradCoord(seed, i + this.#PrimeX, j, x1, y1);
+				}
+			}
+			return (n0 + n1 + n2) * 99.83685446303647;
+		};
+
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} z
+		 * @returns {number}
+		 */
+		let R3 = (seed, x, y, z) => {
+			// 3D OpenSimplex2 case uses two offset rotated cube grids.
+
+			/*
+			 * --- Rotation moved to switch statements before fractal evaluation ---
+			 * final FNLfloat R3 = (FNLfloat)(2.0 / 3.0);
+			 * FNLfloat r = (x + y + z) * R3; // Rotation, not skew
+			 * x = r - x; y = r - y; z = r - z;
+			 */
+
+			let i = Math.round(x);
+			let j = Math.round(y);
+			let k = Math.round(z);
+			let x0 = x - i;
+			let y0 = y - j;
+			let z0 = z - k;
+
+			let yNSign = Math.trunc((-1.0 - y0) | 1);
+			let xNSign = Math.trunc((-1.0 - x0) | 1);
+			let zNSign = Math.trunc((-1.0 - z0) | 1);
+
+			let ax0 = xNSign * -x0;
+			let ay0 = yNSign * -y0;
+			let az0 = zNSign * -z0;
+			i *= this.#PrimeX;
+			j *= this.#PrimeY;
+			k *= this.#PrimeZ;
+
+			let value = 0;
+			let a = 0.6 - x0 * x0 - (y0 * y0 + z0 * z0);
+
+			for (let l = 0; ; l++) {
+				if (a > 0) {
+					value += a * a * (a * a) * this.#GradCoord(seed, i, j, k, x0, y0, z0);
+				}
+
+				if (ax0 >= ay0 && ax0 >= az0) {
+					let b = a + ax0 + ax0;
+					if (b > 1) {
+						b -= 1;
+						value +=
+							b *
+							b *
+							(b * b) *
+							this.#GradCoord(seed, i - xNSign * this.#PrimeX, j, k, x0 + xNSign, y0, z0);
+					}
+				} else if (ay0 > ax0 && ay0 >= az0) {
+					let b = a + ay0 + ay0;
+					if (b > 1) {
+						b -= 1;
+						value +=
+							b *
+							b *
+							(b * b) *
+							this.#GradCoord(seed, i, j - yNSign * this.#PrimeY, k, x0, y0 + yNSign, z0);
+					}
+				} else {
+					let b = a + az0 + az0;
+					if (b > 1) {
+						b -= 1;
+						value +=
+							b *
+							b *
+							(b * b) *
+							this.#GradCoord(seed, i, j, k - zNSign * this.#PrimeZ, x0, y0, z0 + zNSign);
+					}
+				}
+
+				if (l === 1) {
+					break;
+				}
+
+				ax0 = 0.5 - ax0;
+				ay0 = 0.5 - ay0;
+				az0 = 0.5 - az0;
+
+				x0 = xNSign * ax0;
+				y0 = yNSign * ay0;
+				z0 = zNSign * az0;
+
+				a += 0.75 - ax0 - (ay0 + az0);
+
+				i += (xNSign >> 1) & this.#PrimeX;
+				j += (yNSign >> 1) & this.#PrimeY;
+				k += (zNSign >> 1) & this.#PrimeZ;
+
+				xNSign = -xNSign;
+				yNSign = -yNSign;
+				zNSign = -zNSign;
+
+				seed = ~seed;
+			}
+
+			return value * 32.69428253173828125;
+		};
+
+		if (arguments.length === 3) {
+			return R2(arguments[0], arguments[1], arguments[2]);
+		}
+
+		if (arguments.length === 4) {
+			return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
+		}
+	}
+
+	/**
+	 * @private
+	 * @returns {number}
+	 */
+	#SingleOpenSimplex2S() {
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} x
+		 * @param {number} y
+		 * @returns {number}
+		 */
+		let R2 = (seed, x, y) => {
+			// 2D OpenSimplex2S case is a modified 2D simplex noise.
+
+			const SQRT3 = 1.7320508075688772935274463415059;
+			const G2 = (3 - SQRT3) / 6;
+
+			/*
+			 * --- Skew moved to TransformNoiseCoordinate method ---
+			 * final FNLfloat F2 = 0.5f * (SQRT3 - 1);
+			 * FNLfloat s = (x + y) * F2;
+			 * x += s; y += s;
+			 */
+
+			let i = Math.floor(x);
+			let j = Math.floor(y);
+			let xi = x - i;
+			let yi = y - j;
+
+			i *= this.#PrimeX;
+			j *= this.#PrimeY;
+			let i1 = i + this.#PrimeX;
+			let j1 = j + this.#PrimeY;
+
+			let t = (xi + yi) * G2;
+			let x0 = xi - t;
+			let y0 = yi - t;
+
+			let a0 = 2.0 / 3.0 - x0 * x0 - y0 * y0;
+			let value = a0 * a0 * (a0 * a0) * this.#GradCoord(seed, i, j, x0, y0);
+			let a1 = 2 * (1 - 2 * G2) * (1 / G2 - 2) * t + (-2 * (1 - 2 * G2) * (1 - 2 * G2) + a0);
+			let x1 = x0 - (1 - 2 * G2);
+			let y1 = y0 - (1 - 2 * G2);
+			value += a1 * a1 * (a1 * a1) * this.#GradCoord(seed, i1, j1, x1, y1);
+
+			// Nested conditionals were faster than compact bit logic/arithmetic.
+			let xmyi = xi - yi;
+			if (t > G2) {
+				if (xi + xmyi > 1) {
+					let x2 = x0 + (3 * G2 - 2);
+					let y2 = y0 + (3 * G2 - 1);
+					let a2 = 2.0 / 3.0 - x2 * x2 - y2 * y2;
+					if (a2 > 0) {
+						value +=
+							a2 *
+							a2 *
+							(a2 * a2) *
+							this.#GradCoord(seed, i + (this.#PrimeX << 1), j + this.#PrimeY, x2, y2);
+					}
+				} else {
+					let x2 = x0 + G2;
+					let y2 = y0 + (G2 - 1);
+					let a2 = 2.0 / 3.0 - x2 * x2 - y2 * y2;
+					if (a2 > 0) {
+						value += a2 * a2 * (a2 * a2) * this.#GradCoord(seed, i, j + this.#PrimeY, x2, y2);
+					}
+				}
+
+				if (yi - xmyi > 1) {
+					let x3 = x0 + (3 * G2 - 1);
+					let y3 = y0 + (3 * G2 - 2);
+					let a3 = 2.0 / 3.0 - x3 * x3 - y3 * y3;
+					if (a3 > 0) {
+						value +=
+							a3 *
+							a3 *
+							(a3 * a3) *
+							this.#GradCoord(seed, i + this.#PrimeX, j + (this.#PrimeY << 1), x3, y3);
+					}
+				} else {
+					let x3 = x0 + (G2 - 1);
+					let y3 = y0 + G2;
+					let a3 = 2.0 / 3.0 - x3 * x3 - y3 * y3;
+					if (a3 > 0) {
+						value += a3 * a3 * (a3 * a3) * this.#GradCoord(seed, i + this.#PrimeX, j, x3, y3);
+					}
+				}
+			} else {
+				if (xi + xmyi < 0) {
+					let x2 = x0 + (1 - G2);
+					let y2 = y0 - G2;
+					let a2 = 2.0 / 3.0 - x2 * x2 - y2 * y2;
+					if (a2 > 0) {
+						value += a2 * a2 * (a2 * a2) * this.#GradCoord(seed, i - this.#PrimeX, j, x2, y2);
+					}
+				} else {
+					let x2 = x0 + (G2 - 1);
+					let y2 = y0 + G2;
+					let a2 = 2.0 / 3.0 - x2 * x2 - y2 * y2;
+					if (a2 > 0) {
+						value += a2 * a2 * (a2 * a2) * this.#GradCoord(seed, i + this.#PrimeX, j, x2, y2);
+					}
+				}
+
+				if (yi < xmyi) {
+					let x2 = x0 - G2;
+					let y2 = y0 - (G2 - 1);
+					let a2 = 2.0 / 3.0 - x2 * x2 - y2 * y2;
+					if (a2 > 0) {
+						value += a2 * a2 * (a2 * a2) * this.#GradCoord(seed, i, j - this.#PrimeY, x2, y2);
+					}
+				} else {
+					let x2 = x0 + G2;
+					let y2 = y0 + (G2 - 1);
+					let a2 = 2.0 / 3.0 - x2 * x2 - y2 * y2;
+					if (a2 > 0) {
+						value += a2 * a2 * (a2 * a2) * this.#GradCoord(seed, i, j + this.#PrimeY, x2, y2);
+					}
+				}
+			}
+
+			return value * 18.24196194486065;
+		};
+
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} z
+		 * @returns {number}
+		 */
+		let R3 = (seed, x, y, z) => {
+			// 3D OpenSimplex2S case uses two offset rotated cube grids.
+
+			/*
+			 * --- Rotation moved to TransformNoiseCoordinate method ---
+			 * final FNLfloat R3 = (FNLfloat)(2.0 / 3.0);
+			 * FNLfloat r = (x + y + z) * R3; // Rotation, not skew
+			 * x = r - x; y = r - y; z = r - z;
+			 */
+
+			let i = Math.floor(x);
+			let j = Math.floor(y);
+			let k = Math.floor(z);
+			let xi = x - i;
+			let yi = y - j;
+			let zi = z - k;
+
+			i *= this.#PrimeX;
+			j *= this.#PrimeY;
+			k *= this.#PrimeZ;
+			let seed2 = seed + 1293373;
+
+			let xNMask = Math.trunc(-0.5 - xi);
+			let yNMask = Math.trunc(-0.5 - yi);
+			let zNMask = Math.trunc(-0.5 - zi);
+
+			let x0 = xi + xNMask;
+			let y0 = yi + yNMask;
+			let z0 = zi + zNMask;
+			let a0 = 0.75 - x0 * x0 - y0 * y0 - z0 * z0;
+			let value =
+				a0 *
+				a0 *
+				(a0 * a0) *
+				this.#GradCoord(
+					seed,
+					i + (xNMask & this.#PrimeX),
+					j + (yNMask & this.#PrimeY),
+					k + (zNMask & this.#PrimeZ),
+					x0,
+					y0,
+					z0
+				);
+
+			let x1 = xi - 0.5;
+			let y1 = yi - 0.5;
+			let z1 = zi - 0.5;
+			let a1 = 0.75 - x1 * x1 - y1 * y1 - z1 * z1;
+			value +=
+				a1 *
+				a1 *
+				(a1 * a1) *
+				this.#GradCoord(seed2, i + this.#PrimeX, j + this.#PrimeY, k + this.#PrimeZ, x1, y1, z1);
+
+			let xAFlipMask0 = ((xNMask | 1) << 1) * x1;
+			let yAFlipMask0 = ((yNMask | 1) << 1) * y1;
+			let zAFlipMask0 = ((zNMask | 1) << 1) * z1;
+			let xAFlipMask1 = (-2 - (xNMask << 2)) * x1 - 1.0;
+			let yAFlipMask1 = (-2 - (yNMask << 2)) * y1 - 1.0;
+			let zAFlipMask1 = (-2 - (zNMask << 2)) * z1 - 1.0;
+
+			let skip5 = false;
+			let a2 = xAFlipMask0 + a0;
+			if (a2 > 0) {
+				let x2 = x0 - (xNMask | 1);
+				let y2 = y0;
+				let z2 = z0;
+				value +=
+					a2 *
+					a2 *
+					(a2 * a2) *
+					this.#GradCoord(
+						seed,
+						i + (~xNMask & this.#PrimeX),
+						j + (yNMask & this.#PrimeY),
+						k + (zNMask & this.#PrimeZ),
+						x2,
+						y2,
+						z2
+					);
+			} else {
+				let a3 = yAFlipMask0 + zAFlipMask0 + a0;
+
+				if (a3 > 0) {
+					let x3 = x0;
+					let y3 = y0 - (yNMask | 1);
+					let z3 = z0 - (zNMask | 1);
+					value +=
+						a3 *
+						a3 *
+						(a3 * a3) *
+						this.#GradCoord(
+							seed,
+							i + (xNMask & this.#PrimeX),
+							j + (~yNMask & this.#PrimeY),
+							k + (~zNMask & this.#PrimeZ),
+							x3,
+							y3,
+							z3
+						);
+				}
+
+				let a4 = xAFlipMask1 + a1;
+				if (a4 > 0) {
+					let x4 = (xNMask | 1) + x1;
+					let y4 = y1;
+					let z4 = z1;
+					value +=
+						a4 *
+						a4 *
+						(a4 * a4) *
+						this.#GradCoord(
+							seed2,
+							i + (xNMask & (this.#PrimeX * 2)),
+							j + this.#PrimeY,
+							k + this.#PrimeZ,
+							x4,
+							y4,
+							z4
+						);
+					skip5 = true;
+				}
+			}
+
+			let skip9 = false;
+			let a6 = yAFlipMask0 + a0;
+			if (a6 > 0) {
+				let x6 = x0;
+				let y6 = y0 - (yNMask | 1);
+				let z6 = z0;
+				value +=
+					a6 *
+					a6 *
+					(a6 * a6) *
+					this.#GradCoord(
+						seed,
+						i + (xNMask & this.#PrimeX),
+						j + (~yNMask & this.#PrimeY),
+						k + (zNMask & this.#PrimeZ),
+						x6,
+						y6,
+						z6
+					);
+			} else {
+				let a7 = xAFlipMask0 + zAFlipMask0 + a0;
+				if (a7 > 0) {
+					let x7 = x0 - (xNMask | 1);
+					let y7 = y0;
+					let z7 = z0 - (zNMask | 1);
+					value +=
+						a7 *
+						a7 *
+						(a7 * a7) *
+						this.#GradCoord(
+							seed,
+							i + (~xNMask & this.#PrimeX),
+							j + (yNMask & this.#PrimeY),
+							k + (~zNMask & this.#PrimeZ),
+							x7,
+							y7,
+							z7
+						);
+				}
+
+				let a8 = yAFlipMask1 + a1;
+				if (a8 > 0) {
+					let x8 = x1;
+					let y8 = (yNMask | 1) + y1;
+					let z8 = z1;
+					value +=
+						a8 *
+						a8 *
+						(a8 * a8) *
+						this.#GradCoord(
+							seed2,
+							i + this.#PrimeX,
+							j + (yNMask & (this.#PrimeY << 1)),
+							k + this.#PrimeZ,
+							x8,
+							y8,
+							z8
+						);
+					skip9 = true;
+				}
+			}
+
+			let skipD = false;
+			let aA = zAFlipMask0 + a0;
+			if (aA > 0) {
+				let xA = x0;
+				let yA = y0;
+				let zA = z0 - (zNMask | 1);
+				value +=
+					aA *
+					aA *
+					(aA * aA) *
+					this.#GradCoord(
+						seed,
+						i + (xNMask & this.#PrimeX),
+						j + (yNMask & this.#PrimeY),
+						k + (~zNMask & this.#PrimeZ),
+						xA,
+						yA,
+						zA
+					);
+			} else {
+				let aB = xAFlipMask0 + yAFlipMask0 + a0;
+				if (aB > 0) {
+					let xB = x0 - (xNMask | 1);
+					let yB = y0 - (yNMask | 1);
+					let zB = z0;
+					value +=
+						aB *
+						aB *
+						(aB * aB) *
+						this.#GradCoord(
+							seed,
+							i + (~xNMask & this.#PrimeX),
+							j + (~yNMask & this.#PrimeY),
+							k + (zNMask & this.#PrimeZ),
+							xB,
+							yB,
+							zB
+						);
+				}
+
+				let aC = zAFlipMask1 + a1;
+				if (aC > 0) {
+					let xC = x1;
+					let yC = y1;
+					let zC = (zNMask | 1) + z1;
+					value +=
+						aC *
+						aC *
+						(aC * aC) *
+						this.#GradCoord(
+							seed2,
+							i + this.#PrimeX,
+							j + this.#PrimeY,
+							k + (zNMask & (this.#PrimeZ << 1)),
+							xC,
+							yC,
+							zC
+						);
+					skipD = true;
+				}
+			}
+
+			if (!skip5) {
+				let a5 = yAFlipMask1 + zAFlipMask1 + a1;
+				if (a5 > 0) {
+					let x5 = x1;
+					let y5 = (yNMask | 1) + y1;
+					let z5 = (zNMask | 1) + z1;
+					value +=
+						a5 *
+						a5 *
+						(a5 * a5) *
+						this.#GradCoord(
+							seed2,
+							i + this.#PrimeX,
+							j + (yNMask & (this.#PrimeY << 1)),
+							k + (zNMask & (this.#PrimeZ << 1)),
+							x5,
+							y5,
+							z5
+						);
+				}
+			}
+
+			if (!skip9) {
+				let a9 = xAFlipMask1 + zAFlipMask1 + a1;
+				if (a9 > 0) {
+					let x9 = (xNMask | 1) + x1;
+					let y9 = y1;
+					let z9 = (zNMask | 1) + z1;
+					value +=
+						a9 *
+						a9 *
+						(a9 * a9) *
+						this.#GradCoord(
+							seed2,
+							i + (xNMask & (this.#PrimeX * 2)),
+							j + this.#PrimeY,
+							k + (zNMask & (this.#PrimeZ << 1)),
+							x9,
+							y9,
+							z9
+						);
+				}
+			}
+
+			if (!skipD) {
+				let aD = xAFlipMask1 + yAFlipMask1 + a1;
+				if (aD > 0) {
+					let xD = (xNMask | 1) + x1;
+					let yD = (yNMask | 1) + y1;
+					let zD = z1;
+					value +=
+						aD *
+						aD *
+						(aD * aD) *
+						this.#GradCoord(
+							seed2,
+							i + (xNMask & (this.#PrimeX << 1)),
+							j + (yNMask & (this.#PrimeY << 1)),
+							k + this.#PrimeZ,
+							xD,
+							yD,
+							zD
+						);
+				}
+			}
+
+			return value * 9.046026385208288;
+		};
+
+		if (arguments.length === 3) {
+			return R2(arguments[0], arguments[1], arguments[2]);
+		}
+
+		if (arguments.length === 4) {
+			return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
+		}
+	}
+
+	/**
+	 * @private
+	 * @returns {number}
+	 */
+	#SingleCellular() {
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} x
+		 * @param {number} y
+		 * @returns {number}
+		 */
+		let R2 = (seed, x, y) => {
+			let xr = Math.round(x);
+			let yr = Math.round(y);
+
+			let distance0 = Number.MAX_VALUE;
+			let distance1 = Number.MAX_VALUE;
+
+			let closestHash = 0;
+
+			let cellularJitter = 0.43701595 * this.#CellularJitterModifier;
+
+			let xPrimed = (xr - 1) * this.#PrimeX;
+			let yPrimedBase = (yr - 1) * this.#PrimeY;
+
+			switch (this.#CellularDistanceFunction) {
+				default:
+				case FastNoise.CellularDistanceFunction.Euclidean:
+				case FastNoise.CellularDistanceFunction.EuclideanSq:
+					for (let xi = xr - 1; xi <= xr + 1; xi++) {
+						let yPrimed = yPrimedBase;
+
+						for (let yi = yr - 1; yi <= yr + 1; yi++) {
+							let hash = this.#Hash(seed, xPrimed, yPrimed);
+							let idx = hash & (255 << 1);
+
+							let vecX = xi - x + this.#RandVecs2D[idx] * cellularJitter;
+							let vecY = yi - y + this.#RandVecs2D[idx | 1] * cellularJitter;
+
+							let newDistance = vecX * vecX + vecY * vecY;
+
+							distance1 = Math.max(Math.min(distance1, newDistance), distance0);
+							if (newDistance < distance0) {
+								distance0 = newDistance;
+								closestHash = hash;
+							}
+							yPrimed += this.#PrimeY;
+						}
+						xPrimed += this.#PrimeX;
+					}
+					break;
+				case FastNoise.CellularDistanceFunction.Manhattan:
+					for (let xi = xr - 1; xi <= xr + 1; xi++) {
+						let yPrimed = yPrimedBase;
+
+						for (let yi = yr - 1; yi <= yr + 1; yi++) {
+							let hash = this.#Hash(seed, xPrimed, yPrimed);
+							let idx = hash & (255 << 1);
+
+							let vecX = xi - x + this.#RandVecs2D[idx] * cellularJitter;
+							let vecY = yi - y + this.#RandVecs2D[idx | 1] * cellularJitter;
+
+							let newDistance = Math.abs(vecX) + Math.abs(vecY);
+
+							distance1 = Math.max(Math.min(distance1, newDistance), distance0);
+							if (newDistance < distance0) {
+								distance0 = newDistance;
+								closestHash = hash;
+							}
+							yPrimed += this.#PrimeY;
+						}
+						xPrimed += this.#PrimeX;
+					}
+					break;
+				case FastNoise.CellularDistanceFunction.Hybrid:
+					for (let xi = xr - 1; xi <= xr + 1; xi++) {
+						let yPrimed = yPrimedBase;
+
+						for (let yi = yr - 1; yi <= yr + 1; yi++) {
+							let hash = this.#Hash(seed, xPrimed, yPrimed);
+							let idx = hash & (255 << 1);
+
+							let vecX = xi - x + this.#RandVecs2D[idx] * cellularJitter;
+							let vecY = yi - y + this.#RandVecs2D[idx | 1] * cellularJitter;
+
+							let newDistance = Math.abs(vecX) + Math.abs(vecY) + (vecX * vecX + vecY * vecY);
+
+							distance1 = Math.max(Math.min(distance1, newDistance), distance0);
+							if (newDistance < distance0) {
+								distance0 = newDistance;
+								closestHash = hash;
+							}
+							yPrimed += this.#PrimeY;
+						}
+						xPrimed += this.#PrimeX;
+					}
+					break;
+			}
+
+			if (
+				this.#CellularDistanceFunction === FastNoise.CellularDistanceFunction.Euclidean &&
+				this.#CellularReturnType !== FastNoise.CellularReturnType.CellValue
+			) {
+				distance0 = Math.sqrt(distance0);
+
+				if (this.#CellularReturnType !== FastNoise.CellularReturnType.CellValue) {
+					distance1 = Math.sqrt(distance1);
+				}
+			}
+
+			switch (this.#CellularReturnType) {
+				case FastNoise.CellularReturnType.CellValue:
+					return closestHash * (1 / 2147483648.0);
+				case FastNoise.CellularReturnType.Distance:
+					return distance0 - 1;
+				case FastNoise.CellularReturnType.Distance2:
+					return distance1 - 1;
+				case FastNoise.CellularReturnType.Distance2Add:
+					return (distance1 + distance0) * 0.5 - 1;
+				case FastNoise.CellularReturnType.Distance2Sub:
+					return distance1 - distance0 - 1;
+				case FastNoise.CellularReturnType.Distance2Mul:
+					return distance1 * distance0 * 0.5 - 1;
+				case FastNoise.CellularReturnType.Distance2Div:
+					return distance0 / distance1 - 1;
+				default:
+					return 0;
+			}
+		};
+
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} z
+		 * @returns {number}
+		 */
+		let R3 = (seed, x, y, z) => {
+			let xr = Math.round(x);
+			let yr = Math.round(y);
+			let zr = Math.round(z);
+
+			let distance0 = Number.MAX_VALUE;
+			let distance1 = Number.MAX_VALUE;
+			let closestHash = 0;
+
+			let cellularJitter = 0.39614353 * this.#CellularJitterModifier;
+
+			let xPrimed = (xr - 1) * this.#PrimeX;
+			let yPrimedBase = (yr - 1) * this.#PrimeY;
+			let zPrimedBase = (zr - 1) * this.#PrimeZ;
+
+			switch (this.#CellularDistanceFunction) {
+				case FastNoise.CellularDistanceFunction.Euclidean:
+				case FastNoise.CellularDistanceFunction.EuclideanSq:
+					for (let xi = xr - 1; xi <= xr + 1; xi++) {
+						let yPrimed = yPrimedBase;
+
+						for (let yi = yr - 1; yi <= yr + 1; yi++) {
+							let zPrimed = zPrimedBase;
+
+							for (let zi = zr - 1; zi <= zr + 1; zi++) {
+								let hash = this.#Hash(seed, xPrimed, yPrimed, zPrimed);
+								let idx = hash & (255 << 2);
+
+								let vecX = xi - x + this.#RandVecs3D[idx] * cellularJitter;
+								let vecY = yi - y + this.#RandVecs3D[idx | 1] * cellularJitter;
+								let vecZ = zi - z + this.#RandVecs3D[idx | 2] * cellularJitter;
+
+								let newDistance = vecX * vecX + vecY * vecY + vecZ * vecZ;
+
+								distance1 = Math.max(Math.min(distance1, newDistance), distance0);
+								if (newDistance < distance0) {
+									distance0 = newDistance;
+									closestHash = hash;
+								}
+								zPrimed += this.#PrimeZ;
+							}
+							yPrimed += this.#PrimeY;
+						}
+						xPrimed += this.#PrimeX;
+					}
+					break;
+				case FastNoise.CellularDistanceFunction.Manhattan:
+					for (let xi = xr - 1; xi <= xr + 1; xi++) {
+						let yPrimed = yPrimedBase;
+
+						for (let yi = yr - 1; yi <= yr + 1; yi++) {
+							let zPrimed = zPrimedBase;
+
+							for (let zi = zr - 1; zi <= zr + 1; zi++) {
+								let hash = this.#Hash(seed, xPrimed, yPrimed, zPrimed);
+								let idx = hash & (255 << 2);
+
+								let vecX = xi - x + this.#RandVecs3D[idx] * cellularJitter;
+								let vecY = yi - y + this.#RandVecs3D[idx | 1] * cellularJitter;
+								let vecZ = zi - z + this.#RandVecs3D[idx | 2] * cellularJitter;
+
+								let newDistance = Math.abs(vecX) + Math.abs(vecY) + Math.abs(vecZ);
+
+								distance1 = Math.max(Math.min(distance1, newDistance), distance0);
+								if (newDistance < distance0) {
+									distance0 = newDistance;
+									closestHash = hash;
+								}
+								zPrimed += this.#PrimeZ;
+							}
+							yPrimed += this.#PrimeY;
+						}
+						xPrimed += this.#PrimeX;
+					}
+					break;
+				case FastNoise.CellularDistanceFunction.Hybrid:
+					for (let xi = xr - 1; xi <= xr + 1; xi++) {
+						let yPrimed = yPrimedBase;
+
+						for (let yi = yr - 1; yi <= yr + 1; yi++) {
+							let zPrimed = zPrimedBase;
+
+							for (let zi = zr - 1; zi <= zr + 1; zi++) {
+								let hash = this.#Hash(seed, xPrimed, yPrimed, zPrimed);
+								let idx = hash & (255 << 2);
+
+								let vecX = xi - x + this.#RandVecs3D[idx] * cellularJitter;
+								let vecY = yi - y + this.#RandVecs3D[idx | 1] * cellularJitter;
+								let vecZ = zi - z + this.#RandVecs3D[idx | 2] * cellularJitter;
+
+								let newDistance =
+									Math.abs(vecX) +
+									Math.abs(vecY) +
+									Math.abs(vecZ) +
+									(vecX * vecX + vecY * vecY + vecZ * vecZ);
+
+								distance1 = Math.max(Math.min(distance1, newDistance), distance0);
+								if (newDistance < distance0) {
+									distance0 = newDistance;
+									closestHash = hash;
+								}
+								zPrimed += this.#PrimeZ;
+							}
+							yPrimed += this.#PrimeY;
+						}
+						xPrimed += this.#PrimeX;
+					}
+					break;
+				default:
+					break;
+			}
+
+			if (
+				this.#CellularDistanceFunction === FastNoise.CellularDistanceFunction.Euclidean &&
+				this.#CellularReturnType !== FastNoise.CellularReturnType.CellValue
+			) {
+				distance0 = Math.sqrt(distance0);
+
+				if (this.#CellularReturnType !== FastNoise.CellularReturnType.CellValue) {
+					distance1 = Math.sqrt(distance1);
+				}
+			}
+
+			switch (this.#CellularReturnType) {
+				case FastNoise.CellularReturnType.CellValue:
+					return closestHash * (1 / 2147483648.0);
+				case FastNoise.CellularReturnType.Distance:
+					return distance0 - 1;
+				case FastNoise.CellularReturnType.Distance2:
+					return distance1 - 1;
+				case FastNoise.CellularReturnType.Distance2Add:
+					return (distance1 + distance0) * 0.5 - 1;
+				case FastNoise.CellularReturnType.Distance2Sub:
+					return distance1 - distance0 - 1;
+				case FastNoise.CellularReturnType.Distance2Mul:
+					return distance1 * distance0 * 0.5 - 1;
+				case FastNoise.CellularReturnType.Distance2Div:
+					return distance0 / distance1 - 1;
+				default:
+					return 0;
+			}
+		};
+
+		if (arguments.length === 3) {
+			return R2(arguments[0], arguments[1], arguments[2]);
+		}
+
+		if (arguments.length === 4) {
+			return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
+		}
+	}
+
+	/**
+	 * @private
+	 * @returns {number}
+	 */
+	#SinglePerlin() {
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} x
+		 * @param {number} y
+		 * @returns {number}
+		 */
+		let R2 = (seed, x, y) => {
+			let x0 = Math.floor(x);
+			let y0 = Math.floor(y);
+
+			let xd0 = x - x0;
+			let yd0 = y - y0;
+			let xd1 = xd0 - 1;
+			let yd1 = yd0 - 1;
+
+			let xs = FastNoise.#InterpQuintic(xd0);
+			let ys = FastNoise.#InterpQuintic(yd0);
+
+			x0 *= this.#PrimeX;
+			y0 *= this.#PrimeY;
+			let x1 = x0 + this.#PrimeX;
+			let y1 = y0 + this.#PrimeY;
+
+			let xf0 = FastNoise.#Lerp(
+				this.#GradCoord(seed, x0, y0, xd0, yd0),
+				this.#GradCoord(seed, x1, y0, xd1, yd0),
+				xs
+			);
+			let xf1 = FastNoise.#Lerp(
+				this.#GradCoord(seed, x0, y1, xd0, yd1),
+				this.#GradCoord(seed, x1, y1, xd1, yd1),
+				xs
+			);
+
+			return FastNoise.#Lerp(xf0, xf1, ys) * 1.4247691104677813;
+		};
+
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} z
+		 * @returns {number}
+		 */
+		let R3 = (seed, x, y, z) => {
+			let x0 = Math.floor(x);
+			let y0 = Math.floor(y);
+			let z0 = Math.floor(z);
+
+			let xd0 = x - x0;
+			let yd0 = y - y0;
+			let zd0 = z - z0;
+			let xd1 = xd0 - 1;
+			let yd1 = yd0 - 1;
+			let zd1 = zd0 - 1;
+
+			let xs = FastNoise.#InterpQuintic(xd0);
+			let ys = FastNoise.#InterpQuintic(yd0);
+			let zs = FastNoise.#InterpQuintic(zd0);
+
+			x0 *= this.#PrimeX;
+			y0 *= this.#PrimeY;
+			z0 *= this.#PrimeZ;
+			let x1 = x0 + this.#PrimeX;
+			let y1 = y0 + this.#PrimeY;
+			let z1 = z0 + this.#PrimeZ;
+
+			let xf00 = FastNoise.#Lerp(
+				this.#GradCoord(seed, x0, y0, z0, xd0, yd0, zd0),
+				this.#GradCoord(seed, x1, y0, z0, xd1, yd0, zd0),
+				xs
+			);
+			let xf10 = FastNoise.#Lerp(
+				this.#GradCoord(seed, x0, y1, z0, xd0, yd1, zd0),
+				this.#GradCoord(seed, x1, y1, z0, xd1, yd1, zd0),
+				xs
+			);
+			let xf01 = FastNoise.#Lerp(
+				this.#GradCoord(seed, x0, y0, z1, xd0, yd0, zd1),
+				this.#GradCoord(seed, x1, y0, z1, xd1, yd0, zd1),
+				xs
+			);
+			let xf11 = FastNoise.#Lerp(
+				this.#GradCoord(seed, x0, y1, z1, xd0, yd1, zd1),
+				this.#GradCoord(seed, x1, y1, z1, xd1, yd1, zd1),
+				xs
+			);
+
+			let yf0 = FastNoise.#Lerp(xf00, xf10, ys);
+			let yf1 = FastNoise.#Lerp(xf01, xf11, ys);
+
+			return FastNoise.#Lerp(yf0, yf1, zs) * 0.964921414852142333984375;
+		};
+
+		if (arguments.length === 3) {
+			return R2(arguments[0], arguments[1], arguments[2]);
+		}
+
+		if (arguments.length === 4) {
+			return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
+		}
+	}
+
+	/**
+	 * @private
+	 * @returns {number}
+	 */
+	#SingleValueCubic() {
+		/**
+		 * @param {number} seed
+		 * @param {number} x
+		 * @param {number} y
+		 * @returns {number}
+		 */
+		let R2 = (seed, x, y) => {
+			let x1 = Math.floor(x);
+			let y1 = Math.floor(y);
+
+			let xs = x - x1;
+			let ys = y - y1;
+
+			x1 *= this.#PrimeX;
+			y1 *= this.#PrimeY;
+			let x0 = x1 - this.#PrimeX;
+			let y0 = y1 - this.#PrimeY;
+			let x2 = x1 + this.#PrimeX;
+			let y2 = y1 + this.#PrimeY;
+			let x3 = x1 + (this.#PrimeX << 1);
+			let y3 = y1 + (this.#PrimeY << 1);
+
+			return (
+				FastNoise.#CubicLerp(
+					FastNoise.#CubicLerp(
+						this.#ValCoord(seed, x0, y0),
+						this.#ValCoord(seed, x1, y0),
+						this.#ValCoord(seed, x2, y0),
+						this.#ValCoord(seed, x3, y0),
+						xs
+					),
+					FastNoise.#CubicLerp(
+						this.#ValCoord(seed, x0, y1),
+						this.#ValCoord(seed, x1, y1),
+						this.#ValCoord(seed, x2, y1),
+						this.#ValCoord(seed, x3, y1),
+						xs
+					),
+					FastNoise.#CubicLerp(
+						this.#ValCoord(seed, x0, y2),
+						this.#ValCoord(seed, x1, y2),
+						this.#ValCoord(seed, x2, y2),
+						this.#ValCoord(seed, x3, y2),
+						xs
+					),
+					FastNoise.#CubicLerp(
+						this.#ValCoord(seed, x0, y3),
+						this.#ValCoord(seed, x1, y3),
+						this.#ValCoord(seed, x2, y3),
+						this.#ValCoord(seed, x3, y3),
+						xs
+					),
+					ys
+				) *
+				(1 / (1.5 * 1.5))
+			);
+		};
+
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} z
+		 * @returns {number}
+		 */
+		let R3 = (seed, x, y, z) => {
+			let x1 = Math.floor(x);
+			let y1 = Math.floor(y);
+			let z1 = Math.floor(z);
+
+			let xs = x - x1;
+			let ys = y - y1;
+			let zs = z - z1;
+
+			x1 *= this.#PrimeX;
+			y1 *= this.#PrimeY;
+			z1 *= this.#PrimeZ;
+
+			let x0 = x1 - this.#PrimeX;
+			let y0 = y1 - this.#PrimeY;
+			let z0 = z1 - this.#PrimeZ;
+			let x2 = x1 + this.#PrimeX;
+			let y2 = y1 + this.#PrimeY;
+			let z2 = z1 + this.#PrimeZ;
+			let x3 = x1 + (this.#PrimeX << 1);
+			let y3 = y1 + (this.#PrimeY << 1);
+			let z3 = z1 + (this.#PrimeZ << 1);
+
+			return (
+				FastNoise.#CubicLerp(
+					FastNoise.#CubicLerp(
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y0, z0),
+							this.#ValCoord(seed, x1, y0, z0),
+							this.#ValCoord(seed, x2, y0, z0),
+							this.#ValCoord(seed, x3, y0, z0),
+							xs
+						),
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y1, z0),
+							this.#ValCoord(seed, x1, y1, z0),
+							this.#ValCoord(seed, x2, y1, z0),
+							this.#ValCoord(seed, x3, y1, z0),
+							xs
+						),
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y2, z0),
+							this.#ValCoord(seed, x1, y2, z0),
+							this.#ValCoord(seed, x2, y2, z0),
+							this.#ValCoord(seed, x3, y2, z0),
+							xs
+						),
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y3, z0),
+							this.#ValCoord(seed, x1, y3, z0),
+							this.#ValCoord(seed, x2, y3, z0),
+							this.#ValCoord(seed, x3, y3, z0),
+							xs
+						),
+						ys
+					),
+					FastNoise.#CubicLerp(
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y0, z1),
+							this.#ValCoord(seed, x1, y0, z1),
+							this.#ValCoord(seed, x2, y0, z1),
+							this.#ValCoord(seed, x3, y0, z1),
+							xs
+						),
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y1, z1),
+							this.#ValCoord(seed, x1, y1, z1),
+							this.#ValCoord(seed, x2, y1, z1),
+							this.#ValCoord(seed, x3, y1, z1),
+							xs
+						),
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y2, z1),
+							this.#ValCoord(seed, x1, y2, z1),
+							this.#ValCoord(seed, x2, y2, z1),
+							this.#ValCoord(seed, x3, y2, z1),
+							xs
+						),
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y3, z1),
+							this.#ValCoord(seed, x1, y3, z1),
+							this.#ValCoord(seed, x2, y3, z1),
+							this.#ValCoord(seed, x3, y3, z1),
+							xs
+						),
+						ys
+					),
+					FastNoise.#CubicLerp(
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y0, z2),
+							this.#ValCoord(seed, x1, y0, z2),
+							this.#ValCoord(seed, x2, y0, z2),
+							this.#ValCoord(seed, x3, y0, z2),
+							xs
+						),
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y1, z2),
+							this.#ValCoord(seed, x1, y1, z2),
+							this.#ValCoord(seed, x2, y1, z2),
+							this.#ValCoord(seed, x3, y1, z2),
+							xs
+						),
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y2, z2),
+							this.#ValCoord(seed, x1, y2, z2),
+							this.#ValCoord(seed, x2, y2, z2),
+							this.#ValCoord(seed, x3, y2, z2),
+							xs
+						),
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y3, z2),
+							this.#ValCoord(seed, x1, y3, z2),
+							this.#ValCoord(seed, x2, y3, z2),
+							this.#ValCoord(seed, x3, y3, z2),
+							xs
+						),
+						ys
+					),
+					FastNoise.#CubicLerp(
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y0, z3),
+							this.#ValCoord(seed, x1, y0, z3),
+							this.#ValCoord(seed, x2, y0, z3),
+							this.#ValCoord(seed, x3, y0, z3),
+							xs
+						),
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y1, z3),
+							this.#ValCoord(seed, x1, y1, z3),
+							this.#ValCoord(seed, x2, y1, z3),
+							this.#ValCoord(seed, x3, y1, z3),
+							xs
+						),
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y2, z3),
+							this.#ValCoord(seed, x1, y2, z3),
+							this.#ValCoord(seed, x2, y2, z3),
+							this.#ValCoord(seed, x3, y2, z3),
+							xs
+						),
+						FastNoise.#CubicLerp(
+							this.#ValCoord(seed, x0, y3, z3),
+							this.#ValCoord(seed, x1, y3, z3),
+							this.#ValCoord(seed, x2, y3, z3),
+							this.#ValCoord(seed, x3, y3, z3),
+							xs
+						),
+						ys
+					),
+					zs
+				) *
+				(1 / (1.5 * 1.5 * 1.5))
+			);
+		};
+
+		if (arguments.length === 3) {
+			return R2(arguments[0], arguments[1], arguments[2]);
+		}
+
+		if (arguments.length === 4) {
+			return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
+		}
+	}
+
+	/**
+	 * @private
+	 * @returns {number}
+	 */
+	#SingleValue() {
+		/**
+		 *
+		 * @param {number}seed
+		 * @param {number}x
+		 * @param {number}y
+		 * @returns {number}
+		 */
+		let R2 = (seed, x, y) => {
+			let x0 = Math.floor(x);
+			let y0 = Math.floor(y);
+
+			let xs = FastNoise.#InterpHermite(x - x0);
+			let ys = FastNoise.#InterpHermite(y - y0);
+
+			x0 *= this.#PrimeX;
+			y0 *= this.#PrimeY;
+			let x1 = x0 + this.#PrimeX;
+			let y1 = y0 + this.#PrimeY;
+
+			let xf0 = FastNoise.#Lerp(this.#ValCoord(seed, x0, y0), this.#ValCoord(seed, x1, y0), xs);
+			let xf1 = FastNoise.#Lerp(this.#ValCoord(seed, x0, y1), this.#ValCoord(seed, x1, y1), xs);
+
+			return FastNoise.#Lerp(xf0, xf1, ys);
+		};
+
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} z
+		 * @returns {number}
+		 */
+		let R3 = (seed, x, y, z) => {
+			let x0 = Math.floor(x);
+			let y0 = Math.floor(y);
+			let z0 = Math.floor(z);
+
+			let xs = FastNoise.#InterpHermite(x - x0);
+			let ys = FastNoise.#InterpHermite(y - y0);
+			let zs = FastNoise.#InterpHermite(z - z0);
+
+			x0 *= this.#PrimeX;
+			y0 *= this.#PrimeY;
+			z0 *= this.#PrimeZ;
+			let x1 = x0 + this.#PrimeX;
+			let y1 = y0 + this.#PrimeY;
+			let z1 = z0 + this.#PrimeZ;
+
+			let xf00 = FastNoise.#Lerp(
+				this.#ValCoord(seed, x0, y0, z0),
+				this.#ValCoord(seed, x1, y0, z0),
+				xs
+			);
+			let xf10 = FastNoise.#Lerp(
+				this.#ValCoord(seed, x0, y1, z0),
+				this.#ValCoord(seed, x1, y1, z0),
+				xs
+			);
+			let xf01 = FastNoise.#Lerp(
+				this.#ValCoord(seed, x0, y0, z1),
+				this.#ValCoord(seed, x1, y0, z1),
+				xs
+			);
+			let xf11 = FastNoise.#Lerp(
+				this.#ValCoord(seed, x0, y1, z1),
+				this.#ValCoord(seed, x1, y1, z1),
+				xs
+			);
+
+			let yf0 = FastNoise.#Lerp(xf00, xf10, ys);
+			let yf1 = FastNoise.#Lerp(xf01, xf11, ys);
+
+			return FastNoise.#Lerp(yf0, yf1, zs);
+		};
+
+		if (arguments.length === 3) {
+			return R2(arguments[0], arguments[1], arguments[2]);
+		}
+
+		if (arguments.length === 4) {
+			return R3(arguments[0], arguments[1], arguments[2], arguments[3]);
+		}
+	}
+
+	/**
+	 * @private
+	 */
+	#DoSingleDomainWarp() {
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} amp
+		 * @param {number} freq
+		 * @param {Vector2} coord
+		 * @param {number} x
+		 * @param {number} y
+		 */
+		let R2 = (seed, amp, freq, coord, x, y) => {
+			switch (this.#DomainWarpType) {
+				case FastNoise.DomainWarpType.OpenSimplex2:
+					this.#SingleDomainWarpOpenSimplex2Gradient(
+						seed,
+						amp * 38.283687591552734375,
+						freq,
+						coord,
+						false,
+						x,
+						y
+					);
+					break;
+				case FastNoise.DomainWarpType.OpenSimplex2Reduced:
+					this.#SingleDomainWarpOpenSimplex2Gradient(seed, amp * 16.0, freq, coord, true, x, y);
+					break;
+				case FastNoise.DomainWarpType.BasicGrid:
+					this.#SingleDomainWarpBasicGrid(seed, amp, freq, coord, x, y);
+					break;
+			}
+		};
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} amp
+		 * @param {number} freq
+		 * @param {Vector3} coord
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} z
+		 */
+		let R3 = (seed, amp, freq, coord, x, y, z) => {
+			switch (this.#DomainWarpType) {
+				case FastNoise.DomainWarpType.OpenSimplex2:
+					this.#SingleDomainWarpOpenSimplex2Gradient(
+						seed,
+						amp * 32.69428253173828125,
+						freq,
+						coord,
+						false,
+						x,
+						y,
+						z
+					);
+					break;
+				case FastNoise.DomainWarpType.OpenSimplex2Reduced:
+					this.#SingleDomainWarpOpenSimplex2Gradient(
+						seed,
+						amp * 7.71604938271605,
+						freq,
+						coord,
+						true,
+						x,
+						y,
+						z
+					);
+					break;
+				case FastNoise.DomainWarpType.BasicGrid:
+					this.#SingleDomainWarpBasicGrid(seed, amp, freq, coord, x, y, z);
+					break;
+			}
+		};
+
+		if (arguments.length === 6 && arguments[3] instanceof Vector2) {
+			return R2(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
+		}
+
+		if (arguments.length === 7 && arguments[3] instanceof Vector3) {
+			return R3(
+				arguments[0],
+				arguments[1],
+				arguments[2],
+				arguments[3],
+				arguments[4],
+				arguments[5],
+				arguments[6]
+			);
+		}
+	}
+
+	/**
+	 * @private
+	 */
+	#DomainWarpSingle() {
+		/**
+		 *
+		 * @param {Vector2} coord
+		 */
+		let R2 = coord => {
+			let seed = this.#Seed;
+			let amp = this.#DomainWarpAmp * this.#FractalBounding;
+			let freq = this.#Frequency;
+
+			let xs = coord.x;
+			let ys = coord.y;
+			switch (this.#DomainWarpType) {
+				case FastNoise.DomainWarpType.OpenSimplex2:
+				case FastNoise.DomainWarpType.OpenSimplex2Reduced:
+					const SQRT3 = 1.7320508075688772935274463415059;
+					const F2 = 0.5 * (SQRT3 - 1);
+					let t = (xs + ys) * F2;
+					xs += t;
+					ys += t;
+					break;
+				default:
+					break;
+			}
+
+			this.#DoSingleDomainWarp(seed, amp, freq, coord, xs, ys);
+		};
+		/**
+		 *
+		 * @param {Vector3} coord
+		 */
+		let R3 = coord => {
+			let seed = this.#Seed;
+			let amp = this.#DomainWarpAmp * this.#FractalBounding;
+			let freq = this.#Frequency;
+
+			let xs = coord.x;
+			let ys = coord.y;
+			let zs = coord.z;
+			switch (this.#WarpTransformType3D) {
+				case FastNoise.TransformType3D.ImproveXYPlanes:
+					{
+						let xy = xs + ys;
+						let s2 = xy * -0.211324865405187;
+						zs *= 0.577350269189626;
+						xs += s2 - zs;
+						ys = ys + s2 - zs;
+						zs += xy * 0.577350269189626;
+					}
+					break;
+
+				case FastNoise.TransformType3D.ImproveXZPlanes:
+					{
+						let xz = xs + zs;
+						let s2 = xz * -0.211324865405187;
+						ys *= 0.577350269189626;
+						xs += s2 - ys;
+						zs += s2 - ys;
+						ys += xz * 0.577350269189626;
+					}
+					break;
+				case FastNoise.TransformType3D.DefaultOpenSimplex2:
+					const R3 = 2.0 / 3.0;
+					let r = (xs + ys + zs) * R3; // Rotation, not skew
+					xs = r - xs;
+					ys = r - ys;
+					zs = r - zs;
+					break;
+				default:
+					break;
+			}
+
+			this.#DoSingleDomainWarp(seed, amp, freq, coord, xs, ys, zs);
+		};
+
+		if (arguments.length === 1 && arguments[0] instanceof Vector2) {
+			return R2(arguments[0]);
+		}
+
+		if (arguments.length === 1 && arguments[0] instanceof Vector3) {
+			return R3(arguments[0]);
+		}
+	}
+
+	#DomainWarpFractalProgressive() {
+		/**
+		 *
+		 * @param {Vector2} coord
+		 */
+		let R2 = coord => {
+			let seed = this.#Seed;
+			let amp = this.#DomainWarpAmp * this.#FractalBounding;
+			let freq = this.#Frequency;
+
+			for (let i = 0; i < this.#Octaves; i++) {
+				let xs = coord.x;
+				let ys = coord.y;
+				switch (this.#DomainWarpType) {
+					case FastNoise.DomainWarpType.OpenSimplex2:
+					case FastNoise.DomainWarpType.OpenSimplex2Reduced:
+						const SQRT3 = 1.7320508075688772935274463415059;
+						const F2 = 0.5 * (SQRT3 - 1);
+						let t = (xs + ys) * F2;
+						xs += t;
+						ys += t;
+						break;
+					default:
+						break;
+				}
+
+				this.#DoSingleDomainWarp(seed, amp, freq, coord, xs, ys);
+
+				seed++;
+				amp *= this.#Gain;
+				freq *= this.#Lacunarity;
+			}
+		};
+		/**
+		 *
+		 * @param {Vector3} coord
+		 */
+
+		let R3 = coord => {
+			let seed = this.#Seed;
+			let amp = this.#DomainWarpAmp * this.#FractalBounding;
+			let freq = this.#Frequency;
+
+			for (let i = 0; i < this.#Octaves; i++) {
+				let xs = coord.x;
+				let ys = coord.y;
+				let zs = coord.z;
+				switch (this.#WarpTransformType3D) {
+					case FastNoise.TransformType3D.ImproveXYPlanes:
+						{
+							let xy = xs + ys;
+							let s2 = xy * -0.211324865405187;
+							zs *= 0.577350269189626;
+							xs += s2 - zs;
+							ys = ys + s2 - zs;
+							zs += xy * 0.577350269189626;
+						}
+						break;
+					case FastNoise.TransformType3D.ImproveXZPlanes:
+						{
+							let xz = xs + zs;
+							let s2 = xz * -0.211324865405187;
+							ys *= 0.577350269189626;
+							xs += s2 - ys;
+							zs += s2 - ys;
+							ys += xz * 0.577350269189626;
+						}
+						break;
+					case FastNoise.TransformType3D.DefaultOpenSimplex2:
+						{
+							const R3 = 2.0 / 3.0;
+							let r = (xs + ys + zs) * R3; // Rotation, not skew
+							xs = r - xs;
+							ys = r - ys;
+							zs = r - zs;
+						}
+						break;
+					default:
+						break;
+				}
+
+				this.#DoSingleDomainWarp(seed, amp, freq, coord, xs, ys, zs);
+
+				seed++;
+				amp *= this.#Gain;
+				freq *= this.#Lacunarity;
+			}
+		};
+
+		if (arguments.length === 1 && arguments[0] instanceof Vector2) {
+			return R2(arguments[0]);
+		}
+
+		if (arguments.length === 1 && arguments[0] instanceof Vector3) {
+			return R3(arguments[0]);
+		}
+	}
+
+	/**
+	 * @private
+	 */
+	#DomainWarpFractalIndependent() {
+		/**
+		 *
+		 * @param {Vector2} coord
+		 */
+		let R2 = coord => {
+			let xs = coord.x;
+			let ys = coord.y;
+			switch (this.#DomainWarpType) {
+				case FastNoise.DomainWarpType.OpenSimplex2:
+				case FastNoise.DomainWarpType.OpenSimplex2Reduced:
+					const SQRT3 = 1.7320508075688772935274463415059;
+					const F2 = 0.5 * (SQRT3 - 1);
+					let t = (xs + ys) * F2;
+					xs += t;
+					ys += t;
+					break;
+				default:
+					break;
+			}
+			let seed = this.#Seed;
+			let amp = this.#DomainWarpAmp * this.#FractalBounding;
+			let freq = this.#Frequency;
+
+			for (let i = 0; i < this.#Octaves; i++) {
+				this.#DoSingleDomainWarp(seed, amp, freq, coord, xs, ys);
+
+				seed++;
+				amp *= this.#Gain;
+				freq *= this.#Lacunarity;
+			}
+		};
+
+		/**
+		 *
+		 * @param {Vector3} coord
+		 */
+		let R3 = coord => {
+			let xs = coord.x;
+			let ys = coord.y;
+			let zs = coord.z;
+			switch (this.#WarpTransformType3D) {
+				case FastNoise.TransformType3D.ImproveXYPlanes:
+					{
+						let xy = xs + ys;
+						let s2 = xy * -0.211324865405187;
+						zs *= 0.577350269189626;
+						xs += s2 - zs;
+						ys = ys + s2 - zs;
+						zs += xy * 0.577350269189626;
+					}
+					break;
+				case FastNoise.TransformType3D.ImproveXZPlanes:
+					{
+						let xz = xs + zs;
+						let s2 = xz * -0.211324865405187;
+						ys *= 0.577350269189626;
+						xs += s2 - ys;
+						zs += s2 - ys;
+						ys += xz * 0.577350269189626;
+					}
+					break;
+				case FastNoise.TransformType3D.DefaultOpenSimplex2:
+					{
+						const R3 = 2.0 / 3.0;
+						let r = (xs + ys + zs) * R3; // Rotation, not skew
+						xs = r - xs;
+						ys = r - ys;
+						zs = r - zs;
+					}
+					break;
+				default:
+					break;
+			}
+
+			let seed = this.#Seed;
+			let amp = this.#DomainWarpAmp * this.#FractalBounding;
+			let freq = this.#Frequency;
+			for (let i = 0; i < this.#Octaves; i++) {
+				this.#DoSingleDomainWarp(seed, amp, freq, coord, xs, ys, zs);
+
+				seed++;
+				amp *= this.#Gain;
+				freq *= this.#Lacunarity;
+			}
+		};
+
+		if (arguments.length === 1 && arguments[0] instanceof Vector2) {
+			return R2(arguments[0]);
+		}
+
+		if (arguments.length === 1 && arguments[0] instanceof Vector3) {
+			return R3(arguments[0]);
+		}
+	}
+
+	/**
+	 * @private
+	 */
+	#SingleDomainWarpBasicGrid() {
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} warpAmp
+		 * @param {number} frequency
+		 * @param {Vector2} coord
+		 * @param {number} x
+		 * @param {number} y
+		 */
+
+		let R2 = (seed, warpAmp, frequency, coord, x, y) => {
+			let xf = x * frequency;
+			let yf = y * frequency;
+
+			let x0 = Math.floor(xf);
+			let y0 = Math.floor(yf);
+
+			let xs = FastNoise.#InterpHermite(xf - x0);
+			let ys = FastNoise.#InterpHermite(yf - y0);
+
+			x0 *= this.#PrimeX;
+			y0 *= this.#PrimeY;
+			let x1 = x0 + this.#PrimeX;
+			let y1 = y0 + this.#PrimeY;
+
+			let hash0 = this.#Hash(seed, x0, y0) & (255 << 1);
+			let hash1 = this.#Hash(seed, x1, y0) & (255 << 1);
+
+			let lx0x = FastNoise.#Lerp(this.#RandVecs2D[hash0], this.#RandVecs2D[hash1], xs);
+			let ly0x = FastNoise.#Lerp(this.#RandVecs2D[hash0 | 1], this.#RandVecs2D[hash1 | 1], xs);
+
+			hash0 = this.#Hash(seed, x0, y1) & (255 << 1);
+			hash1 = this.#Hash(seed, x1, y1) & (255 << 1);
+
+			let lx1x = FastNoise.#Lerp(this.#RandVecs2D[hash0], this.#RandVecs2D[hash1], xs);
+			let ly1x = FastNoise.#Lerp(this.#RandVecs2D[hash0 | 1], this.#RandVecs2D[hash1 | 1], xs);
+
+			coord.x += FastNoise.#Lerp(lx0x, lx1x, ys) * warpAmp;
+			coord.y += FastNoise.#Lerp(ly0x, ly1x, ys) * warpAmp;
+		};
+
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} warpAmp
+		 * @param {number} frequency
+		 * @param {Vector3} coord
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} z
+		 */
+		let R3 = (seed, warpAmp, frequency, coord, x, y, z) => {
+			let xf = x * frequency;
+			let yf = y * frequency;
+			let zf = z * frequency;
+
+			let x0 = Math.floor(xf);
+			let y0 = Math.floor(yf);
+			let z0 = Math.floor(zf);
+
+			let xs = FastNoise.#InterpHermite(xf - x0);
+			let ys = FastNoise.#InterpHermite(yf - y0);
+			let zs = FastNoise.#InterpHermite(zf - z0);
+
+			x0 *= this.#PrimeX;
+			y0 *= this.#PrimeY;
+			z0 *= this.#PrimeZ;
+			let x1 = x0 + this.#PrimeX;
+			let y1 = y0 + this.#PrimeY;
+			let z1 = z0 + this.#PrimeZ;
+
+			let hash0 = this.#Hash(seed, x0, y0, z0) & (255 << 2);
+			let hash1 = this.#Hash(seed, x1, y0, z0) & (255 << 2);
+
+			let lx0x = FastNoise.#Lerp(this.#RandVecs3D[hash0], this.#RandVecs3D[hash1], xs);
+			let ly0x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 1], this.#RandVecs3D[hash1 | 1], xs);
+			let lz0x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 2], this.#RandVecs3D[hash1 | 2], xs);
+
+			hash0 = this.#Hash(seed, x0, y1, z0) & (255 << 2);
+			hash1 = this.#Hash(seed, x1, y1, z0) & (255 << 2);
+
+			let lx1x = FastNoise.#Lerp(this.#RandVecs3D[hash0], this.#RandVecs3D[hash1], xs);
+			let ly1x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 1], this.#RandVecs3D[hash1 | 1], xs);
+			let lz1x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 2], this.#RandVecs3D[hash1 | 2], xs);
+
+			let lx0y = FastNoise.#Lerp(lx0x, lx1x, ys);
+			let ly0y = FastNoise.#Lerp(ly0x, ly1x, ys);
+			let lz0y = FastNoise.#Lerp(lz0x, lz1x, ys);
+
+			hash0 = this.#Hash(seed, x0, y0, z1) & (255 << 2);
+			hash1 = this.#Hash(seed, x1, y0, z1) & (255 << 2);
+
+			lx0x = FastNoise.#Lerp(this.#RandVecs3D[hash0], this.#RandVecs3D[hash1], xs);
+			ly0x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 1], this.#RandVecs3D[hash1 | 1], xs);
+			lz0x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 2], this.#RandVecs3D[hash1 | 2], xs);
+
+			hash0 = this.#Hash(seed, x0, y1, z1) & (255 << 2);
+			hash1 = this.#Hash(seed, x1, y1, z1) & (255 << 2);
+
+			lx1x = FastNoise.#Lerp(this.#RandVecs3D[hash0], this.#RandVecs3D[hash1], xs);
+			ly1x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 1], this.#RandVecs3D[hash1 | 1], xs);
+			lz1x = FastNoise.#Lerp(this.#RandVecs3D[hash0 | 2], this.#RandVecs3D[hash1 | 2], xs);
+
+			coord.x += FastNoise.#Lerp(lx0y, FastNoise.#Lerp(lx0x, lx1x, ys), zs) * warpAmp;
+			coord.y += FastNoise.#Lerp(ly0y, FastNoise.#Lerp(ly0x, ly1x, ys), zs) * warpAmp;
+			coord.z += FastNoise.#Lerp(lz0y, FastNoise.#Lerp(lz0x, lz1x, ys), zs) * warpAmp;
+		};
+
+		if (arguments.length === 6 && arguments[3] instanceof Vector2) {
+			R2(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
+		}
+
+		if (arguments.length === 7 && arguments[3] instanceof Vector3) {
+			R3(
+				arguments[0],
+				arguments[1],
+				arguments[2],
+				arguments[3],
+				arguments[4],
+				arguments[5],
+				arguments[6]
+			);
+		}
+	}
+
+	/**
+	 * @private
+	 */
+	#SingleDomainWarpOpenSimplex2Gradient() {
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} warpAmp
+		 * @param {number} frequency
+		 * @param {Vector2} coord
+		 * @param {boolean} outGradOnly
+		 * @param {number} x
+		 * @param {number} y
+		 */
+		let R2 = (seed, warpAmp, frequency, coord, outGradOnly, x, y) => {
+			const SQRT3 = 1.7320508075688772935274463415059;
+			const G2 = (3 - SQRT3) / 6;
+
+			x *= frequency;
+			y *= frequency;
+
+			let i = Math.floor(x);
+			let j = Math.floor(y);
+			let xi = x - i;
+			let yi = y - j;
+
+			let t = (xi + yi) * G2;
+			let x0 = xi - t;
+			let y0 = yi - t;
+
+			i *= this.#PrimeX;
+			j *= this.#PrimeY;
+
+			let vx, vy;
+			vx = vy = 0;
+
+			let a = 0.5 - x0;
+			if (a > 0) {
+				let aaaa = a * a * (a * a);
+				let xo, yo;
+				if (outGradOnly) {
+					let hash = this.#Hash(seed, i, j) & (255 << 1);
+					xo = this.#RandVecs2D[hash];
+					yo = this.#RandVecs2D[hash | 1];
+				} else {
+					let hash = this.#Hash(seed, i, j);
+					let index1 = hash & (127 << 1);
+					let index2 = (hash >> 7) & (255 << 1);
+					let xg = this.#Gradients2D[index1];
+					let yg = this.#Gradients2D[index1 | 1];
+					let value = x0 * xg + y0 * yg;
+					let xgo = this.#RandVecs2D[index2];
+					let ygo = this.#RandVecs2D[index2 | 1];
+					xo = value * xgo;
+					yo = value * ygo;
+				}
+				vx += aaaa * xo;
+				vy += aaaa * yo;
+			}
+
+			let c = 2 * (1 - 2 * G2) * (1 / G2 - 2) * t + (-2 * (1 - 2 * G2) * (1 - 2 * G2) + a);
+			if (c > 0) {
+				let x2 = x0 + (2 * G2 - 1);
+				let y2 = y0 + (2 * G2 - 1);
+				let cccc = c * c * (c * c);
+				let xo, yo;
+				if (outGradOnly) {
+					let hash = this.#Hash(seed, i + this.#PrimeX, j + this.#PrimeY) & (255 << 1);
+					xo = this.#RandVecs2D[hash];
+					yo = this.#RandVecs2D[hash | 1];
+				} else {
+					let hash = this.#Hash(seed, i + this.#PrimeX, j + this.#PrimeY);
+					let index1 = hash & (127 << 1);
+					let index2 = (hash >> 7) & (255 << 1);
+					let xg = this.#Gradients2D[index1];
+					let yg = this.#Gradients2D[index1 | 1];
+					let value = x2 * xg + y2 * yg;
+					let xgo = this.#RandVecs2D[index2];
+					let ygo = this.#RandVecs2D[index2 | 1];
+					xo = value * xgo;
+					yo = value * ygo;
+				}
+				vx += cccc * xo;
+				vy += cccc * yo;
+			}
+
+			if (y0 > x0) {
+				let x1 = x0 + G2;
+				let y1 = y0 + (G2 - 1);
+				let b = 0.5 - x1 * x1 - y1 * y1;
+				if (b > 0) {
+					let bbbb = b * b * (b * b);
+					let xo, yo;
+					if (outGradOnly) {
+						let hash = this.#Hash(seed, i, j + this.#PrimeY) & (255 << 1);
+						xo = this.#RandVecs2D[hash];
+						yo = this.#RandVecs2D[hash | 1];
+					} else {
+						let hash = this.#Hash(seed, i, j + this.#PrimeY);
+						let index1 = hash & (127 << 1);
+						let index2 = (hash >> 7) & (255 << 1);
+						let xg = this.#Gradients2D[index1];
+						let yg = this.#Gradients2D[index1 | 1];
+						let value = x1 * xg + y1 * yg;
+						let xgo = this.#RandVecs2D[index2];
+						let ygo = this.#RandVecs2D[index2 | 1];
+						xo = value * xgo;
+						yo = value * ygo;
+					}
+					vx += bbbb * xo;
+					vy += bbbb * yo;
+				}
+			} else {
+				let x1 = x0 + (G2 - 1);
+				let y1 = y0 + G2;
+				let b = 0.5 - x1 * x1 - y1 * y1;
+				if (b > 0) {
+					let bbbb = b * b * (b * b);
+					let xo, yo;
+					if (outGradOnly) {
+						let hash = this.#Hash(seed, i + this.#PrimeX, j) & (255 << 1);
+						xo = this.#RandVecs2D[hash];
+						yo = this.#RandVecs2D[hash | 1];
+					} else {
+						let hash = this.#Hash(seed, i + this.#PrimeX, j);
+						let index1 = hash & (127 << 1);
+						let index2 = (hash >> 7) & (255 << 1);
+						let xg = this.#Gradients2D[index1];
+						let yg = this.#Gradients2D[index1 | 1];
+						let value = x1 * xg + y1 * yg;
+						let xgo = this.#RandVecs2D[index2];
+						let ygo = this.#RandVecs2D[index2 | 1];
+						xo = value * xgo;
+						yo = value * ygo;
+					}
+					vx += bbbb * xo;
+					vy += bbbb * yo;
+				}
+			}
+
+			coord.x += vx * warpAmp;
+			coord.y += vy * warpAmp;
+		};
+
+		/**
+		 *
+		 * @param {number} seed
+		 * @param {number} warpAmp
+		 * @param {number} frequency
+		 * @param {Vector3} coord
+		 * @param {boolean} outGradOnly
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} z
+		 */
+		let R3 = (seed, warpAmp, frequency, coord, outGradOnly, x, y, z) => {
+			x *= frequency;
+			y *= frequency;
+			z *= frequency;
+
+			let i = Math.round(x);
+			let j = Math.round(y);
+			let k = Math.round(z);
+			let x0 = x - i;
+			let y0 = y - j;
+			let z0 = z - k;
+
+			let xNSign = (-x0 - 1.0) | 1;
+			let yNSign = (-y0 - 1.0) | 1;
+			let zNSign = (-z0 - 1.0) | 1;
+
+			let ax0 = xNSign * -x0;
+			let ay0 = yNSign * -y0;
+			let az0 = zNSign * -z0;
+
+			i *= this.#PrimeX;
+			j *= this.#PrimeY;
+			k *= this.#PrimeZ;
+
+			let vx, vy, vz;
+			vx = vy = vz = 0;
+
+			let a = 0.6 - x0 * x0 - (y0 * y0 + z0 * z0);
+			for (let l = 0; ; l++) {
+				if (a > 0) {
+					let aaaa = a * a * (a * a);
+					let xo, yo, zo;
+					if (outGradOnly) {
+						let hash = this.#Hash(seed, i, j, k) & (255 << 2);
+						xo = this.#RandVecs3D[hash];
+						yo = this.#RandVecs3D[hash | 1];
+						zo = this.#RandVecs3D[hash | 2];
+					} else {
+						let hash = this.#Hash(seed, i, j, k);
+						let index1 = hash & (63 << 2);
+						let index2 = (hash >> 6) & (255 << 2);
+						let xg = this.#Gradients3D[index1];
+						let yg = this.#Gradients3D[index1 | 1];
+						let zg = this.#Gradients3D[index1 | 2];
+						let value = x0 * xg + y0 * yg + z0 * zg;
+						let xgo = this.#RandVecs3D[index2];
+						let ygo = this.#RandVecs3D[index2 | 1];
+						let zgo = this.#RandVecs3D[index2 | 2];
+						xo = value * xgo;
+						yo = value * ygo;
+						zo = value * zgo;
+					}
+					vx += aaaa * xo;
+					vy += aaaa * yo;
+					vz += aaaa * zo;
+				}
+
+				let b = a;
+				let i1 = i;
+				let j1 = j;
+				let k1 = k;
+				let x1 = x0;
+				let y1 = y0;
+				let z1 = z0;
+
+				if (ax0 >= ay0 && ax0 >= az0) {
+					x1 += xNSign;
+					b = b + ax0 + ax0;
+					i1 -= xNSign * this.#PrimeX;
+				} else if (ay0 > ax0 && ay0 >= az0) {
+					y1 += yNSign;
+					b = b + ay0 + ay0;
+					j1 -= yNSign * this.#PrimeY;
+				} else {
+					z1 += zNSign;
+					b = b + az0 + az0;
+					k1 -= zNSign * this.#PrimeZ;
+				}
+
+				if (b > 1) {
+					b -= 1;
+					let bbbb = b * b * (b * b);
+					let xo, yo, zo;
+					if (outGradOnly) {
+						let hash = this.#Hash(seed, i1, j1, k1) & (255 << 2);
+						xo = this.#RandVecs3D[hash];
+						yo = this.#RandVecs3D[hash | 1];
+						zo = this.#RandVecs3D[hash | 2];
+					} else {
+						let hash = this.#Hash(seed, i1, j1, k1);
+						let index1 = hash & (63 << 2);
+						let index2 = (hash >> 6) & (255 << 2);
+						let xg = this.#Gradients3D[index1];
+						let yg = this.#Gradients3D[index1 | 1];
+						let zg = this.#Gradients3D[index1 | 2];
+						let value = x1 * xg + y1 * yg + z1 * zg;
+						let xgo = this.#RandVecs3D[index2];
+						let ygo = this.#RandVecs3D[index2 | 1];
+						let zgo = this.#RandVecs3D[index2 | 2];
+						xo = value * xgo;
+						yo = value * ygo;
+						zo = value * zgo;
+					}
+					vx += bbbb * xo;
+					vy += bbbb * yo;
+					vz += bbbb * zo;
+				}
+
+				if (l === 1) break;
+
+				ax0 = 0.5 - ax0;
+				ay0 = 0.5 - ay0;
+				az0 = 0.5 - az0;
+
+				x0 = xNSign * ax0;
+				y0 = yNSign * ay0;
+				z0 = zNSign * az0;
+
+				a += 0.75 - ax0 - (ay0 + az0);
+
+				i += (xNSign >> 1) & this.#PrimeX;
+				j += (yNSign >> 1) & this.#PrimeY;
+				k += (zNSign >> 1) & this.#PrimeZ;
+
+				xNSign = -xNSign;
+				yNSign = -yNSign;
+				zNSign = -zNSign;
+
+				seed += 1293373;
+			}
+
+			coord.x += vx * warpAmp;
+			coord.y += vy * warpAmp;
+			coord.z += vz * warpAmp;
+		};
+
+		if (arguments.length === 7) {
+			R2(
+				arguments[0],
+				arguments[1],
+				arguments[2],
+				arguments[3],
+				arguments[4],
+				arguments[5],
+				arguments[6]
+			);
+		}
+
+		if (arguments.length === 8) {
+			R3(
+				arguments[0],
+				arguments[1],
+				arguments[2],
+				arguments[3],
+				arguments[4],
+				arguments[5],
+				arguments[6],
+				arguments[7]
+			);
+		}
+	}
 }
 
 class Vector2 {
-    /**
-     * 2d Vector
-     * @param {number} x
-     * @param {number} y
-     */
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
+	/**
+	 * 2d Vector
+	 * @param {number} x
+	 * @param {number} y
+	 */
+	constructor(x, y) {
+		this.x = x;
+		this.y = y;
+	}
 }
 
 class Vector3 {
-    /**
-     * 3d Vector
-     * @param {number} x
-     * @param {number} y
-     * @param {number} z
-     */
-    constructor(x, y, z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
+	/**
+	 * 3d Vector
+	 * @param {number} x
+	 * @param {number} y
+	 * @param {number} z
+	 */
+	constructor(x, y, z) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
 }
-
-let noise = new FastNoise();
-noise.SetNoiseType(FastNoise.NoiseType.Perlin);
-console.log(noise.GetNoise(1, 7));
-console.log(noise.GetNoise(1, 7));
