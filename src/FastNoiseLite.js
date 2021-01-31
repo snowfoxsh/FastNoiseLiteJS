@@ -1,3 +1,56 @@
+// MIT License
+//
+// Copyright(c) 2021 Jordan Peck (jordan.me2@gmail.com)
+// Copyright(c) 2021 Contributors
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files(the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions :
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+//
+// .'',;:cldxkO00KKXXNNWWWNNXKOkxdollcc::::::;:::ccllloooolllllllllooollc:,'...        ...........',;cldxkO000Okxdlc::;;;,,;;;::cclllllll
+// ..',;:ldxO0KXXNNNNNNNNXXK0kxdolcc::::::;;;,,,,,,;;;;;;;;;;:::cclllllc:;'....       ...........',;:ldxO0KXXXK0Okxdolc::;;;;::cllodddddo
+// ...',:loxO0KXNNNNNXXKK0Okxdolc::;::::::::;;;,,'''''.....''',;:clllllc:;,'............''''''''',;:loxO0KXNNNNNXK0Okxdollccccllodxxxxxxd
+// ....';:ldkO0KXXXKK00Okxdolcc:;;;;;::cclllcc:;;,''..... ....',;clooddolcc:;;;;,,;;;;;::::;;;;;;:cloxk0KXNWWWWWWNXKK0Okxddoooddxxkkkkkxx
+// .....';:ldxkOOOOOkxxdolcc:;;;,,,;;:cllooooolcc:;'...      ..,:codxkkkxddooollloooooooollcc:::::clodkO0KXNWWWWWWNNXK00Okxxxxxxxxkkkkxxx
+// . ....';:cloddddo___________,,,,;;:clooddddoolc:,...      ..,:ldx__00OOOkkk___kkkkkkxxdollc::::cclodkO0KXXNNNNNNXXK0OOkxxxxxxxxxxxxddd
+// .......',;:cccc:|           |,,,;;:cclooddddoll:;'..     ..';cox|  \KKK000|   |KK00OOkxdocc___;::clldxxkO0KKKKK00Okkxdddddddddddddddoo
+// .......'',,,,,''|   ________|',,;;::cclloooooolc:;'......___:ldk|   \KK000|   |XKKK0Okxolc|   |;;::cclodxxkkkkxxdoolllcclllooodddooooo
+// ''......''''....|   |  ....'',,,,;;;::cclloooollc:;,''.'|   |oxk|    \OOO0|   |KKK00Oxdoll|___|;;;;;::ccllllllcc::;;,,;;;:cclloooooooo
+// ;;,''.......... |   |_____',,;;;____:___cllo________.___|   |___|     \xkk|   |KK_______ool___:::;________;;;_______...'',;;:ccclllloo
+// c:;,''......... |         |:::/     '   |lo/        |           |      \dx|   |0/       \d|   |cc/        |'/       \......',,;;:ccllo
+// ol:;,'..........|    _____|ll/    __    |o/   ______|____    ___|   |   \o|   |/   ___   \|   |o/   ______|/   ___   \ .......'',;:clo
+// dlc;,...........|   |::clooo|    /  |   |x\___   \KXKKK0|   |dol|   |\   \|   |   |   |   |   |d\___   \..|   |  /   /       ....',:cl
+// xoc;'...  .....'|   |llodddd|    \__|   |_____\   \KKK0O|   |lc:|   |'\       |   |___|   |   |_____\   \.|   |_/___/...      ...',;:c
+// dlc;'... ....',;|   |oddddddo\          |          |Okkx|   |::;|   |..\      |\         /|   |          | \         |...    ....',;:c
+// ol:,'.......',:c|___|xxxddollc\_____,___|_________/ddoll|___|,,,|___|...\_____|:\ ______/l|___|_________/...\________|'........',;::cc
+// c:;'.......';:codxxkkkkxxolc::;::clodxkOO0OOkkxdollc::;;,,''''',,,,''''''''''',,'''''',;:loxkkOOkxol:;,'''',,;:ccllcc:;,'''''',;::ccll
+// ;,'.......',:codxkOO0OOkxdlc:;,,;;:cldxxkkxxdolc:;;,,''.....'',;;:::;;,,,'''''........,;cldkO0KK0Okdoc::;;::cloodddoolc:;;;;;::ccllooo
+// .........',;:lodxOO0000Okdoc:,,',,;:clloddoolc:;,''.......'',;:clooollc:;;,,''.......',:ldkOKXNNXX0Oxdolllloddxxxxxxdolccccccllooodddd
+// .    .....';:cldxkO0000Okxol:;,''',,;::cccc:;,,'.......'',;:cldxxkkxxdolc:;;,'.......';coxOKXNWWWNXKOkxddddxxkkkkkkxdoollllooddxxxxkkk
+//       ....',;:codxkO000OOxdoc:;,''',,,;;;;,''.......',,;:clodkO00000Okxolc::;,,''..',;:ldxOKXNWWWNNK0OkkkkkkkkkkkxxddooooodxxkOOOOO000
+//       ....',;;clodxkkOOOkkdolc:;,,,,,,,,'..........,;:clodxkO0KKXKK0Okxdolcc::;;,,,;;:codkO0XXNNNNXKK0OOOOOkkkkxxdoollloodxkO0KKKXXXXX
+//
+// VERSION: 1.0.1
+// https://github.com/Auburn/FastNoise
+//
+// Ported to Javascript by storm (Patrick U):
+// Discord: storm#5279 | Email: storm1surge@gmail.com | Github: stormy482
+//
+
 class FastNoise {
 	/**
 	 * @static
@@ -36,8 +89,8 @@ class FastNoise {
 		PingPong: "PingPong",
 		DomainWarpProgressive: "DomainWarpProgressive",
 		DomainWarpIndependent: "DomainWarpIndependent",
-    });
-    
+	});
+
 	/**
 	 * @static
 	 * @enum {string}
@@ -48,8 +101,8 @@ class FastNoise {
 		EuclideanSq: "EuclideanSq",
 		Manhattan: "Manhattan",
 		Hybrid: "Hybrid",
-    });
-    
+	});
+
 	/**
 	 * @static
 	 * @enum {string}
@@ -63,8 +116,8 @@ class FastNoise {
 		Distance2Sub: "Distance2Sub",
 		Distance2Mul: "Distance2Mul",
 		Distance2Div: "Distance2Div",
-    });
-    
+	});
+
 	/**
 	 * @static
 	 * @enum {string}
@@ -74,8 +127,8 @@ class FastNoise {
 		OpenSimplex2: "OpenSimplex2",
 		OpenSimplex2Reduced: "OpenSimplex2Reduced",
 		BasicGrid: "BasicGrid",
-    });
-    
+	});
+
 	/**
 	 * @static
 	 * @enum {string}
@@ -282,12 +335,18 @@ class FastNoise {
 
 	/**
 	 * @description 2D/3D noise at given position using current settings
-	 * @param {number} x
-	 * @param {number} y
-	 * @param {number} [z]
+	 * @param {number} x X coordinate
+	 * @param {number} y Y coordinate
+	 * @param {number} [z] Z coordinate
 	 * @return {number} Noise output bounded between -1...1
 	 */
 	GetNoise(x, y, z) {
+		/**
+		 * @description 2D noise at given position using current settings
+		 * @param {number} x
+		 * @param {*} y
+		 * @return {number} Noise output bounded between -1...1
+		 */
 		let R2 = (x, y) => {
 			x *= this.#Frequency;
 			y *= this.#Frequency;
@@ -317,6 +376,13 @@ class FastNoise {
 			}
 		};
 
+		/**
+		 * @description 3D noise at given position using current settings
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} z
+		 * @return {number} Noise output bounded between -1...1
+		 */
 		let R3 = (x, y, z) => {
 			x *= this.#Frequency;
 			y *= this.#Frequency;
@@ -392,7 +458,7 @@ class FastNoise {
 				break;
 		}
 	}
-     
+
 	// prettier-ignore
 	#Gradients2D = [
         0.130526192220052, 0.99144486137381, 0.38268343236509, 0.923879532511287, 0.608761429008721, 0.793353340291235, 0.793353340291235, 0.608761429008721,
