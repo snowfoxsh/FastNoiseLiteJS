@@ -36,7 +36,8 @@ class FastNoise {
 		PingPong: "PingPong",
 		DomainWarpProgressive: "DomainWarpProgressive",
 		DomainWarpIndependent: "DomainWarpIndependent",
-	});
+    });
+    
 	/**
 	 * @static
 	 * @enum {string}
@@ -47,7 +48,8 @@ class FastNoise {
 		EuclideanSq: "EuclideanSq",
 		Manhattan: "Manhattan",
 		Hybrid: "Hybrid",
-	});
+    });
+    
 	/**
 	 * @static
 	 * @enum {string}
@@ -61,7 +63,8 @@ class FastNoise {
 		Distance2Sub: "Distance2Sub",
 		Distance2Mul: "Distance2Mul",
 		Distance2Div: "Distance2Div",
-	});
+    });
+    
 	/**
 	 * @static
 	 * @enum {string}
@@ -71,7 +74,8 @@ class FastNoise {
 		OpenSimplex2: "OpenSimplex2",
 		OpenSimplex2Reduced: "OpenSimplex2Reduced",
 		BasicGrid: "BasicGrid",
-	});
+    });
+    
 	/**
 	 * @static
 	 * @enum {string}
@@ -388,7 +392,8 @@ class FastNoise {
 				break;
 		}
 	}
-
+     
+	// prettier-ignore
 	#Gradients2D = [
         0.130526192220052, 0.99144486137381, 0.38268343236509, 0.923879532511287, 0.608761429008721, 0.793353340291235, 0.793353340291235, 0.608761429008721,
         0.923879532511287, 0.38268343236509, 0.99144486137381, 0.130526192220051, 0.99144486137381, -0.130526192220051, 0.923879532511287, -0.38268343236509,
@@ -424,7 +429,8 @@ class FastNoise {
         -0.38268343236509, -0.923879532511287, -0.923879532511287, -0.38268343236509, -0.923879532511287, 0.38268343236509, -0.38268343236509, 0.923879532511287,
     ];
 
-    #RandVecs2D = [
+	// prettier-ignore
+	#RandVecs2D = [
         -0.2700222198, -0.9628540911, 0.3863092627, -0.9223693152, 0.04444859006, -0.999011673, -0.5992523158, -0.8005602176, -0.7819280288, 0.6233687174, 0.9464672271, 0.3227999196, -0.6514146797, -0.7587218957, 0.9378472289, 0.347048376,
         -0.8497875957, -0.5271252623, -0.879042592, 0.4767432447, -0.892300288, -0.4514423508, -0.379844434, -0.9250503802, -0.9951650832, 0.0982163789, 0.7724397808, -0.6350880136, 0.7573283322, -0.6530343002, -0.9928004525, -0.119780055,
         -0.0532665713, 0.9985803285, 0.9754253726, -0.2203300762, -0.7665018163, 0.6422421394, 0.991636706, 0.1290606184, -0.994696838, 0.1028503788, -0.5379205513, -0.84299554, 0.5022815471, -0.8647041387, 0.4559821461, -0.8899889226,
@@ -459,7 +465,8 @@ class FastNoise {
         0.01426758847, -0.9998982128, -0.6734383991, 0.7392433447, 0.639412098, -0.7688642071, 0.9211571421, 0.3891908523, -0.146637214, -0.9891903394, -0.782318098, 0.6228791163, -0.5039610839, -0.8637263605, -0.7743120191, -0.6328039957,
     ];
 
-    #Gradients3D = [
+	// prettier-ignore
+	#Gradients3D = [
         0, 1, 1, 0, 0, -1, 1, 0, 0, 1, -1, 0, 0, -1, -1, 0,
         1, 0, 1, 0, -1, 0, 1, 0, 1, 0, -1, 0, -1, 0, -1, 0,
         1, 1, 0, 0, -1, 1, 0, 0, 1, -1, 0, 0, -1, -1, 0, 0,
@@ -478,7 +485,8 @@ class FastNoise {
         1, 1, 0, 0, 0, -1, 1, 0, -1, 1, 0, 0, 0, -1, -1, 0
     ];
 
-    #RandVecs3D = [
+	// prettier-ignore
+	#RandVecs3D = [
         -0.7292736885, -0.6618439697, 0.1735581948, 0, 0.790292081, -0.5480887466, -0.2739291014, 0, 0.7217578935, 0.6226212466, -0.3023380997, 0, 0.565683137, -0.8208298145, -0.0790000257, 0, 0.760049034, -0.5555979497, -0.3370999617, 0, 0.3713945616, 0.5011264475, 0.7816254623, 0, -0.1277062463, -0.4254438999, -0.8959289049, 0, -0.2881560924, -0.5815838982, 0.7607405838, 0,
         0.5849561111, -0.662820239, -0.4674352136, 0, 0.3307171178, 0.0391653737, 0.94291689, 0, 0.8712121778, -0.4113374369, -0.2679381538, 0, 0.580981015, 0.7021915846, 0.4115677815, 0, 0.503756873, 0.6330056931, -0.5878203852, 0, 0.4493712205, 0.601390195, 0.6606022552, 0, -0.6878403724, 0.09018890807, -0.7202371714, 0, -0.5958956522, -0.6469350577, 0.475797649, 0,
         -0.5127052122, 0.1946921978, -0.8361987284, 0, -0.9911507142, -0.05410276466, -0.1212153153, 0, -0.2149721042, 0.9720882117, -0.09397607749, 0, -0.7518650936, -0.5428057603, 0.3742469607, 0, 0.5237068895, 0.8516377189, -0.02107817834, 0, 0.6333504779, 0.1926167129, -0.7495104896, 0, -0.06788241606, 0.3998305789, 0.9140719259, 0, -0.5538628599, -0.4729896695, -0.6852128902, 0,
@@ -1159,7 +1167,15 @@ class FastNoise {
 							b *
 							b *
 							(b * b) *
-							this.#GradCoord(seed, i - xNSign * this.#PrimeX, j, k, x0 + xNSign, y0, z0);
+							this.#GradCoord(
+								seed,
+								i - xNSign * this.#PrimeX,
+								j,
+								k,
+								x0 + xNSign,
+								y0,
+								z0
+							);
 					}
 				} else if (ay0 > ax0 && ay0 >= az0) {
 					let b = a + ay0 + ay0;
@@ -1169,7 +1185,15 @@ class FastNoise {
 							b *
 							b *
 							(b * b) *
-							this.#GradCoord(seed, i, j - yNSign * this.#PrimeY, k, x0, y0 + yNSign, z0);
+							this.#GradCoord(
+								seed,
+								i,
+								j - yNSign * this.#PrimeY,
+								k,
+								x0,
+								y0 + yNSign,
+								z0
+							);
 					}
 				} else {
 					let b = a + az0 + az0;
@@ -1179,7 +1203,15 @@ class FastNoise {
 							b *
 							b *
 							(b * b) *
-							this.#GradCoord(seed, i, j, k - zNSign * this.#PrimeZ, x0, y0, z0 + zNSign);
+							this.#GradCoord(
+								seed,
+								i,
+								j,
+								k - zNSign * this.#PrimeZ,
+								x0,
+								y0,
+								z0 + zNSign
+							);
 					}
 				}
 
@@ -1285,7 +1317,8 @@ class FastNoise {
 					let y2 = y0 + (G2 - 1);
 					let a2 = 2.0 / 3.0 - x2 * x2 - y2 * y2;
 					if (a2 > 0) {
-						value += a2 * a2 * (a2 * a2) * this.#GradCoord(seed, i, j + this.#PrimeY, x2, y2);
+						value +=
+							a2 * a2 * (a2 * a2) * this.#GradCoord(seed, i, j + this.#PrimeY, x2, y2);
 					}
 				}
 
@@ -1305,7 +1338,8 @@ class FastNoise {
 					let y3 = y0 + G2;
 					let a3 = 2.0 / 3.0 - x3 * x3 - y3 * y3;
 					if (a3 > 0) {
-						value += a3 * a3 * (a3 * a3) * this.#GradCoord(seed, i + this.#PrimeX, j, x3, y3);
+						value +=
+							a3 * a3 * (a3 * a3) * this.#GradCoord(seed, i + this.#PrimeX, j, x3, y3);
 					}
 				}
 			} else {
@@ -1314,14 +1348,16 @@ class FastNoise {
 					let y2 = y0 - G2;
 					let a2 = 2.0 / 3.0 - x2 * x2 - y2 * y2;
 					if (a2 > 0) {
-						value += a2 * a2 * (a2 * a2) * this.#GradCoord(seed, i - this.#PrimeX, j, x2, y2);
+						value +=
+							a2 * a2 * (a2 * a2) * this.#GradCoord(seed, i - this.#PrimeX, j, x2, y2);
 					}
 				} else {
 					let x2 = x0 + (G2 - 1);
 					let y2 = y0 + G2;
 					let a2 = 2.0 / 3.0 - x2 * x2 - y2 * y2;
 					if (a2 > 0) {
-						value += a2 * a2 * (a2 * a2) * this.#GradCoord(seed, i + this.#PrimeX, j, x2, y2);
+						value +=
+							a2 * a2 * (a2 * a2) * this.#GradCoord(seed, i + this.#PrimeX, j, x2, y2);
 					}
 				}
 
@@ -1330,14 +1366,16 @@ class FastNoise {
 					let y2 = y0 - (G2 - 1);
 					let a2 = 2.0 / 3.0 - x2 * x2 - y2 * y2;
 					if (a2 > 0) {
-						value += a2 * a2 * (a2 * a2) * this.#GradCoord(seed, i, j - this.#PrimeY, x2, y2);
+						value +=
+							a2 * a2 * (a2 * a2) * this.#GradCoord(seed, i, j - this.#PrimeY, x2, y2);
 					}
 				} else {
 					let x2 = x0 + G2;
 					let y2 = y0 + (G2 - 1);
 					let a2 = 2.0 / 3.0 - x2 * x2 - y2 * y2;
 					if (a2 > 0) {
-						value += a2 * a2 * (a2 * a2) * this.#GradCoord(seed, i, j + this.#PrimeY, x2, y2);
+						value +=
+							a2 * a2 * (a2 * a2) * this.#GradCoord(seed, i, j + this.#PrimeY, x2, y2);
 					}
 				}
 			}
@@ -1765,7 +1803,8 @@ class FastNoise {
 							let vecX = xi - x + this.#RandVecs2D[idx] * cellularJitter;
 							let vecY = yi - y + this.#RandVecs2D[idx | 1] * cellularJitter;
 
-							let newDistance = Math.abs(vecX) + Math.abs(vecY) + (vecX * vecX + vecY * vecY);
+							let newDistance =
+								Math.abs(vecX) + Math.abs(vecY) + (vecX * vecX + vecY * vecY);
 
 							distance1 = Math.max(Math.min(distance1, newDistance), distance0);
 							if (newDistance < distance0) {
@@ -2432,7 +2471,15 @@ class FastNoise {
 					);
 					break;
 				case FastNoise.DomainWarpType.OpenSimplex2Reduced:
-					this.#SingleDomainWarpOpenSimplex2Gradient(seed, amp * 16.0, freq, coord, true, x, y);
+					this.#SingleDomainWarpOpenSimplex2Gradient(
+						seed,
+						amp * 16.0,
+						freq,
+						coord,
+						true,
+						x,
+						y
+					);
 					break;
 				case FastNoise.DomainWarpType.BasicGrid:
 					this.#SingleDomainWarpBasicGrid(seed, amp, freq, coord, x, y);
